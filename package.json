@@ -1,0 +1,30 @@
+{
+  "name": "pet_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:server": "pm2 start process.config.js",
+    "stop:server": "pm2 delete process.config.js",
+    "logs:server": "pm2 logs /api/ --lines 10",
+    "start:client": "npm run start --prefix client",
+    "build:client": "npm run build --prefix client",
+    "test:client": "npm run test --prefix client",
+    "eject:client": "npm run eject --prefix client",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.4.22"
+  },
+  "devDependencies": {
+    "pm2": "^3.5.0"
+  }
+}
