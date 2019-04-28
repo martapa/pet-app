@@ -22,9 +22,24 @@ applyMiddleware(middleWare, router);
 router.use('/shelters', shelterRouter);
 router.use('/pets', petRouter);
 
+// 1. Change route handler to return static folder
+const publicFolder = path.resolve(__dirname, '..', 'build')
+router.use('/', express.static(publicFolder)) //want to serve that static content
+
+// 2. Add route handler to catch all requests
+
+router.use('*', (req, res, next) => {
+  const indexFile = path.resolve(publicFolder, 'index.html')
+   res.sendFile(indexFile);
+ });
+
 applyMiddleware(errorHandlers, router);
 
+
+
 const server = http.createServer(router);
+
+
 
 mongoose
   .connect(URL, { useNewUrlParser: true })
