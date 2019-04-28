@@ -3,6 +3,7 @@ const http = require('http');
 const mongoose = require('mongoose');
 const router = express();
 const errorHandlers = require('./middleware/errorHandlers');
+const path = require('path');
 
 const PORT = 3001;
 const URL = 'mongodb://localhost:27017/pets_project';
@@ -29,7 +30,7 @@ router.use('/', express.static(publicFolder)) //want to serve that static conten
 // 2. Add route handler to catch all requests
 
 router.use('*', (req, res, next) => {
-  const indexFile = path.resolve(publicFolder, 'index.html')
+  const indexFile = path.resolve(publicFolder, 'index.html');
    res.sendFile(indexFile);
  });
 
