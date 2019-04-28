@@ -1,7 +1,7 @@
 const Shelter = require('./shelterModel');
 const mongoose = require('mongoose');
 const tokenService = require('../../utils/tokenService');
-const { ClientError } = require('../../utils/errors');
+const { HTTP404Error, HTTP403Error, HTTP400Error } = require('../../utils/httpErrors');
 
 exports.getAllShelters = async () => {
   try {
@@ -116,18 +116,22 @@ exports.getShelterPets = async id => {
 };
 
 exports.login = async (email, password) => {
-  if (!email) throw new ClientError('Email Missing');
-  else if (!password) throw new ClientError('Password Missing');
+  try {
+    if (!email) throw new HTTP400Error('Email Missing');
+    else if (!password) throw new HTTP400Error('Password Missing');
 
-  const user = await Shelter.findOne({ email });
+    const user = await Shelter.findOne({ email });
 
-  if (!user) throw new ClientError('User Does Not Exist');
+    if (!user) throw new HTTP404Error('User Does Not Exist');
 
-  const match = await user.comparePassword(password);
+    const match = await user.comparePassword(password);
 
-  if (!match) throw new ClientError('Password Incorrect');
+    if (!match) throw new HTTP403Error('Password Incorrect');
 
-  const token = tokenService.create(user);
+    const token = tokenService.create(user);
 
-  return token;
+    return token;
+  } catch (e) {
+      throw e
+  }
 };

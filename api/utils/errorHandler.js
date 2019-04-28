@@ -3,6 +3,7 @@ const { HTTPClientError, HTTP404Error } = require('./httpErrors');
 
 // Handle client error
 exports.clientError = (err, res, next) => {
+  console.log("middleWare", err)
   if (err instanceof HTTPClientError) {
     console.warn(err);
 

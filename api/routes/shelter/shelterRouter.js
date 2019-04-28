@@ -87,7 +87,6 @@ router.route('/near').get(async (req, res, next) => {
 //login shelter
 router.route('/login').post(async (req, res, next) => {
   const { email, password } = req.body;
-
   try {
     const token = await shelterService.login(email, password);
 
@@ -96,10 +95,9 @@ router.route('/login').post(async (req, res, next) => {
     });
   } catch (e) {
     // Refactor this
-    res.status(e.statusCode).json({
-      message: e.message,
-      errors: [e]
-    });
+    console.log("ERROR",e)
+    next(e);
+
   }
 });
 
