@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React YAY!!
-        </a>
-      </header>
-    </div>
-  );
+import Routes from './Routes.js'
+
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <h2>PetsApp</h2>
+        <Routes />
+      </div>
+    );
+  }
 }
 
-export default App;
+export default withRouter(App);
