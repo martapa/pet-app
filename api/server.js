@@ -5,8 +5,13 @@ const router = express();
 const errorHandlers = require('./middleware/errorHandlers');
 const path = require('path');
 
+// exports.PORT = process.env.PORT || 3001;
+// exports.SECRET = process.env.SECRET || 'super-secret-passphrase';
+const URL = process.env.MONGO_DB_URI || 'mongodb://localhost:27017/pets_project';
+
+
 const PORT = 3001;
-const URL = 'mongodb://localhost:27017/pets_project';
+//const URL = 'mongodb://localhost:27017/pets_project';
 
 
 
