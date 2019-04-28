@@ -6,7 +6,7 @@ const errorHandlers = require('./middleware/errorHandlers');
 const path = require('path');
 
 const PORT = process.env.PORT || 3001;
-const URL = process.env.MONGO_DB_URI || 'mongodb://localhost:27017/pets_project';
+const URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/pets_project';
 
 
 //const PORT = 3001;
