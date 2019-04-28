@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "deploy": "node api/server.js",
+    "build": "react-scripts build",
     "start:server": "pm2 start process.config.js",
     "stop:server": "pm2 delete process.config.js",
     "logs:server": "pm2 logs /api/ --lines 10",
