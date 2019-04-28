@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
 const shelterModel = require('../routes/shelter/shelterModel');
 const petModel = require('../routes/pet/petModel');
 
-async function seed() {
+exports.seed = async () => {
   await shelterModel.remove();
   await petModel.remove();
 
@@ -131,16 +131,21 @@ async function seed() {
 
   const shelters = await Promise.all(shelterPromises); // FOR REASONS;
 }
-const url = 'mongodb://localhost:27017/pets_project';
-mongoose
-  .connect(url, {
-    useNewUrlParser: true
-  })
-  .then(async () => {
-    console.log(`Connect to server: ${url}`);
-    await seed();
-  })
-  .catch(err => {
-    console.log(err);
-    throw err;
-  });
+
+exports.truncate = async () => {
+  await shelterModel.deleteMany();
+  await petModel.deleteMany();
+};
+// const url = 'mongodb://localhost:27017/pets_project';
+// mongoose
+//   .connect(url, {
+//     useNewUrlParser: true
+//   })
+//   .then(async () => {
+//     console.log(`Connect to server: ${url}`);
+//     await seed();
+//   })
+//   .catch(err => {
+//     console.log(err);
+//     throw err;
+//   });
