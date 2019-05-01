@@ -41,6 +41,9 @@ const shelterSchema = new Schema({
    type: { type: String },
    coordinates: []
   },
+  address: {
+    type: String,
+  }
 });
 
 shelterSchema.index({ location: "2dsphere" });

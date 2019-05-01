@@ -2,9 +2,11 @@
 import React, { Component } from 'react';
 import { debounce } from 'lodash';
 import axios from 'axios';
+import { Form, Button } from 'react-bootstrap';
+
 //
 // // Import local dependencies
-// import './login.scss';
+import './login.scss';
 
 class LoginPage extends Component {
   constructor(props) {
@@ -29,14 +31,11 @@ class LoginPage extends Component {
     const { email, password } = this.state;
 
     try {
-      const response = await axios.post(
-        '/shelters/login',
-        {
-          email: email,
-          password: password
-        }
-      );
-
+      const response = await axios.post('/shelters/login', {
+        email: email,
+        password: password
+      });
+      console.log(email)
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -46,58 +45,43 @@ class LoginPage extends Component {
   render() {
     return (
       <>
-        <div className="container login">
-          <div className="row">
-            <div className="col">
-              <div className="form-container">
-                <h1>Log In</h1>
-                <form onSubmit={this.handleSubmit}>
-                  <div className="form-group">
-                    <label htmlFor="email">Email address</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="email"
-                      aria-describedby="emailHelp"
-                      placeholder="Enter email"
-                      onChange={({ target: { id, value } }) => {
-                        this.debounceChange(id, value);
-                      }}
-                    />
-                    <small id="emailHelp" className="form-text text-muted">
-                    </small>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="password"
-                      placeholder="Password"
-                      autoComplete="new-password"
-                      onChange={({ target: { id, value } }) => {
-                        this.debounceChange(id, value);
-                      }}
-                    />
-                  </div>
-                  <div className="form-group form-check">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      id="remember-me"
-                    />
-                    <label className="form-check-label" htmlFor="remember-me">
-                      Remember me
-                    </label>
-                  </div>
-                  <button type="submit" className="btn btn-primary">
-                    Submit
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
+
+        <h1>Log In</h1>
+        <div className="login">
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Group controlID="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                id="email"
+                type="email"
+                placeholder="Enter email"
+                onChange={({ target: { id, value } }) => {
+                  this.debounceChange(id, value);
+                }}
+              />
+              <small id="emailHelp" className="form-text text-muted" />
+            </Form.Group>
+            <Form.Group controlID="formBasicPassword">
+              <Form.Label htmlFor="password">Password</Form.Label>
+              <Form.Control
+                id="password"
+                type="password"
+                className="form-control"
+                placeholder="Password"
+                autoComplete="new-password"
+                onChange={({ target: { id, value } }) => {
+                  this.debounceChange(id, value);
+                }}
+              />
+            </Form.Group>
+            <Form.Group controlID="rememberMe">
+              <Form.Check type="checkbox" />
+              <Form.Label>Remember me</Form.Label>
+            </Form.Group>
+            <Button variant="dark">Submit</Button>
+          </Form>
         </div>
+
       </>
     );
   }
