@@ -70,7 +70,7 @@ class RegisterPage extends Component {
             <Formik
               validationSchema={schema}
               onSubmit={async (values) => {
-                console.log(values);
+                //console.log(values);
                 const street2 = '+'+values.street.split(' ').join('+');
                 const city2 = '+'+values.city.split(' ').join('+');
                 const address = [street2, city2, values.province].join(',');

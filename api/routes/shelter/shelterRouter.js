@@ -22,7 +22,8 @@ router
     } catch (err) {
       next(err);
     }
-  }) //edit shelter when shelter is logged in
+  })
+  //edit shelter when shelter is logged in
   .patch(requiresAuth, async (req, res, next) => {
     const id = req.token.shelter.id;
     try {

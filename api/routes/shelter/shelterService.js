@@ -68,7 +68,7 @@ exports.aggregateShelterWithPets = async (longitude, latitude) => {
             coordinates: [parseFloat(longitude), parseFloat(latitude)]
           },
           distanceField: 'distance', // co to
-          maxDistance: 5000,
+          maxDistance: 20000,
           includeLocs: 'location',
           spherical: true
         }

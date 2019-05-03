@@ -51,8 +51,8 @@ mongoose
   .then(async () => {
     console.log(`Connected to database at: ${URL}`);
     try {
-      await require('./utils/seed').truncate();
-      await require('./utils/seed').seed();
+      //await require('./utils/seed').truncate();
+      //await require('./utils/seed').seed();
 
       server.listen(PORT, () => {
         console.log(`Server is running on PORT:${PORT}`);
