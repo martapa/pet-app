@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 //import { Navbar, Nav, Form, Button, FormControl } from 'react-bootstrap';
 //import { LinkContainer, Routes } from "react-router-bootstrap";
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 import { Nav, Navbar, Form, Button, FormControl, Image } from 'react-bootstrap';
 import { Formik } from 'formik';
 import axios from 'axios';
+
 import * as actions from '../../../actions';
 import { getDogsNearYou } from '../../../actions/index';
 
@@ -37,10 +38,12 @@ class Navigation extends Component {
             <Formik
               onSubmit={async values => {
                 try {
+                  //console.log("city", values.search)
                   const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=,+${values.search}&key=${google_api_key}`)
                   const lng = response.data.results[0].geometry.location.lng
                   const lat = response.data.results[0].geometry.location.lat
                   this.props.getDogsNearYou(lng, lat);
+                  //console.log("navigation",this.props)
                   this.props.history.push('/dogs_near_you');
 
 
@@ -82,10 +85,10 @@ class Navigation extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
+  //console.log("navigation",state)
   return {
     dogs_near_you: state.dogs_near_you
   };
 }
 
-export default connect(mapStateToProps, { getDogsNearYou })(Navigation);
+export default withRouter(connect(mapStateToProps, { getDogsNearYou })(Navigation));

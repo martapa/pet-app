@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CardDeck } from 'react-bootstrap';
+import { CardDeck, Row } from 'react-bootstrap';
 
 
 import * as actions from '../../../actions';
@@ -11,16 +11,7 @@ class Dogs extends Component {
   componentDidMount() {
     this.props.getDogs();
   }
-  render() {
-    return (
-      <>
-      <CardDeck style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-          <DogCard/>
-      </CardDeck>
 
-      </>
-    );
-  }
   renderListItem(dog) {
     //console.log(dog)
     return <DogCard dog={dog} key={dog.id} />;
@@ -34,7 +25,9 @@ class Dogs extends Component {
   }
 
   render() {
-    return <div>{this.renderList()}</div>;
+    return <Row>
+      {this.renderList()}
+    </Row>;
   }
 }
 
