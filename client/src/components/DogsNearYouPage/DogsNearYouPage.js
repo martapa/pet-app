@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { Row } from 'react-bootstrap';
 
-import DogCard from './DogCard';
+import DogCard from '../LandingPage/components/DogCard';
 import _ from 'lodash';
 
 //import './landing_page.scss';

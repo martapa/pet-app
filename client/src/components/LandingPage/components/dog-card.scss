@@ -1,0 +1,16 @@
+.dog-card {
+  margin-top: 30px;
+  
+  .img {
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      top: 50%;
+      position: absolute;
+      transform: translateY(-50%);
+      width: 100%;
+    }
+  }
+}

@@ -5,15 +5,16 @@ import LandingPage from './components/LandingPage/LandingPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import DogsNearYouPage from './components/DogsNearYouPage/DogsNearYouPage';
-
-
+import DogDetail from './components/DogDetail/DogDetail';
 
 
 export const routes = [
   { path: '/', component: LandingPage },
-  { path: '/register', component: RegisterPage},
-  { path: '/login', component: LoginPage},
+  { path: '/register', component: RegisterPage },
+  { path: '/login', component: LoginPage },
   { path: '/dogs_near_you', component: DogsNearYouPage },
+  { path: '/details/:id', component: DogDetail },
+
 ];
 
 const genKey = path => `route:${path}`;
