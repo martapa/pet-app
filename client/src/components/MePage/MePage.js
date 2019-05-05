@@ -17,7 +17,7 @@ class MePage extends Component {
             <div className="row">
               <div className="col-sm-2" />
               <div className="col-sm-8">
-                <h2 style={{'text-align': 'center'}}>{this.props.shelter_user.shelter_name}</h2>
+                <h2 style={{'text-align': 'center','margin-top': '100px'}}>{this.props.shelter_user.shelter_name}</h2>
                 <p>{this.props.shelter_user.description}</p>
                 <p>Address: {this.props.shelter_user.address}</p>
                 <p>Email: {this.props.shelter_user.email}</p>

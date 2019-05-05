@@ -31,12 +31,15 @@ class Navigation extends Component {
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
+                  {!this.props.shelter_user && (
+                    <>
                   <Nav.Link as={NavLink} to="/register" exact>
                     Register
                   </Nav.Link>
                   <Nav.Link as={NavLink} to="/login" exact>
                     Log in
                   </Nav.Link>
+                </>)}
                   {this.props.shelter_user && (
                     <Nav.Link as={NavLink} to="/me" exact>
                       My Account
