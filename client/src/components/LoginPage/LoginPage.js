@@ -5,6 +5,11 @@ import axios from 'axios';
 import { Form, Button } from 'react-bootstrap';
 import { setToken } from '../../services/tokenService';
 import { Formik } from 'formik';
+import { getShelterUser } from '../../actions/index';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+
 
 //
 // // Import local dependencies
@@ -33,7 +38,7 @@ class LoginPage extends Component {
 
                 setToken(data[0]);
                 // call redux action that fetches user and puts user in state
-
+                this.props.getShelterUser();
                 this.props.history.push('/');
               } catch (error) {
                 console.log(error);
@@ -94,4 +99,13 @@ class LoginPage extends Component {
 }
 
 // Module exports
-export default LoginPage;
+function mapStateToProps(state){
+  console.log(state);
+  return {
+    shelter_user: state.shelter_user
+  };
+}
+
+export default withRouter(
+  connect(mapStateToProps, { getShelterUser })(LoginPage)
+);

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-import { GET_DOGS, GET_DOGS_NEAR, GET_DOG_DETAIL } from './types';
+import { GET_DOGS, GET_DOGS_NEAR, GET_DOG_DETAIL, GET_SHELTER_USER } from './types';
+import { getToken } from '../services/tokenService'
 
 export function getDogs(){
   const request = axios.get('/pets');
@@ -38,4 +39,28 @@ export function getDogDetail(id){
       })
     });
   }
+}
+
+
+export function getShelterUser() {
+  const token = getToken();
+
+  const req = axios.post(
+    "/shelters",
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+
+  return function(dispatch) {
+    req.then(function(response) {
+      dispatch({
+        type: GET_SHELTER_USER,
+        payload: response.data.data[0]
+      });
+    });
+  };
 }

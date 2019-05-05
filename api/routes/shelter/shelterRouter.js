@@ -23,6 +23,18 @@ router
       next(err);
     }
   })
+  .post(requiresAuth, async (req, res, next) => {
+    try {
+      const id = req.token.shelter.id;
+
+      const shelter = await shelterService.getShelterById(id);
+      res.status(200).send({
+        data: [shelter]
+      });
+    } catch (err) {
+      next(err);
+    }
+  })
   //edit shelter when shelter is logged in
   .patch(requiresAuth, async (req, res, next) => {
     const id = req.token.shelter.id;

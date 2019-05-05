@@ -18,13 +18,16 @@ class Navigation extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <header className="container-fluid">
         <div className="row">
           <div className="col">
             <Navbar expand="lg" className="navbar">
-              <Link to="/" className="navbar-brand">Pet Search</Link>
+              <Link to="/" className="navbar-brand">
+                Pet Search
+              </Link>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
@@ -34,6 +37,11 @@ class Navigation extends Component {
                   <Nav.Link as={NavLink} to="/login" exact>
                     Log in
                   </Nav.Link>
+                  {this.props.shelter_user && (
+                    <Nav.Link as={NavLink} to="/me" exact>
+                      My Account
+                    </Nav.Link>
+                  )}
                 </Nav>
                 <Formik
                   onSubmit={async values => {
@@ -95,8 +103,9 @@ class Navigation extends Component {
 }
 
 function mapStateToProps(state) {
-  //console.log("navigation",state)
+  console.log('navigation', state);
   return {
+    shelter_user: state.shelter_user,
     dogs_near_you: state.dogs_near_you
   };
 }
