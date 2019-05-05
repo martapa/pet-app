@@ -6,6 +6,8 @@ import RegisterPage from './components/RegisterPage/RegisterPage';
 import LoginPage from './components/LoginPage/LoginPage';
 import DogsNearYouPage from './components/DogsNearYouPage/DogsNearYouPage';
 import DogDetail from './components/DogDetail/DogDetail';
+import MePage from './components/MePage/MePage';
+
 
 
 export const routes = [
@@ -14,6 +16,7 @@ export const routes = [
   { path: '/login', component: LoginPage },
   { path: '/dogs_near_you', component: DogsNearYouPage },
   { path: '/details/:id', component: DogDetail },
+  { path: '/me', component: MePage },
 
 ];
 
