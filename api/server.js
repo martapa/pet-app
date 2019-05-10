@@ -7,6 +7,7 @@ const path = require('path');
 
 const PORT = process.env.PORT || 3001;
 const URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/pets_project';
+//const KEY = process.env.API_GOOGLE_KEY
 
 
 //const PORT = 3001;
@@ -23,7 +24,9 @@ const { router: petRouter } = require('./routes/pet/petRouter');
 
 applyMiddleware(middleWare, router);
 
-
+// router.use('/key', (req, res, next) => {
+//   res.json({ key: KEY });
+// })
 router.use('/shelters', shelterRouter);
 router.use('/pets', petRouter);
 

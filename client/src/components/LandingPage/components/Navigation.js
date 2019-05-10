@@ -9,10 +9,14 @@ import axios from 'axios';
 import * as actions from '../../../actions';
 import { getDogsNearYou } from '../../../actions/index';
 
-import { google_api_key } from '../../../keys.js';
+
+import { KEY } from '../../../'
 import { connect } from 'react-redux';
 
 import '../landing_page.scss';
+
+const API_KEY =`${process.env.REACT_APP_API_KEY_GOOGLE}`
+
 
 class Navigation extends Component {
   constructor(props) {
@@ -50,10 +54,11 @@ class Navigation extends Component {
                   onSubmit={async values => {
                     try {
                       //console.log("city", values.search)
+                      //console.log("API_KEY", API_KEY);
                       const response = await axios.get(
                         `https://maps.googleapis.com/maps/api/geocode/json?address=,+${
                           values.search
-                        }&key=${google_api_key}`
+                        }&key=${API_KEY}`
                       );
                       const lng =
                         response.data.results[0].geometry.location.lng;
