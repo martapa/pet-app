@@ -10,7 +10,6 @@ import * as actions from '../../../actions';
 import { getDogsNearYou } from '../../../actions/index';
 
 
-import { KEY } from '../../../'
 import { connect } from 'react-redux';
 
 import '../landing_page.scss';
