@@ -14,8 +14,6 @@ import { connect } from 'react-redux';
 
 import '../landing_page.scss';
 
-const API_KEY =`${process.env.REACT_APP_API_KEY_GOOGLE}`
-
 
 class Navigation extends Component {
   constructor(props) {
@@ -54,15 +52,21 @@ class Navigation extends Component {
                     try {
                       //console.log("city", values.search)
                       //console.log("API_KEY", API_KEY);
+                      // const response = await axios.get(
+                      //   `https://maps.googleapis.com/maps/api/geocode/json?address=,+${
+                      //     values.search
+                      //   }&key=${API_KEY}`
+                      // );
                       const response = await axios.get(
-                        `https://maps.googleapis.com/maps/api/geocode/json?address=,+${
+                        `/geocode?address=,+${
                           values.search
-                        }&key=${API_KEY}`
+                        }`
                       );
+                      console.log(response);
                       const lng =
-                        response.data.results[0].geometry.location.lng;
+                        response.data.data[0].results[0].geometry.location.lng;
                       const lat =
-                        response.data.results[0].geometry.location.lat;
+                        response.data.data[0].results[0].geometry.location.lat;
                       this.props.getDogsNearYou(lng, lat);
                       //console.log("navigation",this.props)
                       this.props.history.push('/dogs_near_you');

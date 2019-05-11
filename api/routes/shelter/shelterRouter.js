@@ -9,7 +9,9 @@ const { ClientError } = require('../../utils/errors');
 const requiresAuth = require('../../middleware/auth');
 const Shelter = require('./shelterModel');
 
+const axios = require('axios');
 const _ = require('lodash');
+
 
 router
   .route('/')
@@ -68,6 +70,21 @@ router
     }
   });
 
+  // router.route('/key').post(async (req, res, next) => {
+  //   try {
+  //     const key = await shelterService.returnKey();
+  //
+  //     res.json({
+  //       data: key
+  //     });
+  //   } catch (e) {
+  //     // Refactor this
+  //     //console.log("ERROR",e)
+  //     next(e);
+  //
+  //   }
+  // });
+
 //register shelter
 //doesn't require authentication
 router.route('/register').post(async (req, res, next) => {
@@ -113,6 +130,7 @@ router.route('/login').post(async (req, res, next) => {
 
   }
 });
+
 
 //get shelter info by specyfic shelter id
 router

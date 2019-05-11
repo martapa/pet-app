@@ -2,6 +2,9 @@ const Shelter = require('./shelterModel');
 const mongoose = require('mongoose');
 const tokenService = require('../../utils/tokenService');
 const { HTTP404Error, HTTP403Error, HTTP400Error } = require('../../utils/httpErrors');
+const KEY = process.env.GOOGLE_KEY || 'AIzaSyAl3tSBmqyu9eaZ5H6Bd4GEpWOh9Yh4Gdo'
+
+
 
 exports.getAllShelters = async () => {
   try {
@@ -135,3 +138,11 @@ exports.login = async (email, password) => {
       throw e
   }
 };
+
+// exports.returnKey = async () => {
+//   try {
+//     return await KEY;
+//   } catch (err) {
+//     throw err;
+//   }
+// };
