@@ -15,6 +15,9 @@ router
   .route('/')
   .get(async (req, res, next) => {
     try {
+      console.log("process.env.GOOGLE_KEY", process.env.GOOGLE_KEY)
+      console.log("process.env.ENV_GOOGLE_KEY", process.env.ENV_GOOGLE_KEY)
+
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?address=,+${
           req.query.address
