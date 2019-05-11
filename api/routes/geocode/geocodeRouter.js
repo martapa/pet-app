@@ -8,16 +8,13 @@ const { ClientError } = require('../../utils/errors');
 const axios = require('axios');
 
 
-const API_KEY = process.env.GOOGLE_KEY || process.env.ENV_GOOGLE_KEY
+const API_KEY = process.env.GOOGLE_API || process.env.ENV_GOOGLE_KEY
 //console.log("here",process.env.ENV_GOOGLE_KEY)
 
 router
   .route('/')
   .get(async (req, res, next) => {
     try {
-      console.log("process.env.GOOGLE_KEY", process.env.GOOGLE_KEY)
-      console.log("process.env.ENV_GOOGLE_KEY", process.env.ENV_GOOGLE_KEY)
-
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?address=,+${
           req.query.address
