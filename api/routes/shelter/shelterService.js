@@ -96,7 +96,6 @@ exports.aggregateShelterWithPets = async (longitude, latitude) => {
 exports.getShelterPets = async id => {
   const ObjectId = mongoose.Types.ObjectId;
   try {
-    console.log(id);
     const sp = await Shelter.aggregate([
       {
         $match: {
@@ -138,11 +137,3 @@ exports.login = async (email, password) => {
       throw e
   }
 };
-
-// exports.returnKey = async () => {
-//   try {
-//     return await KEY;
-//   } catch (err) {
-//     throw err;
-//   }
-// };

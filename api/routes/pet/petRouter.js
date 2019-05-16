@@ -24,8 +24,10 @@ router.route('/')
     const shelterId = req.token.shelter.id;
     try {
       const pet = await petService.createPet(req.body, shelterId);
+      const shelterPets = await shelterService.getShelterPets(shelterId);
+
       res.status(201).json({
-        data: [pet],
+        data: [shelterPets],
       });
     } catch(err){
       next(err);
@@ -49,7 +51,6 @@ router.route('/')
   .delete(requiresAuth, async (req, res, next) => {
     const { id } = req.params;
     const shelterId = req.token.shelter.id;
-    console.log(shelterId);
 
     try {
       const pet = await petService.deletePet(id);
@@ -63,8 +64,8 @@ router.route('/')
       shelter.pets = updated_pets
       const updated_shelter = await shelterService.updateShelter(shelterId, shelter);
 
+      const remainingPets = await shelterService.getShelterPets(shelterId);
 
-      const remainingPets = await petService.getAllPets();
       res.status(200).send({
         data: [remainingPets]
       });

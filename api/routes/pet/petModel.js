@@ -26,10 +26,12 @@ const petSchema = new Schema({
     type: String,
     max: 1000
   },
-  is_adopted: {
-    type: Boolean,
-    required: true
-  },
+  is_adopted:
+    [{
+      type: String,
+      enum: ['For adoption','Already adopted']
+    }]
+  ,
   good_with: [{
     type: String,
     enum: ['dogs', 'cats', 'children']

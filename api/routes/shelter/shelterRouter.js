@@ -131,7 +131,22 @@ router.route('/login').post(async (req, res, next) => {
   }
 });
 
+//return all pets for specific shelter id
+router.route('/mypets').get(requiresAuth, async (req, res, next) => {
+  const id = req.token.shelter.id;
+  console.log(id);
+  try {
+    //console.log(id);
+    const shelter_with_pets_profiles = await shelterService.getShelterPets(id);
+    //console.log(shelter_with_pets_profiles);
 
+    res.status(200).send({
+      data: shelter_with_pets_profiles
+    });
+  } catch (err) {
+    next(err);
+  }
+});
 //get shelter info by specyfic shelter id
 router
   .route('/:id')
@@ -147,20 +162,6 @@ router
     }
   })
 
-//return all pets for specific shelter id
-router.route('/:id/mypets').get(async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    //console.log(id);
-    const shelter_with_pets_profiles = await shelterService.getShelterPets(id);
-    //console.log(shelter_with_pets_profiles);
 
-    res.status(200).send({
-      data: shelter_with_pets_profiles
-    });
-  } catch (err) {
-    next(err);
-  }
-});
 
 exports.router = router;

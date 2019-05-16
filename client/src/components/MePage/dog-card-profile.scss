@@ -1,0 +1,34 @@
+.dog-card-profile {
+  .title-name {
+    text-align: center;
+  }
+  p.titles {
+    text-align: center;
+    border-bottom: 2px solid #fcfc53;
+    color: #424242;
+  }
+
+  ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      margin-left: 5px;
+      flex-grow: 1;
+      text-align: center;
+      border: 1px solid #a3a3a3;
+      border-radius: 25px;
+      color: #a3a3a3;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .button {
+    flex-basis: 25%;
+  }
+}

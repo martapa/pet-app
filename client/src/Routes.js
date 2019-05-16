@@ -7,6 +7,9 @@ import LoginPage from './components/LoginPage/LoginPage';
 import DogsNearYouPage from './components/DogsNearYouPage/DogsNearYouPage';
 import DogDetail from './components/DogDetail/DogDetail';
 import MePage from './components/MePage/MePage';
+import AddPetForm from './components/MePage/AddPetForm';
+import EditPet from './components/MePage/EditPet';
+
 
 
 
@@ -17,6 +20,8 @@ export const routes = [
   { path: '/dogs_near_you', component: DogsNearYouPage },
   { path: '/details/:id', component: DogDetail },
   { path: '/me', component: MePage },
+  { path: '/addform', component: AddPetForm },
+  { path: '/edit/:id', component: EditPet }
 
 ];
 

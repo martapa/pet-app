@@ -7,7 +7,7 @@ import './dog_detail.scss';
 class DogDetail extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
+    //console.log(this.props);
   }
 
   render() {
@@ -47,7 +47,7 @@ class DogDetail extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('state', state.dog_detail);
+  //console.log('state', state.dog_detail);
   return {
     dog_detail: state.dog_detail
   };

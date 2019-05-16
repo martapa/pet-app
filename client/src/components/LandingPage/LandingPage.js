@@ -10,7 +10,6 @@ class LandingPage extends Component {
     return (
       <>
         <Container fluid>
-          
           <Row>
             <Col className='main-col'>
             <h2 className='main-message'>Find dogs for adoption near you</h2>

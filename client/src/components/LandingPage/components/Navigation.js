@@ -114,7 +114,7 @@ class Navigation extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('navigation', state);
+  //console.log('navigation', state);
   return {
     shelter_user: state.shelter_user,
     dogs_near_you: state.dogs_near_you

@@ -12,7 +12,7 @@ exports.seed = async () => {
       name: 'Bobek',
       size: 'extra-large',
       age: 20,
-      is_adopted: false,
+      is_adopted: "For adoption",
       good_with: 'children',
       description:"Bobek is a great walker and really likes to smell and explore on walks, can be managed through basic training and feeding separately.",
       photo: "https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1560&q=80"
@@ -21,7 +21,7 @@ exports.seed = async () => {
       name: 'Klusek',
       size: 'large',
       age: 2,
-      is_adopted: false,
+      is_adopted: "For adoption",
       good_with: ['children', 'dogs', 'cats'],
       description: "Klusek was abandoned at the animal hospital; the owner left him there for checkup but never came back to pick him up.",
       photo: "https://images.unsplash.com/photo-1503256207526-0d5d80fa2f47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1533&q=80"
@@ -30,7 +30,7 @@ exports.seed = async () => {
       name: 'Sam',
       size: 'extra-small',
       age: 8,
-      is_adopted: false,
+      is_adopted: 'Already adopted',
       good_with: ['children', 'cats'],
       description:"Sam went through a lot. He needs very patient parents.",
       photo:"https://images.unsplash.com/photo-1505044197374-4d4ae3f9d566?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80"
@@ -39,7 +39,7 @@ exports.seed = async () => {
       name: 'Kelly',
       size: 'medium',
       age: 10,
-      is_adopted: false,
+      is_adopted: 'For adoption',
       good_with: ['children', 'dogs', 'cats'],
       description:"Kelly was rescued from Dangjin dog meat farm last fall in Korea. As you can see in the first photo, she was tied to a concrete block in hot summer; there was no water or food. Kelly likes to be around people; obedient, friendly and affectionate.",
       photo:"https://images.unsplash.com/photo-1550165298-e574b8c3c7f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1587&q=80"
@@ -48,7 +48,7 @@ exports.seed = async () => {
       name: 'Amanda',
       size: 'small',
       age: 5,
-      is_adopted: false,
+      is_adopted: 'Already adopted',
       good_with: [],
       description: "Amanda is a nice dog. She likes long walks and naps. Her owner died so she is lonely now.",
       photo: "https://images.unsplash.com/photo-1548946621-7426005b8ee2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1532&q=80"
@@ -57,7 +57,7 @@ exports.seed = async () => {
       name: 'Kasia',
       size: 'medium',
       age: 3,
-      is_adopted: false,
+      is_adopted: 'Already adopted',
       good_with: 'children',
       description:"Kasia is full of joy. She likes to eat veggies and fruits. Her favourie one is an apple.",
       photo: "https://images.unsplash.com/photo-1530126483408-aa533e55bdb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1601&q=80"
@@ -66,7 +66,7 @@ exports.seed = async () => {
       name: 'Karol',
       size: 'large',
       age: 4,
-      is_adopted: false,
+      is_adopted: 'For adoption',
       good_with: ['cats', 'dogs'],
       description: "Karol still has a lot to learn, but with a little bit of training and support, he will become a great companion dog. He has a good personality and temperament.",
       photo: "https://images.unsplash.com/photo-1542220365-4807048114ca?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1575&q=80"
@@ -75,7 +75,7 @@ exports.seed = async () => {
       name: 'Marta',
       size: 'medium',
       age: 2,
-      is_adopted: false,
+      is_adopted: 'For adoption',
       good_with: ['cats', 'dogs'],
       description:"Marta is a real lady. She likes to lie on the couch all day and smell nice.",
       photo:"https://images.unsplash.com/photo-1555231458-22288111e347?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80"
