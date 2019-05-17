@@ -22,13 +22,18 @@ class DogCardProfile extends Component {
   async handleClickEdit() {
     //console.log('edit');
     const id = this.props.dog._id
+    this.props.history.push(`/edit/${id}`)
     //console.log('id',id);
-    await this.props.getDogDetail(id);
+    //await this.props.getDogDetail(id);
     //console.log("get_detail",this.props.getDogDetail(id))
-  
-      this.props.history.push(`/edit/${id}`);
 
   }
+
+  // componentWillUpdate() {
+  //   // if (this.props.dog_detail)
+  //   //   this.props.history.push(`/edit/${this.props.dog_detail._id}`);
+  // }
+
   render() {
     return (
       <Col sm={4}>

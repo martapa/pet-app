@@ -34,23 +34,36 @@ const categories = [
 class EditPet extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {};
   }
+
+  async componentDidMount() {
+    //console.log(this.props)
+    const pet_id = this.props.match.params.id
+    const response = await axios.get(`/pets/${pet_id}`);
+    //console.log(response.data.data[0][0]);
+    this.setState(response.data.data[0][0])
+    console.log("state",this.state);
+    }
+
 
   render() {
     //console.log("props", this.props)
     return (
       <>
-        {this.props.dog_detail && (
+      {this.state.name &&
           <div className="container">
             <div className="row">
               <div className="col-sm-2" />
               <div className="col-sm-8">
                 <Formik
                   onSubmit={async values => {
-                    // console.log(values);
+                    //console.log("values",values.name);
+                    //console.log(this.state)
                     try {
                       const token = getToken();
-                      const id = this.props.dog_detail._id
+                      const id = this.state._id
                       const req = await axios.patch(`/pets/${id}`, values, {
                         headers: {
                           Authorization: `Bearer ${token}`
@@ -69,7 +82,7 @@ class EditPet extends Component {
                       console.log(error);
                     }
                   }}
-                  initialValues={this.props.dog_detail}
+                  initialValues={this.state}
                 >
                   {({
                     handleSubmit,
@@ -225,7 +238,7 @@ class EditPet extends Component {
               </div>
             </div>
           </div>
-        )}
+        }
       </>
     );
   }
