@@ -42,21 +42,20 @@ class Navigation extends Component {
                   </Nav.Link>
                 </>)}
                   {this.props.shelter_user && (
+                    <>
                     <Nav.Link as={NavLink} to="/me" exact>
                       My Account
                     </Nav.Link>
+                    <Nav.Link as={NavLink} to="/logout" exact>
+                      Log Out
+                    </Nav.Link>
+                    </>
                   )}
                 </Nav>
                 <Formik
                   onSubmit={async values => {
                     try {
-                      //console.log("city", values.search)
-                      //console.log("API_KEY", API_KEY);
-                      // const response = await axios.get(
-                      //   `https://maps.googleapis.com/maps/api/geocode/json?address=,+${
-                      //     values.search
-                      //   }&key=${API_KEY}`
-                      // );
+            
                       const response = await axios.get(
                         `/geocode?address=,+${
                           values.search

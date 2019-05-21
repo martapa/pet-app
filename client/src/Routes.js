@@ -9,6 +9,10 @@ import DogDetail from './components/DogDetail/DogDetail';
 import MePage from './components/MePage/MePage';
 import AddPetForm from './components/MePage/AddPetForm';
 import EditPet from './components/MePage/EditPet';
+import EditProfile from './components/MePage/EditProfile';
+import LogOutPage from './components/LogOutPage/LogOutPage';
+
+
 
 
 
@@ -21,7 +25,10 @@ export const routes = [
   { path: '/details/:id', component: DogDetail },
   { path: '/me', component: MePage },
   { path: '/addform', component: AddPetForm },
-  { path: '/edit/:id', component: EditPet }
+  { path: '/edit/:id', component: EditPet },
+  { path: '/profile-edit/:id', component: EditProfile},
+  { path: '/logout', component: LogOutPage},
+
 
 ];
 

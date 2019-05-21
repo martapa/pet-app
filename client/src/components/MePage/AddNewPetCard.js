@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Col } from 'react-bootstrap';
+import { Card, Button, Col, Container } from 'react-bootstrap';
 //import { deleteDog } from '../../actions/index';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -23,8 +23,8 @@ class AddNewPetCard extends Component {
 
   render() {
     return (
-      <Col sm={4}>
-        <Card className="dog-card">
+      <Container fluid>
+        <Card >
           <div className="img">
           <img src="https://theivrgroup.org/images/free-blank-dog-lineart-18.jpg" />
           </div>
@@ -35,7 +35,7 @@ class AddNewPetCard extends Component {
             </Button>
           </Card.Body>
         </Card>
-      </Col>
+      </Container>
     );
   }
 }

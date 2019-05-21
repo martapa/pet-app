@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { debounce } from 'lodash';
+
 import { Form, Button, Col } from 'react-bootstrap';
-import { google_api_key } from '../../keys.js';
 import * as yup from 'yup';
-import { Formik } from 'formik';
+import { Formik, FieldArray } from 'formik';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import { getToken } from '../../services/tokenService';
 
-import './register.scss';
+//import './register.scss';
 
-//const phoneRegEx =
 const schema = yup.object({
   shelter_name: yup.string().required('Name is required'),
   email: yup
@@ -27,46 +27,20 @@ const schema = yup.object({
       'Phone number is not valid'
     ),
   volonteer_name: yup.string(),
-  street: yup.string().required('Please enter street number and name'),
-  city: yup.string().required('Please enter the city'),
-  province: yup.string().required('Province is required'),
+  street: yup.string(),
+  city: yup.string(),
+  province: yup.string(),
   zip: yup
     .string()
     .max(7, 'Too long')
-    .required('Zip code is required')
+
 });
-class RegisterPage extends Component {
+
+class EditProfile extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      shelter_name: '',
-      email: '',
-      password: '',
-      avatar: '',
-      description: '',
-      phone: '',
-      volonteer_name: '',
-      //location: '',
-      street: '',
-      city: '',
-      province: '',
-      zip: ''
-    };
-    //this.debounceChange = debounce(this.handleChange, 0);
-    //this.handleChange = this.handleChange.bind(this);
-    //this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {};
   }
-
-  // handleChange = event => {
-  //   this.setState({ [event.target.id]: event.target.value });
-  // };
-  // //https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
-  // handleSubmit(event) {
-  //   alert('Submitted: ', this.state);
-  //   console.log(this.state);
-  //   //console.log(google_api_key);
-  //   event.preventDefault();
-  // }
 
   render() {
     return (
@@ -77,56 +51,41 @@ class RegisterPage extends Component {
             <Formik
               validationSchema={schema}
               onSubmit={async values => {
-                //console.log(values);
-                const street2 = values.street.split(' ').join('+');
-                const city2 = '+' + values.city.split(' ').join('+');
+                console.log("values",values);
+                //console.log(values.address.split(',')[3].substring(3,11))
+                const street2 = '+'+values.street.split(' ').join('+');
+                const city2 = '+'+values.city.split(' ').join('+');
                 const address = [street2, city2, values.province].join(',');
                 console.log(address);
-                try {
-                  const response = await axios.get(
-                    `/geocode?address=,+${address}`
-                  );
-                  console.log(response);
-                  //const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${google_api_key}`);
-                  const location = [response.data.data[0].results[0].geometry.location.lng, response.data.data[0].results[0].geometry.location.lat];
-                  // console.log(response);
-                  const formatted_address = response.data.data[0].results[0].formatted_address
-                  console.log(formatted_address);
-                  const shelter = {
-                    shelter_name: values.shelter_name,
-                    email: values.email,
-                    password: values.password,
-                    avatar: values.avatar,
-                    description: values.description,
-                    phone: values.phone,
-                    volonteer_name: values.volonteer_name,
-                    location: {
-                      type:'Point',
-                      coordinates: location
-                    },
-                    address: formatted_address
-                  }
-                  //console.log(shelter);
-                  const post_shelter = await axios.post('/shelters/register', shelter);
-                  this.props.history.push('/login');
-                } catch (err) {
-                  console.log(err);
-                }
+                // try {
+                //   const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${google_api_key}`);
+                //   const location = [response.data.results[0].geometry.location.lng, response.data.results[0].geometry.location.lat];
+                //   console.log(response);
+                //   const formatted_address = response.data.results[0].formatted_address
+                //   console.log(formatted_address);
+                //   const shelter = {
+                //     shelter_name: values.shelter_name,
+                //     email: values.email,
+                //     password: values.password,
+                //     avatar: values.avatar,
+                //     description: values.description,
+                //     phone: values.phone,
+                //     volonteer_name: values.volonteer_name,
+                //     location: {
+                //       type:'Point',
+                //       coordinates: location
+                //     },
+                //     address: formatted_address
+                //   }
+                //   console.log(shelter);
+                //   const post_shelter = await axios.post('/shelters/register', shelter);
+                //   console.log(post_shelter);
+                //
+                // } catch (err) {
+                //   console.log(err);
+                // }
               }}
-              initialValues={{
-                shelter_name: '',
-                email: '',
-                password: '',
-                avatar: '',
-                description: '',
-                phone: '',
-                volonteer_name: '',
-                //location: '',
-                street: '',
-                city: '',
-                province: '',
-                zip: ''
-              }}
+              initialValues={this.props.shelter_user}
             >
               {({
                 handleSubmit,
@@ -151,28 +110,6 @@ class RegisterPage extends Component {
                     />
                     <Form.Control.Feedback type="invalid">
                       {errors.shelter_name}
-                    </Form.Control.Feedback>
-                    <Form.Label>Email:</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="email"
-                      onChange={handleChange}
-                      value={values.email}
-                      isInvalid={!!errors.email && touched.email}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.email}
-                    </Form.Control.Feedback>
-                    <Form.Label>Password:</Form.Label>
-                    <Form.Control
-                      type="password"
-                      name="password"
-                      onChange={handleChange}
-                      value={values.password}
-                      isInvalid={!!errors.password && touched.password}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.password}
                     </Form.Control.Feedback>
                     <Form.Label>Volonteer Name:</Form.Label>
                     <Form.Control
@@ -209,9 +146,8 @@ class RegisterPage extends Component {
                       <Form.Control
                         name="street"
                         type="text"
-                        placeholder="1234 Main St"
                         onChange={handleChange}
-                        value={values.street}
+                        value={values.address.split(',')[1].trim()}
                         isInvalid={!!errors.street && !!touched.street}
                       />
                       <Form.Control.Feedback type="invalid">
@@ -225,7 +161,7 @@ class RegisterPage extends Component {
                         <Form.Control
                           name="city"
                           onChange={handleChange}
-                          value={values.city}
+                          value={values.address.split(',')[2].trim()}
                           isInvalid={!!errors.city && !!touched.city}
                         />
                         <Form.Control.Feedback type="invalid">
@@ -239,7 +175,7 @@ class RegisterPage extends Component {
                           name="province"
                           as="select"
                           onChange={handleChange}
-                          value={values.province}
+                          value={values.address.split(',')[3].substring(1,3)}
                           isInvalid={!!errors.province && !!touched.province}
                         >
                           <option>Choose...</option>
@@ -267,7 +203,7 @@ class RegisterPage extends Component {
                         <Form.Control
                           name="zip"
                           onChange={handleChange}
-                          value={values.zip}
+                          value={values.address.split(',')[3].substring(3,11)}
                           isInvalid={!!errors.zip && !!touched.zip}
                         />
                         <Form.Control.Feedback type="invalid">
@@ -280,7 +216,7 @@ class RegisterPage extends Component {
                       type="text"
                       name="avatar"
                       onChange={handleChange}
-                      value={values.savatar}
+                      value={values.avatar}
                     />
                   </Form.Group>
                   <Button variant="dark" type="submit">
@@ -295,4 +231,13 @@ class RegisterPage extends Component {
     );
   }
 }
-export default withRouter(RegisterPage);
+
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    shelter_user: state.shelter_user,
+    // my_dogs: state.my_dogs
+  };
+}
+
+export default connect(mapStateToProps, null)(EditProfile);
