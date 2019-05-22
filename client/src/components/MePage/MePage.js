@@ -1,19 +1,43 @@
 import React, { Component } from 'react';
-import { Col, Row, Container, Image, Card, Button } from 'react-bootstrap';
+import { Col, Row, Container, Image, Card, Button, Modal } from 'react-bootstrap';
 //import { getDogDetail } from '../../../actions/index';
 import { connect } from 'react-redux';
-import { getMyDogs } from '../../actions';
+import { getMyDogs, userLogOut } from '../../actions';
 import DogCardProfile from './DogCardProfile';
 import AddNewPetCard from './AddNewPetCard';
+import { withRouter } from 'react-router-dom';
+import { removeToken, getToken } from '../../services/tokenService';
+import axios from 'axios';
 
 import _ from 'lodash';
 
 class MePage extends Component {
+
+  constructor(props, context) {
+    super(props, context);
+
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+
+    this.state = {
+      show: false,
+    }
+  }
+
   componentDidMount() {
     this.props.getMyDogs();
     this.handleClickDelete = this.handleClickDelete.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
+
+
     //console.log('this.props.getMyDogs', this.props.getMyDogs());
+  }
+  handleClose() {
+    this.setState({ show: false });
+  }
+
+  handleShow() {
+    this.setState({ show: true });
   }
 
   renderListItem(dog) {
@@ -30,6 +54,19 @@ class MePage extends Component {
 
   async handleClickDelete() {
     console.log('delete');
+    let token = getToken();
+    const delete_shelter = await axios.delete(
+      '/shelters/',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    token = removeToken();
+    this.props.userLogOut();
+    this.props.history.push('/')
+
   }
   async handleClickEdit() {
     console.log('edit');
@@ -42,6 +79,9 @@ class MePage extends Component {
     return (
       <>
         {this.props.shelter_user && (
+
+
+
           <Container fluid>
             <Row>
               <Col sm={6}>
@@ -55,7 +95,7 @@ class MePage extends Component {
                       {this.props.shelter_user.description}
                     </Card.Text>
                     <div className="buttons">
-                    <Button className="button" variant="dark" onClick={this.handleClickDelete}>
+                    <Button className="button" variant="dark" onClick={this.handleShow}>
                       Delete Account
                     </Button>
                     <Button className="button" variant="dark" onClick={this.handleClickEdit}>
@@ -70,6 +110,20 @@ class MePage extends Component {
               </Col>
             </Row>
             <Row>{this.renderList()}</Row>
+              <Modal show={this.state.show} onHide={this.handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>Delete account</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>Are you sure you want to delete your account? You won't be able to get it back.</Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={this.handleClose}>
+                  Keep
+                </Button>
+                <Button variant="primary" onClick={this.handleClickDelete}>
+                  Delete
+                </Button>
+              </Modal.Footer>
+            </Modal>
           </Container>
         )}
       </>
@@ -85,4 +139,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { getMyDogs })(MePage);
+export default withRouter(connect(mapStateToProps, { getMyDogs, userLogOut })(MePage));
