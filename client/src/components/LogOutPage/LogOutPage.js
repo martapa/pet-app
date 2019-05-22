@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { removeToken } from '../../services/tokenService';
+import { userLogOut } from '../../actions/';
+import { connect } from 'react-redux';
 
 
 class LogOutPage extends Component {
@@ -12,10 +14,9 @@ class LogOutPage extends Component {
     this.handleClickNo = this.handleClickNo.bind(this);
   }
   async handleClickYes() {
-    this.props.history.push('/')
     const token = removeToken();
-
-
+    this.props.userLogOut();
+    this.props.history.push('/')
 
   }
   handleClickNo() {
@@ -45,4 +46,13 @@ return(
 
 }
 
-export default withRouter(LogOutPage);
+function mapStateToProps(state){
+  //console.log(state);
+  return {
+    shelter_user: state.shelter_user
+  };
+}
+
+export default withRouter(
+  connect(mapStateToProps, { userLogOut })(LogOutPage)
+);

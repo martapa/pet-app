@@ -6,7 +6,7 @@ import {
   GET_DOG_DETAIL,
   GET_SHELTER_USER,
   GET_MY_DOGS,
-
+  USER_LOGOUT
 } from './types';
 import { getToken } from '../services/tokenService';
 
@@ -35,6 +35,14 @@ export function getDogsNearYou(lng, lat) {
   };
 }
 
+export function userLogOut() {
+  console.log('userLogOut');
+  return {
+    type: USER_LOGOUT,
+    payload: 'User logged out'
+  };
+}
+
 export function getDogDetail(id) {
   const request = axios.get(`/pets/${id}`);
   return function(dispatch) {
@@ -51,17 +59,14 @@ export function getDogDetail(id) {
 export function getMyDogs() {
   const token = getToken();
 
-  const req = axios.get(
-    '/shelters/mypets',
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+  const req = axios.get('/shelters/mypets', {
+    headers: {
+      Authorization: `Bearer ${token}`
     }
-  );
+  });
   return function(dispatch) {
     req.then(function(response) {
-      console.log("response",response);
+      console.log('response', response);
       dispatch({
         type: GET_MY_DOGS,
         payload: response.data.data[0].pets_profiles
@@ -93,22 +98,18 @@ export function getShelterUser() {
   };
 }
 
-
 export function deleteDog(id) {
   const token = getToken();
 
-  const req = axios.delete(
-    `/pets/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+  const req = axios.delete(`/pets/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
     }
-  );
+  });
 
   return function(dispatch) {
     req.then(function(response) {
-      console.log('response delete',response);
+      console.log('response delete', response);
       dispatch({
         type: GET_MY_DOGS,
         payload: response.data.data[0][0].pets_profiles
@@ -116,7 +117,6 @@ export function deleteDog(id) {
     });
   };
 }
-
 
 // export function addDog(dog) {
 //   const token = getToken();

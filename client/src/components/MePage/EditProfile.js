@@ -30,10 +30,7 @@ const schema = yup.object({
   street: yup.string(),
   city: yup.string(),
   province: yup.string(),
-  zip: yup
-    .string()
-    .max(7, 'Too long')
-
+  zip: yup.string().max(7, 'Too long')
 });
 
 class EditProfile extends Component {
@@ -51,41 +48,75 @@ class EditProfile extends Component {
             <Formik
               validationSchema={schema}
               onSubmit={async values => {
-                console.log("values",values);
+                console.log('values', values);
                 //console.log(values.address.split(',')[3].substring(3,11))
-                const street2 = '+'+values.street.split(' ').join('+');
-                const city2 = '+'+values.city.split(' ').join('+');
+                const street2 = '+' + values.street.split(' ').join('+');
+                const city2 = '+' + values.city.split(' ').join('+');
                 const address = [street2, city2, values.province].join(',');
                 console.log(address);
-                // try {
-                //   const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${google_api_key}`);
-                //   const location = [response.data.results[0].geometry.location.lng, response.data.results[0].geometry.location.lat];
-                //   console.log(response);
-                //   const formatted_address = response.data.results[0].formatted_address
-                //   console.log(formatted_address);
-                //   const shelter = {
-                //     shelter_name: values.shelter_name,
-                //     email: values.email,
-                //     password: values.password,
-                //     avatar: values.avatar,
-                //     description: values.description,
-                //     phone: values.phone,
-                //     volonteer_name: values.volonteer_name,
-                //     location: {
-                //       type:'Point',
-                //       coordinates: location
-                //     },
-                //     address: formatted_address
-                //   }
-                //   console.log(shelter);
-                //   const post_shelter = await axios.post('/shelters/register', shelter);
-                //   console.log(post_shelter);
-                //
-                // } catch (err) {
-                //   console.log(err);
-                // }
+                try {
+                  const response = await axios.get(
+                    `/geocode?address=,+${address}`
+                  );
+                  const location = [
+                    response.data.data[0].results[0].geometry.location.lng,
+                    response.data.data[0].results[0].geometry.location.lat
+                  ];
+                  const formatted_address =
+                    response.data.data[0].results[0].formatted_address;
+                  //   const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${google_api_key}`);
+                  //   const location = [response.data.results[0].geometry.location.lng, response.data.results[0].geometry.location.lat];
+                  //   console.log(response);
+                  //   const formatted_address = response.data.results[0].formatted_address
+                  //   console.log(formatted_address);
+                  const shelter = {
+                    shelter_name: values.shelter_name,
+                    email: values.email,
+                    password: values.password,
+                    avatar: values.avatar,
+                    description: values.description,
+                    phone: values.phone,
+                    volonteer_name: values.volonteer_name,
+                    location: {
+                      type: 'Point',
+                      coordinates: location
+                    },
+                    address: formatted_address
+                  };
+                  //   console.log(shelter);
+                  const token = getToken();
+                  const edit_shelter = await axios.patch(
+                    '/shelters/',
+                    shelter,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`
+                      }
+                    }
+                  );
+                  this.props.history.push('/me');
+                } catch (err) {
+                  console.log(err);
+                }
               }}
-              initialValues={this.props.shelter_user}
+              initialValues={{
+                shelter_name: this.props.shelter_user.shelter_name,
+                email: this.props.shelter_user.email,
+                password: this.props.shelter_user.password,
+                avatar: this.props.shelter_user.avatar,
+                description: this.props.shelter_user.description,
+                phone: this.props.shelter_user.phone,
+                volonteer_name: this.props.shelter_user.volonteer_name,
+                //location: '',
+                street: this.props.shelter_user.address.split(',')[1].trim(),
+                city: this.props.shelter_user.address.split(',')[2].trim(),
+                province: this.props.shelter_user.address
+                  .split(',')[3]
+                  .substring(1, 3),
+                zip: this.props.shelter_user.address
+                  .split(',')[3]
+                  .substring(4, 11)
+              }}
             >
               {({
                 handleSubmit,
@@ -147,7 +178,7 @@ class EditProfile extends Component {
                         name="street"
                         type="text"
                         onChange={handleChange}
-                        value={values.address.split(',')[1].trim()}
+                        value={values.street}
                         isInvalid={!!errors.street && !!touched.street}
                       />
                       <Form.Control.Feedback type="invalid">
@@ -161,7 +192,7 @@ class EditProfile extends Component {
                         <Form.Control
                           name="city"
                           onChange={handleChange}
-                          value={values.address.split(',')[2].trim()}
+                          value={values.city}
                           isInvalid={!!errors.city && !!touched.city}
                         />
                         <Form.Control.Feedback type="invalid">
@@ -175,7 +206,7 @@ class EditProfile extends Component {
                           name="province"
                           as="select"
                           onChange={handleChange}
-                          value={values.address.split(',')[3].substring(1,3)}
+                          value={values.province}
                           isInvalid={!!errors.province && !!touched.province}
                         >
                           <option>Choose...</option>
@@ -203,7 +234,7 @@ class EditProfile extends Component {
                         <Form.Control
                           name="zip"
                           onChange={handleChange}
-                          value={values.address.split(',')[3].substring(3,11)}
+                          value={values.zip}
                           isInvalid={!!errors.zip && !!touched.zip}
                         />
                         <Form.Control.Feedback type="invalid">
@@ -235,9 +266,9 @@ class EditProfile extends Component {
 function mapStateToProps(state) {
   console.log(state);
   return {
-    shelter_user: state.shelter_user,
+    shelter_user: state.shelter_user
     // my_dogs: state.my_dogs
   };
 }
 
-export default connect(mapStateToProps, null)(EditProfile);
+export default withRouter(connect(mapStateToProps, null)(EditProfile));

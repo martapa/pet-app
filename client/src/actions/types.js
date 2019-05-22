@@ -4,3 +4,4 @@ export const GET_DOG_DETAIL = 'get_dog_detail';
 export const GET_SHELTER_USER = 'get_shelter_user';
 export const GET_MY_DOGS = 'get_my_dogs';
 export const DELETE_DOG = 'delete_dog';
+export const USER_LOGOUT = 'user_logout';

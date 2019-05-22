@@ -43,7 +43,6 @@ class DogCard extends Component {
 
 
 function mapStateToProps(state){
-  console.log(state);
   return {
     dog_detail: state.dog_detail
   };

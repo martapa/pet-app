@@ -55,13 +55,12 @@ class Navigation extends Component {
                 <Formik
                   onSubmit={async values => {
                     try {
-            
+
                       const response = await axios.get(
                         `/geocode?address=,+${
                           values.search
                         }`
                       );
-                      console.log(response);
                       const lng =
                         response.data.data[0].results[0].geometry.location.lng;
                       const lat =
