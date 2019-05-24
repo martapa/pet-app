@@ -125,7 +125,7 @@ router.route('/login').post(async (req, res, next) => {
     });
   } catch (e) {
     // Refactor this
-    //console.log("ERROR",e)
+
     next(e);
 
   }

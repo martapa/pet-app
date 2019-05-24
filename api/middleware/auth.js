@@ -1,6 +1,6 @@
 // Import internal dependencies
 const tokenService = require('../utils/tokenService');
-const { ClientError } = require('../utils/errors');
+const { HTTP401Error } = require('../utils/httpErrors');
 
 // Verify the JWT token passed in the request authorization header and add the
 // decoded payload to the request
@@ -17,10 +17,10 @@ module.exports = async (req, res, next) => {
 
         next();
       } catch (e) {
-        throw new ClientError('Unauthorized');
+        throw new HTTP401Error();
       }
     } else {
-      throw new ClientError('Authorization Missing');
+      throw new HTTP401Error();
     }
   } catch (e) {
     // Refactor this

@@ -15,7 +15,7 @@ const schema = yup.object({
   shelter_name: yup.string().required('Name is required'),
   email: yup
     .string()
-    .email('Please enter an valid email')
+    .email('Please enter a valid email')
     .required('Email is required'),
   password: yup.string().required('Password is required'),
   avatar: yup.string(),

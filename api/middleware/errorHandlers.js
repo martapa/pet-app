@@ -10,9 +10,7 @@ const handleNotFoundError = (exports.handleNotFoundError = router => {
 
 // Handle client error
 const handleClientError = (exports.handleClientError = router => {
-  router.use((err, req, res, next) => {
-    ErrorHandler.clientError(err, res, next);
-  });
+  router.use(ErrorHandler.clientError);
 });
 
 // Handle server error

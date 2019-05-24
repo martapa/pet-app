@@ -2,16 +2,9 @@
 const { HTTPClientError, HTTP404Error } = require('./httpErrors');
 
 // Handle client error
-exports.clientError = (err, res, next) => {
-  console.log("")
+exports.clientError = (err, req, res, next) => {
   if (err instanceof HTTPClientError) {
-    console.warn(err);
-
-    res.status(err.statusCode).send(err.message);
-    // res.status(err.statusCode).json({
-    //   message: err.message,
-    //   errors: [err]
-    // });
+    res.status(err.statusCode).json({ error: err.message });
   } else {
     next(err);
   }

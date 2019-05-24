@@ -123,16 +123,16 @@ exports.login = async (email, password) => {
 
     const user = await Shelter.findOne({ email });
 
-    if (!user) throw new HTTP404Error('User Does Not Exist');
+    if (!user) throw new HTTP404Error('User Or Password Incorrect');
 
     const match = await user.comparePassword(password);
 
-    if (!match) throw new HTTP403Error('Password Incorrect');
+    if (!match) throw new HTTP403Error('User Or Password Incorrect');
 
     const token = tokenService.create(user);
 
     return token;
   } catch (e) {
-      throw e
+      throw e;
   }
 };
