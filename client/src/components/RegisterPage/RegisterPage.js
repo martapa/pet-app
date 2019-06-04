@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { debounce } from 'lodash';
-import { Form, Button, Col } from 'react-bootstrap';
+import { Form, Button, Col, Container, Row } from 'react-bootstrap';
 import { google_api_key } from '../../keys.js';
 import * as yup from 'yup';
 import { Formik } from 'formik';
@@ -70,10 +70,11 @@ class RegisterPage extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-sm-2" />
-          <div className="col-sm-8">
+      <>
+      <div className='login-background' />
+      <Container fluid className="login">
+        <Row className="login-row">
+          <Col xs={10}>
             <Formik
               validationSchema={schema}
               onSubmit={async values => {
@@ -138,61 +139,65 @@ class RegisterPage extends Component {
                 errors
               }) => (
                 <Form onSubmit={handleSubmit}>
-                  <Form.Group controlID="formBasicName">
-                    <Form.Label>Shelter Name:</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="shelter_name"
-                      onChange={handleChange}
-                      value={values.shelter_name}
-                      isInvalid={
-                        !!errors.shelter_name && !!touched.shelter_name
-                      }
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.shelter_name}
-                    </Form.Control.Feedback>
-                    <Form.Label>Email:</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="email"
-                      onChange={handleChange}
-                      value={values.email}
-                      isInvalid={!!errors.email && touched.email}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.email}
-                    </Form.Control.Feedback>
-                    <Form.Label>Password:</Form.Label>
-                    <Form.Control
-                      type="password"
-                      name="password"
-                      onChange={handleChange}
-                      value={values.password}
-                      isInvalid={!!errors.password && touched.password}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.password}
-                    </Form.Control.Feedback>
-                    <Form.Label>Volonteer Name:</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="volonteer_name"
-                      onChange={handleChange}
-                      value={values.volonteer_name}
-                    />
-                    <Form.Label>Description:</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      rows="7"
-                      name="description"
-                      onChange={handleChange}
-                      value={values.description}
-                      isInvalid={!!errors.description && touched.description}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.description}
-                    </Form.Control.Feedback>
+              <Container>
+                <Row>
+                  <Col xs={6}>
+                      <Form.Label>Shelter Name:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="shelter_name"
+                        onChange={handleChange}
+                        value={values.shelter_name}
+                        isInvalid={
+                          !!errors.shelter_name && !!touched.shelter_name
+                        }
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.shelter_name}
+                      </Form.Control.Feedback>
+                      <Form.Label>Email:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="email"
+                        onChange={handleChange}
+                        value={values.email}
+                        isInvalid={!!errors.email && touched.email}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.email}
+                      </Form.Control.Feedback>
+                      <Form.Label>Password:</Form.Label>
+                      <Form.Control
+                        type="password"
+                        name="password"
+                        onChange={handleChange}
+                        value={values.password}
+                        isInvalid={!!errors.password && touched.password}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.password}
+                      </Form.Control.Feedback>
+                      <Form.Label>Volonteer Name:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="volonteer_name"
+                        onChange={handleChange}
+                        value={values.volonteer_name}
+                      />
+                      <Form.Label>Description:</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows="7"
+                        name="description"
+                        onChange={handleChange}
+                        value={values.description}
+                        isInvalid={!!errors.description && touched.description}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errors.description}
+                      </Form.Control.Feedback>
+                  </Col>
+                  <Col xs={6}>
                     <Form.Label>Phone:</Form.Label>
                     <Form.Control
                       type="text"
@@ -282,16 +287,25 @@ class RegisterPage extends Component {
                       onChange={handleChange}
                       value={values.savatar}
                     />
-                  </Form.Group>
+                    </Col>
+                  </Row>
+                </Container>
                   <Button variant="dark" type="submit">
                     Submit
                   </Button>
                 </Form>
+
+
+
+
               )}
             </Formik>
-          </div>
-        </div>
-      </div>
+          </Col>
+          <Col/>
+
+        </Row>
+      </Container>
+      </>
     );
   }
 }

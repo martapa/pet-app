@@ -2,6 +2,7 @@ const Shelter = require('./shelterModel');
 const mongoose = require('mongoose');
 const tokenService = require('../../utils/tokenService');
 const { HTTP404Error, HTTP403Error, HTTP400Error } = require('../../utils/httpErrors');
+var validator = require('validator');
 
 
 
@@ -13,14 +14,7 @@ exports.getAllShelters = async () => {
   }
 };
 
-exports.createShelter = async shelterData => {
-  try {
-    const shelter = new Shelter(shelterData);
-    return await shelter.save();
-  } catch (err) {
-    throw err;
-  }
-};
+
 
 exports.getShelterById = async id => {
   try {
@@ -112,6 +106,38 @@ exports.getShelterPets = async id => {
     ]);
     return sp;
   } catch (err) {
+    throw err;
+  }
+};
+exports.createShelter = async shelterData => {
+  const { email, password, shelter_name, description, address, phone, location } = shelterData;
+
+  try {
+    if (!email || !password || !shelter_name || !description || !address) throw new HTTP400Error('Something is missing');
+
+    if (!validator.isEmail(email)) throw new HTTP400Error('Invalid email');
+
+    if (!validator.isMobilePhone(phone)) throw new HTTP400Error('Invalid phone number');
+
+    if (location.type !== "Point" ) throw new HTTP400Error('Invalid location type');
+
+    if (location.coordinates[0] < -180 ||  location.coordinates[0] > 180 ) throw new HTTP400Error('Invalid coordinates');
+
+    if (location.coordinates[1] > 90 ||  location.coordinates[1] < 0 ) throw new HTTP400Error('Invalid coordinates');
+
+
+
+    // To do: check with Google if address is valid
+    // check if coordinates correct with adress
+
+    const user = await Shelter.findOne({ email });
+    if (user) throw new HTTP404Error('User Already Exists');
+
+    const shelter = new Shelter(shelterData);
+    return await shelter.save();
+  } catch (err) {
+    if (err.name === 'MongoError' && process.env.NODE_ENV === 'production')
+      throw new HTTP400Error();
     throw err;
   }
 };

@@ -1,10 +1,15 @@
 .errors{
   .errors-col6{
-    background-color: #FB3640;
+    background-color: #424242;
+    border-style: 5px solid #424242;
+    border-radius: 15px;
+    padding: 5px;
+    margin-bottom: 20px;
 
     p{
       text-align: center;
-      color: #ffffff;
+      color: #DD6363;
+      font-weight: bold;
     }
   }
 

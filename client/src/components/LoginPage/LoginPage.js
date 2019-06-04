@@ -36,21 +36,23 @@ class LoginPage extends Component {
       <>
 
         <div className='login-background' />
-          {this.state.serverErrors && (
-            <Container fluid className="errors">
-              <Row>
-                <Col />
-                <Col xs={6} className="errors-col6">
-                  <p>{this.state.serverErrors}</p>
-                </Col>
-                <Col />
-              </Row>
-            </Container>
-          )}
+
         <Container fluid className="login">
           <Row className="login-row">
+            {this.state.serverErrors && (
+              <Container fluid className="errors">
+                <Row>
+                  <Col />
+                  <Col xs={6} className="errors-col6">
+                    <p>{this.state.serverErrors}</p>
+                  </Col>
+                  <Col />
+                </Row>
+              </Container>
+            )}
             <Col />
             <Col xs={6} className="login-col6">
+
               <h4>Login to your account</h4>
               <Formik
                 validationSchema={schema}
