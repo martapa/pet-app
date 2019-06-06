@@ -1,0 +1,15 @@
+@import '../../styles/colours.scss';
+
+.search-form{
+  background-color: $dark-grey;
+  border-color: $dark-grey;
+}
+.search-button {
+  color: $bright-yellow;
+  border-color: $bright-yellow;
+
+  &:hover {
+    background: $pale-yellow;
+    border-color: $pale-yellow;
+  }
+}

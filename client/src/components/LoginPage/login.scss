@@ -1,8 +1,11 @@
+@import '../../styles/colours.scss';
+
+
+
 .login-background {
   position: absolute;
   width: 100vw;
   height: 100vh;
-  background-image: url(https://images.unsplash.com/photo-1521128591876-b4ace034003a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80);
   z-index: -1;
   filter: blur(8px);
   -webkit-filter: blur(8px);
@@ -20,11 +23,30 @@
     width: 100vh;
 
     .login-col6 {
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.3);
       background-color: #ffffff;
       padding: 30px;
       flex-grow: 3;
       border-style: 5px solid #ffffff;
       border-radius: 15px;
+      .login-button {
+        background: $dark-grey;
+        color: #ffffff;
+        border-color: $dark-grey;
+        border-radius: .25rem;
+
+        &:hover {
+          background: $bright-yellow;
+          border-color: $bright-yellow;
+          color: $dark-grey;
+        }
+        &:active:focus {
+          background: $bright-yellow;
+          border-color: $bright-yellow;
+          color: $dark-grey;
+          outline: 0;
+        }
+      }
     }
   }
 }

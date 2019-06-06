@@ -73,7 +73,7 @@ class RegisterPage extends Component {
       <>
       <div className='login-background' />
       <Container fluid className="login">
-        <Row className="login-row">
+        <Row className="register-row">
           <Col xs={10}>
             <Formik
               validationSchema={schema}
@@ -290,7 +290,7 @@ class RegisterPage extends Component {
                     </Col>
                   </Row>
                 </Container>
-                  <Button variant="dark" type="submit">
+                  <Button className="register-button" type="submit">
                     Submit
                   </Button>
                 </Form>

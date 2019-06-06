@@ -1,0 +1,22 @@
+@import '../../../styles/colours.scss';
+
+.dark{
+
+  .navbar-light .navbar-nav .nav-link {
+    color: $dark-grey;
+
+    &:hover {
+      color: $pale-yellow;
+    }
+  }
+}
+
+.light {
+  .navbar-light .navbar-nav .nav-link {
+    color: $bright-yellow;
+
+    &:hover {
+      color: $pale-yellow;
+    }
+  }
+}

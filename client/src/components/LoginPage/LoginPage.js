@@ -121,11 +121,7 @@ class LoginPage extends Component {
                         {errors.password}
                       </Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group controlID="rememberMe">
-                      <Form.Check type="checkbox" />
-                      <Form.Label>Remember me</Form.Label>
-                    </Form.Group>
-                    <Button variant="dark" type="submit">
+                    <Button className="login-button" type="submit">
                       Submit
                     </Button>
                   </Form>

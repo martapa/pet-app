@@ -11,7 +11,6 @@ import { BrowserRouter } from 'react-router-dom';
 
 
 import reducers from './reducers/index';
-import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 

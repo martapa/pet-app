@@ -5,6 +5,7 @@ import { Link, NavLink, withRouter } from 'react-router-dom';
 import { Nav, Navbar, Form, Button, FormControl, Image } from 'react-bootstrap';
 import { Formik } from 'formik';
 import axios from 'axios';
+import Search from '../../commons/Search';
 
 import * as actions from '../../../actions';
 import { getDogsNearYou } from '../../../actions/index';
@@ -13,16 +14,36 @@ import { getDogsNearYou } from '../../../actions/index';
 import { connect } from 'react-redux';
 
 import '../landing_page.scss';
+import './navigation.scss';
 
 
 class Navigation extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+     path: ''
+   };
+  }
+
+  componentDidMount() {
+    const path = this.props.match.path;
+    console.log('tutaj',path)
+    this.setState({ path });
+    console.log('path', this.state.path)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.path !== prevProps.path) {
+      const path = this.props.path;
+      this.setState({ path });
+      console.log("path updated", path)
+    }
   }
 
   render() {
     return (
-      <header className="container-fluid">
+      <header className={this.state.path === '/' ? "container-fluid light" : "container-fluid dark"}>
         <div className="row">
           <div className="col">
             <Navbar expand="lg" className="navbar">
@@ -52,56 +73,7 @@ class Navigation extends Component {
                     </>
                   )}
                 </Nav>
-                <Formik
-                  onSubmit={async values => {
-                    try {
-
-                      const response = await axios.get(
-                        `/geocode?address=,+${
-                          values.search
-                        }`
-                      );
-                      const lng =
-                        response.data.data[0].results[0].geometry.location.lng;
-                      const lat =
-                        response.data.data[0].results[0].geometry.location.lat;
-                      this.props.getDogsNearYou(lng, lat);
-                      //console.log("navigation",this.props)
-                      this.props.history.push('/dogs_near_you');
-                    } catch (error) {
-                      console.log(error);
-                    }
-                  }}
-                  initialValues={{
-                    search: ''
-                  }}
-                >
-                  {({
-                    handleSubmit,
-                    handleChange,
-                    values,
-                    touched,
-                    errors
-                  }) => (
-                    <Form inline onSubmit={handleSubmit}>
-                      <FormControl
-                        id="search"
-                        type="text"
-                        placeholder="Your city"
-                        className="mr-sm-2"
-                        value={values.search}
-                        onChange={handleChange}
-                      />
-                      <Button
-                        variant="outline-success"
-                        type="submit"
-                        className="navbar-search"
-                      >
-                        Search
-                      </Button>
-                    </Form>
-                  )}
-                </Formik>
+        <Search/>
               </Navbar.Collapse>
             </Navbar>
           </div>

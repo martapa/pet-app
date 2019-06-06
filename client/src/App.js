@@ -8,6 +8,7 @@ import { getShelterUser } from './actions';
 import { getToken } from './services/tokenService';
 
 import Routes from './Routes.js';
+import './App.scss'
 
 class App extends Component {
   componentDidMount() {

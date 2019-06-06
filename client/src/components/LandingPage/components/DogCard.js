@@ -17,7 +17,7 @@ class DogCard extends Component {
   async handleClick() {
     const id = this.props.dog._id
     //console.log('id',id);
-    await this.props.getDogDetail(id);
+    //await this.props.getDogDetail(id);
     //console.log("get_detail",this.props.getDogDetail(id))
     this.props.history.push(`/details/${id}`);
 
@@ -31,7 +31,7 @@ class DogCard extends Component {
           </div>
           <Card.Body>
             <Card.Title>{this.props.dog.name}</Card.Title>
-            <Button variant="dark" onClick={this.handleClick}>
+            <Button className="dog-card-button" onClick={this.handleClick}>
               Check details
             </Button>
           </Card.Body>
@@ -48,4 +48,4 @@ function mapStateToProps(state){
   };
 }
 
-export default withRouter(connect(mapStateToProps, { getDogDetail })(DogCard));
+export default withRouter(connect(mapStateToProps, null)(DogCard));

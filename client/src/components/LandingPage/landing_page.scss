@@ -1,29 +1,51 @@
+@import '../../styles/colours.scss';
+
 header .col {
   padding-left: 0;
   padding-right: 0;
 }
 
-.navbar{
-  background: #FCFC53;
-}
-.navbar-search {
-  color: #A3A3A3;
-  border-color: #A3A3A3;
+header {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  //background: #FCFC53;
 }
 
-.main-message{
-  position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    font-size: 40px;
-    color: #FCFC53
+.main-col {
+  background-image: -webkit-linear-gradient(
+      rgba(0, 0, 0, 0.9),
+      rgba(0, 0, 0, 0.9)
+    ),
+    url(https://images.unsplash.com/photo-1521128591876-b4ace034003a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80);
+  background-image: -o-linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)),
+    url(https://images.unsplash.com/photo-1521128591876-b4ace034003a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)),
+    url(https://images.unsplash.com/photo-1521128591876-b4ace034003a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80);
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    color: $bright-yellow;
+    margin-bottom: 5px;
+    margin-top: 40px;
+  }
+  h4 {
+    color: $light-grey;
+    margin-bottom: 30px;
+  }
 }
- .main-col{
-   background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://images.unsplash.com/photo-1521128591876-b4ace034003a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80);
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://images.unsplash.com/photo-1521128591876-b4ace034003a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80);
-    background-position: center;
-    height: 100vh;
- }
+
+.meet-dogs{
+  display: flex;
+  justify-content: center;
+  h2 {
+    text-align: center;
+    padding: 40px;
+    margin-top: 55px;
+    color: $dark-grey;
+  }
+}
