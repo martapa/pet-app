@@ -121,7 +121,7 @@ class LoginPage extends Component {
                         {errors.password}
                       </Form.Control.Feedback>
                     </Form.Group>
-                    <Button className="login-button" type="submit">
+                    <Button className="button" type="submit">
                       Submit
                     </Button>
                   </Form>

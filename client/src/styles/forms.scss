@@ -1,0 +1,37 @@
+@import './colours.scss';
+
+.my-form {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  > .row {
+    height: 100vh;
+    align-items: center;
+
+    .col-10 {
+      padding: 20px;
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+      border: 5px solid #ffffff;
+      border-radius: 10px;
+      .form-button {
+        margin-top: 15px;
+        margin-left: 14px;
+        background: $dark-grey;
+        color: #ffffff;
+        border-color: $dark-grey;
+        border-radius: 0.25rem;
+
+        &:hover {
+          background: $bright-yellow;
+          border-color: $bright-yellow;
+          color: $dark-grey;
+        }
+        &:active:focus {
+          background: $bright-yellow;
+          border-color: $bright-yellow;
+          color: $dark-grey;
+          outline: 0;
+        }
+      }
+    }
+  }
+}

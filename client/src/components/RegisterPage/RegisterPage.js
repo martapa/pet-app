@@ -8,7 +8,7 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
 
-import './register.scss';
+import '../../styles/forms.scss';
 
 //const phoneRegEx =
 const schema = yup.object({
@@ -71,9 +71,9 @@ class RegisterPage extends Component {
   render() {
     return (
       <>
-      <div className='login-background' />
-      <Container fluid className="login">
-        <Row className="register-row">
+      <Container fluid className="my-form">
+        <Row>
+          <Col sm={1}/>
           <Col xs={10}>
             <Formik
               validationSchema={schema}
@@ -91,6 +91,7 @@ class RegisterPage extends Component {
                   //const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${google_api_key}`);
                   const location = [response.data.data[0].results[0].geometry.location.lng, response.data.data[0].results[0].geometry.location.lat];
                   // console.log(response);
+                  //const formatted_address =
                   const formatted_address = response.data.data[0].results[0].formatted_address
                   console.log(formatted_address);
                   const shelter = {
@@ -290,18 +291,14 @@ class RegisterPage extends Component {
                     </Col>
                   </Row>
                 </Container>
-                  <Button className="register-button" type="submit">
+                  <Button className="form-button" type="submit">
                     Submit
                   </Button>
                 </Form>
-
-
-
-
               )}
             </Formik>
           </Col>
-          <Col/>
+          <Col sm={1}/>
 
         </Row>
       </Container>

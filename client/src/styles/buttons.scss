@@ -1,0 +1,18 @@
+.button {
+  background: $dark-grey;
+  color: #ffffff;
+  border-color: $dark-grey;
+  border-radius: .25rem;
+
+  &:hover {
+    background: $bright-yellow;
+    border-color: $bright-yellow;
+    color: $dark-grey;
+  }
+  &:active:focus {
+    background: $bright-yellow;
+    border-color: $bright-yellow;
+    color: $dark-grey;
+    outline: 0;
+  }
+}

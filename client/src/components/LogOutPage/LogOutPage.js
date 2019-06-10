@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { removeToken } from '../../services/tokenService';
 import { userLogOut } from '../../actions/';
 import { connect } from 'react-redux';
+
+import './log-out.scss';
 
 
 class LogOutPage extends Component {
@@ -25,22 +27,31 @@ class LogOutPage extends Component {
 
 render(){
 return(
-  <Card>
-  <Card.Body>
-    <Card.Title>Log Out</Card.Title>
-    <Card.Text>
-      Are you sure you want to log out?
-    </Card.Text>
-    <div className="buttons">
-    <Button className="button" variant="dark" onClick={this.handleClickYes}>
-      Yes
-    </Button>
-    <Button className="button" variant="dark" onClick={this.handleClickNo}>
-      No
-    </Button>
-    </div>
-  </Card.Body>
-</Card>
+  <Container fluid className='log-out'>
+    <Row>
+      <Col sm={2}/>
+      <Col sm={8}>
+        <Card>
+        <Card.Body>
+          <Card.Title>Log Out</Card.Title>
+          <Card.Text>
+            Are you sure you want to log out?
+          </Card.Text>
+          <div className="log-out-buttons">
+          <Button className="log-out-button" onClick={this.handleClickYes}>
+            Yes
+          </Button>
+          <Button className="log-out-button" onClick={this.handleClickNo}>
+            No
+          </Button>
+          </div>
+        </Card.Body>
+      </Card>
+      </Col>
+      <Col sm={2}/>
+    </Row>
+  </Container>
+
 );
 }
 

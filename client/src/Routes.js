@@ -7,9 +7,9 @@ import LoginPage from './components/LoginPage/LoginPage';
 import DogsNearYouPage from './components/DogsNearYouPage/DogsNearYouPage';
 import DogDetail from './components/DogDetail/DogDetail';
 import MePage from './components/MePage/MePage';
-import AddPetForm from './components/MePage/AddPetForm';
-import EditPet from './components/MePage/EditPet';
-import EditProfile from './components/MePage/EditProfile';
+import AddPetForm from './components/MePage/components/Forms/AddPetForm';
+import EditPet from './components/MePage/components/Forms/EditPet';
+import EditProfile from './components/MePage/components/Forms/EditProfile';
 import LogOutPage from './components/LogOutPage/LogOutPage';
 
 

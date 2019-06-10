@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Col } from 'react-bootstrap';
+import { Card, Button, Col, Modal } from 'react-bootstrap';
 import { deleteDog, getDogDetail } from '../../actions/index';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -9,9 +9,21 @@ import './dog-card-profile.scss';
 class DogCardProfile extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      show: false,
+    }
+    this.handleShow = this.handleShow.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     //console.log(props.dog)
     this.handleClickDelete = this.handleClickDelete.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
+  }
+  handleClose() {
+    this.setState({ show: false });
+  }
+
+  handleShow() {
+    this.setState({ show: true });
   }
   async handleClickDelete() {
     //console.log('delete');
@@ -36,7 +48,22 @@ class DogCardProfile extends Component {
 
   render() {
     return (
-      <Col sm={4}>
+      <>
+      <Modal show={this.state.show} onHide={this.handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Delete account</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>Are you sure you want to delete {this.props.dog.name}? You won't be able to get them back.</Modal.Body>
+      <Modal.Footer>
+        <Button className="button" onClick={this.handleClose}>
+          Keep
+        </Button>
+        <Button className="button" onClick={this.handleClickDelete}>
+          Delete
+        </Button>
+      </Modal.Footer>
+    </Modal>
+      <Col sm={6}>
        <Card className="dog-card dog-card-profile">
          <div className="img">
            <img src={this.props.dog.photo} />
@@ -45,29 +72,8 @@ class DogCardProfile extends Component {
            <Card.Title className="title-name">
              {this.props.dog.name}
            </Card.Title>
-           <p className="titles">{this.props.dog.is_adopted}</p>
-           <ul>
-           {this.props.dog.age && <li key={this.props.dog.age}>Age {this.props.dog.age}</li>}
-
-             {this.props.dog.size && <li key={this.props.dog.size}>{this.props.dog.size}</li>}
-
-             {this.props.dog.gender && <li key={this.props.dog.gender}>{this.props.dog.gender}</li>}
-           </ul>
-           <Card.Text className="description">
-             {this.props.dog.description}
-           </Card.Text>
-           {this.props.dog.good_with.length !== 0 ? (
-             <p className="titles">Good with</p>
-           ) : (
-             <div />
-           )}
-           <ul>
-             {this.props.dog.good_with.map((element, index) => {
-               return <li key={index}>{element}</li>;
-             })}
-           </ul>
            <div className="buttons">
-           <Button className="button" variant="dark" onClick={this.handleClickDelete}>
+           <Button className="button" variant="dark" onClick={this.handleShow}>
              Delete
            </Button>
            <Button className="button" variant="dark" onClick={this.handleClickEdit}>
@@ -77,6 +83,7 @@ class DogCardProfile extends Component {
          </Card.Body>
        </Card>
      </Col>
+     </>
     );
   }
 }

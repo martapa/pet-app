@@ -114,7 +114,7 @@ exports.seed = async () => {
         coordinates: [-79.356343, 43.657630]
       },
       pets: [pets[0], pets[1]],
-      address: "Toronto Humane Society, 11 River Street, Toronto, ON M5A 4C2, Canada"
+      address: "11 River Street, Toronto, ON M5A 4C2, Canada"
     },
 
     {
@@ -122,12 +122,13 @@ exports.seed = async () => {
       email: 'great_shelter@gmail.com',
       password: 'great_password',
       description: 'This is a test shelter.',
+      avatar:'https://images.unsplash.com/photo-1475855581690-80accde3ae2b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
       location: {
         type: 'Point',
         coordinates: [-79.367967, 43.661860]
       },
       pets: [pets[4], pets[5]],
-      address: "Toronto Central Animal Clinic, 167 Parliament Street, Toronto, ON M5A 2Z2, Canada"
+      address: "167 Parliament Street, Toronto, ON M5A 2Z2, Canada"
     },
     {
       shelter_name: 'SPCA of Montreal QC',
@@ -139,7 +140,7 @@ exports.seed = async () => {
         coordinates: [-73.651817, 45.495801]
       },
       pets: [pets[6], pets[7]],
-      address: "SPCA Montréal, 5215 Rue Jean-Talon Ouest, Montreal, QC H4P 1X4, Canada"
+      address: "5215 Rue Jean-Talon Ouest, Montreal, QC H4P 1X4, Canada"
     },
   ];
 

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { Form, Button, Col } from 'react-bootstrap';
+import { debounce } from 'lodash';
+import { Form, Button, Col, Container, Row } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Formik, FieldArray } from 'formik';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 
-import { getToken } from '../../services/tokenService';
+import { getToken } from '../../../../services/tokenService';
 
-//import './register.scss';
+import '../../../../styles/forms.scss';
 
+//const phoneRegEx
 const schema = yup.object({
   name: yup.string().required('Name is required'),
   size: yup.string(),
@@ -31,76 +32,84 @@ const categories = [
   { id: 'children', name: 'children' }
 ];
 
-class EditPet extends Component {
+class AddPetForm extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {};
+    this.state = {
+      name: '',
+      size: '',
+      age: '',
+      gender: '',
+      photo: '',
+      description: '',
+      is_adopted: '',
+      good_with: ''
+    };
   }
 
-  async componentDidMount() {
-    //console.log(this.props)
-    const pet_id = this.props.match.params.id
-    const response = await axios.get(`/pets/${pet_id}`);
-    //console.log(response.data.data[0][0]);
-    this.setState(response.data.data[0][0])
-    console.log("state",this.state);
-    }
-
-
   render() {
-    //console.log("props", this.props)
     return (
-      <>
-      {this.state.name &&
-          <div className="container">
-            <div className="row">
-              <div className="col-sm-2" />
-              <div className="col-sm-8">
-                <Formik
-                  onSubmit={async values => {
-                    //console.log("values",values.name);
-                    //console.log(this.state)
-                    try {
-                      const token = getToken();
-                      const id = this.state._id
-                      const req = await axios.patch(`/pets/${id}`, values, {
-                        headers: {
-                          Authorization: `Bearer ${token}`
-                        }
-                      });
-                      this.props.history.push('/me');
+      <Container fluid className="my-form">
+        <Row>
+          <Col xs={1} />
+          <Col xs={10}>
+            <Formik
+              validationSchema={schema}
+              onSubmit={async values => {
+                console.log(values);
 
-                      //   const response = await axios.post('/shelters/login', values);
-                      //   const { data } = response.data;
-                      //
-                      //   setToken(data[0]);
-                      //   // call redux action that fetches user and puts user in state
-                      //   this.props.getShelterUser();
-                      //   this.props.history.push('/');
-                    } catch (error) {
-                      console.log(error);
+                try {
+                  const pet = {
+                    name: values.name,
+                    size: values.size,
+                    age: values.age,
+                    gender: values.gender,
+                    photo: values.photo,
+                    description: values.description,
+                    is_adopted: values.is_adopted,
+                    good_with: values.good_with
+                  };
+                  const token = getToken();
+                  const post_pet = await axios.post('/pets', pet, {
+                    headers: {
+                      Authorization: `Bearer ${token}`
                     }
-                  }}
-                  initialValues={this.state}
-                >
-                  {({
-                    handleSubmit,
-                    handleChange,
-                    handleBlur,
-                    values,
-                    touched,
-                    isValid,
-                    errors
-                  }) => (
-                    <Form onSubmit={handleSubmit}>
-                      <Form.Group>
+                  });
+                  console.log(post_pet);
+                  this.props.history.push('/me');
+                } catch (err) {
+                  console.log(err);
+                }
+              }}
+              initialValues={{
+                name: '',
+                size: '',
+                age: '',
+                gender: '',
+                photo: '',
+                description: '',
+                is_adopted: '',
+                good_with: []
+              }}
+            >
+              {({
+                handleSubmit,
+                handleChange,
+                handleBlur,
+                values,
+                touched,
+                isValid,
+                errors
+              }) => (
+                <Form onSubmit={handleSubmit}>
+                  <Container>
+                    <Row>
+                      <Col xs={6}>
                         <Form.Label>Pet Name:</Form.Label>
                         <Form.Control
                           type="text"
                           name="name"
                           onChange={handleChange}
-                          placeholder={values.name}
                           value={values.name}
                           isInvalid={!!errors.name && !!touched.name}
                         />
@@ -156,7 +165,7 @@ class EditPet extends Component {
                         <Form.Label>Description:</Form.Label>
                         <Form.Control
                           as="textarea"
-                          rows="15"
+                          rows="7"
                           name="description"
                           onChange={handleChange}
                           value={values.description}
@@ -167,6 +176,8 @@ class EditPet extends Component {
                         <Form.Control.Feedback type="invalid">
                           {errors.description}
                         </Form.Control.Feedback>
+                      </Col>
+                      <Col xs={6}>
                         <Form.Label>Photo:</Form.Label>
                         <Form.Control
                           type="text"
@@ -228,27 +239,20 @@ class EditPet extends Component {
                             </div>
                           )}
                         />
-                      </Form.Group>
-                      <Button variant="dark" type="submit">
-                        Edit!
-                      </Button>
-                    </Form>
-                  )}
-                </Formik>
-              </div>
-            </div>
-          </div>
-        }
-      </>
+                      </Col>
+                    </Row>
+                  </Container>
+
+                  <Button className="form-button" type="submit">
+                    Add Pet!
+                  </Button>
+                </Form>
+              )}
+            </Formik>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
-// export default connect(mapStateToProps, { getMyDogs })(EditPet);
-function mapStateToProps(state) {
-  console.log('here', state);
-  return {
-    dog_detail: state.dog_detail
-  };
-}
-
-export default withRouter(connect(mapStateToProps, null)(EditPet));
+export default withRouter(AddPetForm);

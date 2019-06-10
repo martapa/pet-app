@@ -64,6 +64,7 @@ formatGoodWith(){
                       {this.state.is_adopted && <li key={this.state.is_adopted}><Row><Col sm={4}><p><strong>Status</strong></p></Col><Col><p>{this.state.is_adopted}</p></Col></Row></li>}
                       {this.state.age && <li key={this.state.age}><Row><Col sm={4}><p><strong>Age</strong></p></Col><Col><p> {this.state.age}</p></Col></Row></li>}
                       {this.state.size && <li key={this.state.size}><Row><Col sm={4}><p><strong>Size</strong></p></Col><Col><p> {this.state.size}</p></Col></Row></li>}
+                      {this.state.gender && <li key={this.state.gender}><Row><Col sm={4}><p><strong>Gender</strong></p></Col><Col><p> {this.state.gender}</p></Col></Row></li>}
                       {this.state.shelter_info && <li key={this.state.shelter_info[0].shelter_name}><Row><Col sm={4}><p><strong>Shelter</strong></p></Col><Col><p> {this.state.shelter_info[0].shelter_name}</p></Col></Row></li>}
                       {this.state.shelter_info && <li key={this.state.shelter_info[0].address}><Row><Col sm={4}><p><strong>Address</strong></p></Col><Col><p> {this.state.shelter_info[0].address}</p></Col></Row></li>}
                       {this.state.shelter_info && <li key={this.state.shelter_info[0].email}><Row><Col sm={4}><p><strong>Email</strong></p></Col><Col><p>{this.formatEmail()}</p></Col></Row></li>}
