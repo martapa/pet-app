@@ -86,6 +86,7 @@ exports.aggregateShelterWithPets = async (longitude, latitude) => {
   }
 };
 
+
 exports.getShelterPets = async id => {
   const ObjectId = mongoose.Types.ObjectId;
   try {

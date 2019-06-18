@@ -21,9 +21,16 @@ router
         }&key=${API_KEY}`
       );
 
-      res.status(200).send({
-        data: [response.data]
-      });
+      if (response.data.status !=="ZERO_RESULTS"){
+        res.status(200).send({
+          data: [response.data]
+        });
+      }
+      else {
+        res.status(400).send({
+          data: {err: "No address found"}
+        })
+      }
     } catch (err) {
       next(err);
     }

@@ -39,11 +39,29 @@ class EditProfile extends Component {
     super(props);
     this.state = {};
   }
+  async componentDidMount() {
+    const shelter_id = this.props.match.params.id;
+    const response = await axios.get(`/shelters/${shelter_id}`);
+    const shelter = response.data.data[0];
+    shelter["street"]= shelter.address.split(',')[0]
+    shelter["city"]= shelter.address.split(',')[1]
+    shelter["province"]= shelter.address
+      .split(',')[2]
+      .substring(0, 3)
+      .trim();
+    shelter["zip"]= shelter.address
+      .split(',')[2]
+      .substring(3, 11)
+      .trim();
+    this.setState(shelter);
+    //console.log('shelter',shelter)
+  }
 
   render() {
+    console.log('here',this.state);
     return (
       <>
-        {this.props.shelter_user && (
+        {this.state.shelter_name && (
           <Container fluid className="my-form">
             <Row>
               <Col xs={1} />
@@ -51,10 +69,13 @@ class EditProfile extends Component {
                 <Formik
                   validationSchema={schema}
                   onSubmit={async values => {
-                    console.log('values', values);
+                    //console.log('values', values);
+                    //console.log(this.state);
                     //console.log(values.address.split(',')[3].substring(3,11))
+
+
                     const street2 = '+' + values.street.split(' ').join('+');
-                    const city2 = '+' + values.city.split(' ').join('+');
+                    const city2 = values.city.replace(' ', '+');
                     const address = [street2, city2, values.province].join(',');
                     console.log(address);
                     try {
@@ -102,25 +123,7 @@ class EditProfile extends Component {
                       console.log(err);
                     }
                   }}
-                  initialValues={{
-                    shelter_name: this.props.shelter_user.shelter_name,
-                    email: this.props.shelter_user.email,
-                    password: this.props.shelter_user.password,
-                    avatar: this.props.shelter_user.avatar,
-                    description: this.props.shelter_user.description,
-                    phone: this.props.shelter_user.phone,
-                    volonteer_name: this.props.shelter_user.volonteer_name,
-                    //location: '',
-                    street: this.props.shelter_user.address
-                      .split(',')[0],
-                    city: this.props.shelter_user.address.split(',')[1].trim(),
-                    province: this.props.shelter_user.address
-                      .split(',')[2]
-                      .substring(1, 3),
-                    zip: this.props.shelter_user.address
-                      .split(',')[2]
-                      .substring(4, 11)
-                  }}
+                  initialValues={this.state}
                 >
                   {({
                     handleSubmit,
@@ -182,7 +185,6 @@ class EditProfile extends Component {
                             <Form.Control.Feedback type="invalid">
                               {errors.phone}
                             </Form.Control.Feedback>
-                            <Form.Group controlId="formGridAddress1">
                               <Form.Label>Address</Form.Label>
                               <Form.Control
                                 name="street"
@@ -194,7 +196,6 @@ class EditProfile extends Component {
                               <Form.Control.Feedback type="invalid">
                                 {errors.adress}
                               </Form.Control.Feedback>
-                            </Form.Group>
 
                             <Form.Row>
                               <Form.Group as={Col} controlId="formGridCity">

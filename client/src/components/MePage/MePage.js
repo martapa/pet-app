@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 //import { getDogDetail } from '../../../actions/index';
 import { connect } from 'react-redux';
-import { getMyDogs, userLogOut } from '../../actions';
+import { getMyDogs, userLogOut, getShelterUser } from '../../actions';
 import DogCardProfile from './DogCardProfile';
 import AddNewPetCard from './AddNewPetCard';
 import { withRouter, Link } from 'react-router-dom';
@@ -28,12 +28,23 @@ class MePage extends Component {
     this.handleClose = this.handleClose.bind(this);
 
     this.state = {
-      show: false
+      show: false,
+      shelter_profile: {}
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.getMyDogs();
+    this.props.getShelterUser();
+    // if (this.props.shelter_user){
+    //   const shelter_id = this.props.shelter_user._id;
+    //   const response = await axios.get(`/shelters/${shelter_id}`);
+    //   const shelter = response.data.data[0];
+    //   this.setState({shelter_profile: shelter})
+    //   console.log('here',this.state)
+    // }
+
+
     this.handleClickDelete = this.handleClickDelete.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
 
@@ -64,7 +75,6 @@ class MePage extends Component {
   }
 
   async handleClickDelete() {
-    console.log('delete');
     let token = getToken();
     const delete_shelter = await axios.delete('/shelters/', {
       headers: {
@@ -159,5 +169,5 @@ function mapStateToProps(state) {
 }
 
 export default withRouter(
-  connect(mapStateToProps, { getMyDogs, userLogOut })(MePage)
+  connect(mapStateToProps, { getMyDogs, userLogOut, getShelterUser })(MePage)
 );
