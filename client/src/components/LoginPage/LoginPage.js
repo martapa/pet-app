@@ -70,6 +70,8 @@ class LoginPage extends Component {
                     this.props.getShelterUser();
                     this.props.history.push('/');
                   } catch (error) {
+
+                    console.log('error',error)
                     this.setState({
                       serverErrors: error.response.data.error
                     });

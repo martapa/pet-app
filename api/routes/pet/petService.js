@@ -1,6 +1,9 @@
 const Pet = require('./petModel');
 const Shelter = require('../shelter/shelterModel');
 const mongoose = require('mongoose');
+const { HTTP404Error, HTTP403Error, HTTP400Error } = require('../../utils/httpErrors');
+const _ = require('lodash');
+
 
 exports.getAllPets = async () => {
   try {
@@ -11,8 +14,26 @@ exports.getAllPets = async () => {
 };
 exports.createPet = async (petData, shelterId) => {
   const pet = new Pet(petData);
+  const is_adopted_arr = ["For adoption", "Already adopted"]
+  const size_arr = ['extra-small','small', 'medium', 'large', 'extra-large']
+  const good_with_arr = ['dogs', 'cats', 'children'];
+  //console.log(pet.good_with)
+  //console.log(good_with_arr);
+  const filtered = pet.good_with.every( e => good_with_arr.includes(e) )
+
+  if (!filtered) throw new HTTP400Error('Invalid dog informationnnn');
+
+  if (!is_adopted_arr.includes(pet.is_adopted[0])) throw new HTTP400Error('Invalid dog information');
+
+  if (!size_arr.includes(pet.size[0])) throw new HTTP400Error('Invalid dog information');
+
+  if (!Number.isInteger(pet.age)) throw new HTTP400Error('Invalid dog age');
+
+
+
   try {
     const doc = await pet.save();
+    console.log(doc)
 
     const shelter = await Shelter.findByIdAndUpdate(
       shelterId,

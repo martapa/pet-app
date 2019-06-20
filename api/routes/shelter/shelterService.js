@@ -28,7 +28,22 @@ exports.getShelterById = async id => {
 
 // check if this works
 exports.updateShelter = async (id, updated) => {
+  const { email, password, shelter_name, description, address, phone, location } = updated;
+
   try {
+
+    if (!email || !password || !shelter_name || !description || !address) throw new HTTP400Error('Something is missing');
+
+    if (!validator.isEmail(email)) throw new HTTP400Error('Invalid email');
+
+    if (phone && !validator.isMobilePhone(phone)) throw new HTTP400Error('Invalid phone number');
+
+    if (location.type !== "Point" ) throw new HTTP400Error('Invalid location type');
+
+    if (location.coordinates[0] < -180 ||  location.coordinates[0] > 180 ) throw new HTTP400Error('Invalid coordinates');
+
+    if (location.coordinates[1] > 90 ||  location.coordinates[1] < 0 ) throw new HTTP400Error('Invalid coordinates');
+
     const shelter = await Shelter.findOneAndUpdate({_id: id}, updated, { new: true });
     return shelter;
   } catch (err) {
@@ -43,15 +58,6 @@ exports.deleteShelter = async id => {
     throw err;
   }
 };
-
-// exports.filterByPetId = async id => {
-//   try {
-//     const shelter = await Shelter.find({ pets: { $in: [id] } });
-//     return shelter;
-//   } catch (err) {
-//     throw err;
-//   }
-// };
 
 exports.aggregateShelterWithPets = async (longitude, latitude) => {
   try {
@@ -114,11 +120,15 @@ exports.createShelter = async shelterData => {
   const { email, password, shelter_name, description, address, phone, location } = shelterData;
 
   try {
+    const users_email = await Shelter.findOne({ email });
+
     if (!email || !password || !shelter_name || !description || !address) throw new HTTP400Error('Something is missing');
 
     if (!validator.isEmail(email)) throw new HTTP400Error('Invalid email');
 
-    if (!validator.isMobilePhone(phone)) throw new HTTP400Error('Invalid phone number');
+    if (email === users_email) throw new HTTP400Error('User already exists');
+
+    if (phone && !validator.isMobilePhone(phone)) throw new HTTP400Error('Invalid phone number');
 
     if (location.type !== "Point" ) throw new HTTP400Error('Invalid location type');
 

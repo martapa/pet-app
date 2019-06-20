@@ -52,7 +52,7 @@ router
     } catch (err) {
       next(err);
     }
-  }) //delete shelter when shelter is logged in
+  }) //delete shelter only when shelter is logged in
   .delete(requiresAuth, async (req, res, next) => {
     const id = req.token.shelter.id;
     try {
@@ -101,7 +101,6 @@ router.route('/register').post(async (req, res, next) => {
 //get pets by location
 router.route('/near').get(async (req, res, next) => {
   //http://localhost:3001/shelters/near?lat=12.13&lon=12.345
-  //console.log(req.query.lat);
   const lat = req.query.lat;
   const lon = req.query.lon;
   try {
@@ -124,8 +123,6 @@ router.route('/login').post(async (req, res, next) => {
       data: [token]
     });
   } catch (e) {
-    // Refactor this
-
     next(e);
 
   }
@@ -136,9 +133,7 @@ router.route('/mypets').get(requiresAuth, async (req, res, next) => {
   const id = req.token.shelter.id;
   console.log(id);
   try {
-    //console.log(id);
     const shelter_with_pets_profiles = await shelterService.getShelterPets(id);
-    //console.log(shelter_with_pets_profiles);
 
     res.status(200).send({
       data: shelter_with_pets_profiles
@@ -161,7 +156,5 @@ router
       next(err);
     }
   })
-
-
 
 exports.router = router;

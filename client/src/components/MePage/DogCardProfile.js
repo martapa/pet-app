@@ -14,7 +14,7 @@ class DogCardProfile extends Component {
     }
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    //console.log(props.dog)
+
     this.handleClickDelete = this.handleClickDelete.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
   }
@@ -26,25 +26,16 @@ class DogCardProfile extends Component {
     this.setState({ show: true });
   }
   async handleClickDelete() {
-    //console.log('delete');
     const id = this.props.dog._id;
-    //console.log('id', id);
     await this.props.deleteDog(id);
   }
   async handleClickEdit() {
-    //console.log('edit');
     const id = this.props.dog._id
     this.props.history.push(`/edit/${this.props.dog._id}`)
-    //console.log('id',id);
-    //await this.props.getDogDetail(id);
-    //console.log("get_detail",this.props.getDogDetail(id))
 
   }
 
-  // componentWillUpdate() {
-  //   // if (this.props.dog_detail)
-  //   //   this.props.history.push(`/edit/${this.props.dog_detail._id}`);
-  // }
+
 
   render() {
     return (
@@ -89,7 +80,6 @@ class DogCardProfile extends Component {
 }
 
 function mapStateToProps(state) {
-  //console.log("dogcardprofile",state);
   return {
     dog_detail: state.dog_detail,
     my_dogs: state.my_dogs
@@ -97,4 +87,3 @@ function mapStateToProps(state) {
 }
 
 export default withRouter(connect(mapStateToProps, { deleteDog, getDogDetail })(DogCardProfile));
-//export default connect(mapStateToProps, { deleteDog })(DogCardProfile);

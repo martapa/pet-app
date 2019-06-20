@@ -1,5 +1,7 @@
 const express = require('express');
 require('dotenv').config()
+const { HTTP400Error } = require('../../utils/httpErrors');
+
 
 //initiate a router
 const router = express.Router();
@@ -21,16 +23,16 @@ router
         }&key=${API_KEY}`
       );
 
-      if (response.data.status !=="ZERO_RESULTS"){
+      if (response.data.status ==="ZERO_RESULTS"){
+        throw new HTTP400Error('No address found')
+      }
+      else {
         res.status(200).send({
           data: [response.data]
         });
       }
-      else {
-        res.status(400).send({
-          data: {err: "No address found"}
-        })
-      }
+
+
     } catch (err) {
       next(err);
     }

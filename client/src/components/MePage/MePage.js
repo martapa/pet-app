@@ -36,24 +36,12 @@ class MePage extends Component {
   async componentDidMount() {
     this.props.getMyDogs();
     this.props.getShelterUser();
-    // if (this.props.shelter_user){
-    //   const shelter_id = this.props.shelter_user._id;
-    //   const response = await axios.get(`/shelters/${shelter_id}`);
-    //   const shelter = response.data.data[0];
-    //   this.setState({shelter_profile: shelter})
-    //   console.log('here',this.state)
-    // }
-
 
     this.handleClickDelete = this.handleClickDelete.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
 
-    //console.log('this.props.getMyDogs', this.props.getMyDogs());
   }
-  componentDidUpdate(prevProps, prevState){
-    console.log(prevProps);
 
-  }
   handleClose() {
     this.setState({ show: false });
   }
@@ -63,13 +51,11 @@ class MePage extends Component {
   }
 
   renderListItem(dog) {
-    //console.log(dog)
     return <DogCardProfile dog={dog} key={dog.id} />;
   }
 
   renderList() {
     if (this.props.my_dogs) {
-      //console.log(this.props.dogs)
       return _.map(this.props.my_dogs, this.renderListItem.bind(this));
     }
   }
@@ -86,7 +72,6 @@ class MePage extends Component {
     this.props.history.push('/');
   }
   async handleClickEdit() {
-    console.log('edit');
     const id = this.props.shelter_user._id;
     this.props.history.push(`/profile-edit/${id}`);
   }
@@ -161,7 +146,6 @@ class MePage extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     shelter_user: state.shelter_user,
     my_dogs: state.my_dogs

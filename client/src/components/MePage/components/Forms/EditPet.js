@@ -39,16 +39,12 @@ class EditPet extends Component {
   }
 
   async componentDidMount() {
-    //console.log(this.props)
     const pet_id = this.props.match.params.id;
     const response = await axios.get(`/pets/${pet_id}`);
-    //console.log(response.data.data[0][0]);
     this.setState(response.data.data[0][0]);
-    console.log('state', this.state);
   }
 
   render() {
-    //console.log("props", this.props)
     return (
       <>
         {this.state.name && (
@@ -59,8 +55,6 @@ class EditPet extends Component {
                 <Formik
                   validationSchema={schema}
                   onSubmit={async values => {
-                    //console.log("values",values.name);
-                    //console.log(this.state)
                     try {
                       const token = getToken();
                       const id = this.state._id;

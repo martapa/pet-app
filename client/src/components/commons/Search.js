@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //import { Navbar, Nav, Form, Button, FormControl } from 'react-bootstrap';
 //import { LinkContainer, Routes } from "react-router-bootstrap";
 import { Link, withRouter } from 'react-router-dom';
-import { Form, Button, FormControl } from 'react-bootstrap';
+import { Form, Button, FormControl, Container, Col, Row } from 'react-bootstrap';
 import { Formik } from 'formik';
 import axios from 'axios';
 
@@ -17,6 +17,9 @@ import { connect } from 'react-redux';
 class Search extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      serverErrors: ''
+    };
   }
 
   render() {
@@ -38,8 +41,11 @@ class Search extends Component {
                       this.props.getDogsNearYou(lng, lat);
                       //console.log("navigation",this.props)
                       this.props.history.push('/dogs_near_you');
+
                     } catch (error) {
-                      console.log(error);
+                      this.setState({
+                        serverErrors: error.response.data.error
+                      });
                     }
                   }}
                   initialValues={{
@@ -72,13 +78,15 @@ class Search extends Component {
                     </Form>
                   )}
                 </Formik>
+                {this.state.serverErrors && (
+                  <p>{this.state.serverErrors}</p>
+                )}
                 </>
     );
   }
 }
 
 function mapStateToProps(state) {
-  //console.log('navigation', state);
   return {
     dogs_near_you: state.dogs_near_you
   };

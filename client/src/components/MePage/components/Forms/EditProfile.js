@@ -37,31 +37,46 @@ const schema = yup.object({
 class EditProfile extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+
+    this.state = {
+      serverErrors: '',
+      shelter: {}
+    };
   }
   async componentDidMount() {
     const shelter_id = this.props.match.params.id;
     const response = await axios.get(`/shelters/${shelter_id}`);
+
     const shelter = response.data.data[0];
-    shelter["street"]= shelter.address.split(',')[0]
-    shelter["city"]= shelter.address.split(',')[1]
-    shelter["province"]= shelter.address
+    shelter['street'] = shelter.address.split(',')[0];
+    shelter['city'] = shelter.address.split(',')[1];
+    shelter['province'] = shelter.address
       .split(',')[2]
       .substring(0, 3)
       .trim();
-    shelter["zip"]= shelter.address
+    shelter['zip'] = shelter.address
       .split(',')[2]
       .substring(3, 11)
       .trim();
-    this.setState(shelter);
-    //console.log('shelter',shelter)
+    this.setState({ shelter: shelter });
   }
 
   render() {
-    console.log('here',this.state);
     return (
       <>
-        {this.state.shelter_name && (
+
+          {this.state.serverErrors && (
+            <Container fluid className="errors">
+              <Row>
+                <Col />
+                <Col xs={6} className="errors-col6">
+                  <p>{this.state.serverErrors}</p>
+                </Col>
+                <Col />
+              </Row>
+            </Container>
+          )}
+        {this.state.shelter.shelter_name && (
           <Container fluid className="my-form">
             <Row>
               <Col xs={1} />
@@ -69,15 +84,10 @@ class EditProfile extends Component {
                 <Formik
                   validationSchema={schema}
                   onSubmit={async values => {
-                    //console.log('values', values);
-                    //console.log(this.state);
-                    //console.log(values.address.split(',')[3].substring(3,11))
-
-
+                    console.log('values', values);
                     const street2 = '+' + values.street.split(' ').join('+');
                     const city2 = values.city.replace(' ', '+');
                     const address = [street2, city2, values.province].join(',');
-                    console.log(address);
                     try {
                       const response = await axios.get(
                         `/geocode?address=,+${address}`
@@ -88,11 +98,7 @@ class EditProfile extends Component {
                       ];
                       const formatted_address =
                         response.data.data[0].results[0].formatted_address;
-                      //   const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${google_api_key}`);
-                      //   const location = [response.data.results[0].geometry.location.lng, response.data.results[0].geometry.location.lat];
-                      //   console.log(response);
-                      //   const formatted_address = response.data.results[0].formatted_address
-                      //   console.log(formatted_address);
+
                       const shelter = {
                         shelter_name: values.shelter_name,
                         email: values.email,
@@ -107,7 +113,11 @@ class EditProfile extends Component {
                         },
                         address: formatted_address
                       };
-                      //   console.log(shelter);
+                      Object.keys(shelter).forEach(key => shelter[key] === undefined && delete shelter[key])
+                      console.log('shelter', shelter);
+
+
+
                       const token = getToken();
                       const edit_shelter = await axios.patch(
                         '/shelters/',
@@ -119,11 +129,13 @@ class EditProfile extends Component {
                         }
                       );
                       this.props.history.push('/me');
-                    } catch (err) {
-                      console.log(err);
+                    } catch (error) {
+                      this.setState({
+                        serverErrors: error.response.data.error
+                      });
                     }
                   }}
-                  initialValues={this.state}
+                  initialValues={this.state.shelter}
                 >
                   {({
                     handleSubmit,
@@ -185,17 +197,17 @@ class EditProfile extends Component {
                             <Form.Control.Feedback type="invalid">
                               {errors.phone}
                             </Form.Control.Feedback>
-                              <Form.Label>Address</Form.Label>
-                              <Form.Control
-                                name="street"
-                                type="text"
-                                onChange={handleChange}
-                                value={values.street}
-                                isInvalid={!!errors.street && !!touched.street}
-                              />
-                              <Form.Control.Feedback type="invalid">
-                                {errors.adress}
-                              </Form.Control.Feedback>
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control
+                              name="street"
+                              type="text"
+                              onChange={handleChange}
+                              value={values.street}
+                              isInvalid={!!errors.street && !!touched.street}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                              {errors.adress}
+                            </Form.Control.Feedback>
 
                             <Form.Row>
                               <Form.Group as={Col} controlId="formGridCity">
@@ -282,7 +294,6 @@ class EditProfile extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     shelter_user: state.shelter_user
     // my_dogs: state.my_dogs

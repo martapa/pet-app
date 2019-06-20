@@ -38,7 +38,7 @@ const schema = yup.object({
 class RegisterPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = {shelter: {
       shelter_name: '',
       email: '',
       password: '',
@@ -51,26 +51,25 @@ class RegisterPage extends Component {
       city: '',
       province: '',
       zip: ''
-    };
-    //this.debounceChange = debounce(this.handleChange, 0);
-    //this.handleChange = this.handleChange.bind(this);
-    //this.handleSubmit = this.handleSubmit.bind(this);
-  }
+    },
+  serverErrors:''}
 
-  // handleChange = event => {
-  //   this.setState({ [event.target.id]: event.target.value });
-  // };
-  // //https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
-  // handleSubmit(event) {
-  //   alert('Submitted: ', this.state);
-  //   console.log(this.state);
-  //   //console.log(google_api_key);
-  //   event.preventDefault();
-  // }
+  }
 
   render() {
     return (
       <>
+      {this.state.serverErrors && (
+        <Container fluid className="errors">
+          <Row>
+            <Col />
+            <Col xs={6} className="errors-col6">
+              <p>{this.state.serverErrors}</p>
+            </Col>
+            <Col />
+          </Row>
+        </Container>
+      )}
       <Container fluid className="my-form">
         <Row>
           <Col sm={1}/>
@@ -78,22 +77,17 @@ class RegisterPage extends Component {
             <Formik
               validationSchema={schema}
               onSubmit={async values => {
-                //console.log(values);
+                console.log(values)
                 const street2 = values.street.split(' ').join('+');
                 const city2 = '+' + values.city.split(' ').join('+');
                 const address = [street2, city2, values.province].join(',');
-                console.log(address);
                 try {
                   const response = await axios.get(
                     `/geocode?address=,+${address}`
                   );
-                  console.log(response);
-                  //const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${google_api_key}`);
                   const location = [response.data.data[0].results[0].geometry.location.lng, response.data.data[0].results[0].geometry.location.lat];
-                  // console.log(response);
-                  //const formatted_address =
+
                   const formatted_address = response.data.data[0].results[0].formatted_address
-                  console.log(formatted_address);
                   const shelter = {
                     shelter_name: values.shelter_name,
                     email: values.email,
@@ -108,27 +102,15 @@ class RegisterPage extends Component {
                     },
                     address: formatted_address
                   }
-                  //console.log(shelter);
                   const post_shelter = await axios.post('/shelters/register', shelter);
                   this.props.history.push('/login');
-                } catch (err) {
-                  console.log(err);
+                } catch (error) {
+                  this.setState({
+                    serverErrors: error.response.data.error
+                  });
                 }
               }}
-              initialValues={{
-                shelter_name: '',
-                email: '',
-                password: '',
-                avatar: '',
-                description: '',
-                phone: '',
-                volonteer_name: '',
-                //location: '',
-                street: '',
-                city: '',
-                province: '',
-                zip: ''
-              }}
+              initialValues={this.state.shelter}
             >
               {({
                 handleSubmit,

@@ -56,7 +56,7 @@ class AddPetForm extends Component {
             <Formik
               validationSchema={schema}
               onSubmit={async values => {
-                console.log(values);
+                //console.log(values);
 
                 try {
                   const pet = {
@@ -75,7 +75,7 @@ class AddPetForm extends Component {
                       Authorization: `Bearer ${token}`
                     }
                   });
-                  console.log(post_pet);
+                  console.log('pet',pet);
                   this.props.history.push('/me');
                 } catch (err) {
                   console.log(err);
