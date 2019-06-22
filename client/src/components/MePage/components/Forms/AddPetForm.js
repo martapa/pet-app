@@ -45,6 +45,12 @@ class AddPetForm extends Component {
       is_adopted: '',
       good_with: ''
     };
+
+    this.handleClickCancel = this.handleClickCancel.bind(this);
+  }
+
+  handleClickCancel(){
+    this.props.history.push('/me');
   }
 
   render() {
@@ -243,8 +249,11 @@ class AddPetForm extends Component {
                     </Row>
                   </Container>
 
-                  <Button className="form-button" type="submit">
+                  <Button className="button" type="submit">
                     Add Pet!
+                  </Button>
+                  <Button className="button" onClick={this.handleClickCancel}>
+                    Cancel
                   </Button>
                 </Form>
               )}

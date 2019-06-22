@@ -42,6 +42,7 @@ class EditProfile extends Component {
       serverErrors: '',
       shelter: {}
     };
+    this.handleClickCancel = this.handleClickCancel.bind(this);
   }
   async componentDidMount() {
     const shelter_id = this.props.match.params.id;
@@ -59,6 +60,9 @@ class EditProfile extends Component {
       .substring(3, 11)
       .trim();
     this.setState({ shelter: shelter });
+  }
+  handleClickCancel(){
+    this.props.history.push('/me');
   }
 
   render() {
@@ -280,6 +284,9 @@ class EditProfile extends Component {
 
                       <Button className="button" type="submit">
                         Submit
+                      </Button>
+                      <Button className="button" onClick={this.handleClickCancel}>
+                        Cancel
                       </Button>
                     </Form>
                   )}

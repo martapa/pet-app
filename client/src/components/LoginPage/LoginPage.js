@@ -29,6 +29,12 @@ class LoginPage extends Component {
       password: '',
       serverErrors: ''
     };
+
+    this.handleClickCancel = this.handleClickCancel.bind(this);
+  }
+
+  handleClickCancel(){
+    this.props.history.push('/')
   }
 
   render() {
@@ -125,6 +131,9 @@ class LoginPage extends Component {
                     </Form.Group>
                     <Button className="button" type="submit">
                       Submit
+                    </Button>
+                    <Button className="button" onClick={this.handleClickCancel}>
+                      Cancel
                     </Button>
                   </Form>
                 )}

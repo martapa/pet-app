@@ -1,4 +1,6 @@
 @import './colours.scss';
+@import './functions.scss';
+
 
 .my-form {
   padding-top: 50px;
@@ -9,27 +11,16 @@
 
     .col-10 {
       padding: 20px;
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
       border: 5px solid #ffffff;
       border-radius: 10px;
-      .form-button {
-        margin-top: 15px;
-        margin-left: 14px;
-        background: $dark-grey;
-        color: #ffffff;
-        border-color: $dark-grey;
-        border-radius: 0.25rem;
+      .button {
+        width: calc(50% - #{rem(8)});
+        margin-right: rem(8);
+        margin-top: rem(16);
 
-        &:hover {
-          background: $bright-yellow;
-          border-color: $bright-yellow;
-          color: $dark-grey;
-        }
-        &:active:focus {
-          background: $bright-yellow;
-          border-color: $bright-yellow;
-          color: $dark-grey;
-          outline: 0;
+        + button {
+          margin-right: 0;
+          margin-left: rem(8);
         }
       }
     }

@@ -39,7 +39,7 @@ class MePage extends Component {
 
     this.handleClickDelete = this.handleClickDelete.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
-
+    this.handleClickAddPet = this.handleClickAddPet.bind(this);
   }
 
   handleClose() {
@@ -75,48 +75,104 @@ class MePage extends Component {
     const id = this.props.shelter_user._id;
     this.props.history.push(`/profile-edit/${id}`);
   }
+  handleClickAddPet() {
+    this.props.history.push('/addform/');
+  }
 
   render() {
     return (
       <>
         {this.props.shelter_user && (
-          <Container fluid className="me-page">
+          <Container className="me-page">
+            <Row className="row-shelter-name">
+              <h4>{this.props.shelter_user.shelter_name} pets</h4>
+            </Row>
             <Row>
-              <Col sm={5} className="my-profile-panel">
+              <Col sm={4} className="my-profile-panel">
                 <Row>
                   <Col>
-                    <img src={this.props.shelter_user.avatar}/>
-                      <ul>
-                        {this.props.shelter_user.address && <li key={this.props.shelter_user.address}><Row><Col sm={4}><p><strong>Address</strong></p></Col><Col><p>{this.props.shelter_user.address}</p></Col></Row></li>}
-                        {this.props.shelter_user.phone && <li key={this.props.shelter_user.phone}><Row><Col sm={4}><p><strong>Phone</strong></p></Col><Col><p>{this.props.shelter_user.phone}</p></Col></Row></li>}
-                        {this.props.shelter_user.email && <li key={this.props.shelter_user.email}><Row><Col sm={4}><p><strong>Email</strong></p></Col><Col><p>{this.props.shelter_user.email}</p></Col></Row></li>}
-                        {this.props.shelter_user.volonteer_name && <li key={this.props.shelter_user.volonteer_name}><Row><Col sm={4}><p><strong>Volonteer</strong></p></Col><Col><p>{this.props.shelter_user.volonteer_name}</p></Col></Row></li>}
-                        {this.props.my_dogs && <li key={this.props.my_dogs.length}><Row><Col sm={4}><p><strong>My pets</strong></p></Col><Col><p>{this.props.my_dogs.length}</p></Col></Row></li>}
-                        <Link to="/addform/" style={{color: '#424242'}}><li key="add-more-pets"><Row><Col sm={4}><p><strong>Add more pets</strong></p></Col></Row></li></Link>
-                      </ul>
+                    <div className="img-container">
+                      <img src={this.props.shelter_user.avatar} />
+                    </div>
+                    <ul>
+                      {this.props.shelter_user.address && (
+                        <li key={this.props.shelter_user.address}>
+                          <h2>Address</h2>
+                          <p>{this.props.shelter_user.address}</p>
+                        </li>
+                      )}
+                      {this.props.shelter_user.phone && (
+                        <li key={this.props.shelter_user.phone}>
+                          <Row>
+                            <Col sm={4}>
+                              <p>
+                                <strong>Phone</strong>
+                              </p>
+                            </Col>
+                            <Col>
+                              <p>{this.props.shelter_user.phone}</p>
+                            </Col>
+                          </Row>
+                        </li>
+                      )}
+                      {this.props.shelter_user.email && (
+                        <li key={this.props.shelter_user.email}>
+                          <Row>
+                            <Col sm={4}>
+                              <p>
+                                <strong>Email</strong>
+                              </p>
+                            </Col>
+                            <Col>
+                              <p>{this.props.shelter_user.email}</p>
+                            </Col>
+                          </Row>
+                        </li>
+                      )}
+                      {this.props.shelter_user.volonteer_name && (
+                        <li key={this.props.shelter_user.volonteer_name}>
+                          <Row>
+                            <Col sm={4}>
+                              <p>
+                                <strong>Volonteer</strong>
+                              </p>
+                            </Col>
+                            <Col>
+                              <p>{this.props.shelter_user.volonteer_name}</p>
+                            </Col>
+                          </Row>
+                        </li>
+                      )}
+                      {this.props.my_dogs && (
+                        <li key={this.props.my_dogs.length}>
+                          <Row>
+                            <Col sm={4}>
+                              <p>
+                                <strong>My pets</strong>
+                              </p>
+                            </Col>
+                            <Col>
+                              <p>{this.props.my_dogs.length}</p>
+                            </Col>
+                          </Row>
+                        </li>
+                      )}
+                    </ul>
                   </Col>
                 </Row>
-                <div className="buttons">
-                  <Button
-                    className="button"
-                    variant="dark"
-                    onClick={this.handleShow}
-                  >
-                    Delete Account
-                  </Button>
-                  <Button
-                    className="button"
-                    variant="dark"
-                    onClick={this.handleClickEdit}
-                  >
-                    Edit Profile
-                  </Button>
-                </div>
+
+                <Button className="button" onClick={this.handleClickAddPet}>
+                  Add Pet
+                </Button>
+
+                <Button className="button" onClick={this.handleClickEdit}>
+                  Edit Profile
+                </Button>
+                <Button className="button outline" onClick={this.handleShow}>
+                  Delete Account
+                </Button>
               </Col>
-              <Col sm={7}>
-                <Row>
-                  <h4>{this.props.shelter_user.shelter_name} pets</h4>
-                </Row>
+              <Col sm={8}>
                 <Row>{this.renderList()}</Row>
               </Col>
             </Row>

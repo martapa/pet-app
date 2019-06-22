@@ -53,7 +53,10 @@ class RegisterPage extends Component {
       zip: ''
     },
   serverErrors:''}
-
+  this.handleClickCancel = this.handleClickCancel.bind(this);
+  }
+  handleClickCancel(){
+    this.props.history.push('/');
   }
 
   render() {
@@ -268,13 +271,16 @@ class RegisterPage extends Component {
                       type="text"
                       name="avatar"
                       onChange={handleChange}
-                      value={values.savatar}
+                      value={values.avatar}
                     />
                     </Col>
                   </Row>
                 </Container>
-                  <Button className="form-button" type="submit">
+                  <Button className="button" type="submit">
                     Submit
+                  </Button>
+                  <Button className="button" onClick={this.handleClickCancel}>
+                    Cancel
                   </Button>
                 </Form>
               )}

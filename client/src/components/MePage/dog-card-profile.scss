@@ -1,18 +1,37 @@
+@import '../../styles/functions.scss';
+
 .dog-card-profile {
+  border: 0;
+
   .title-name {
     text-align: center;
   }
+
   p.titles {
     text-align: center;
     border-bottom: 2px solid #fcfc53;
     color: #424242;
   }
 
-  .buttons {
-    display: flex;
-    justify-content: space-evenly;
+  .img-container {
+    overflow: hidden;
+    padding-top: 75%;
+    position: relative;
+    border-radius: rem(5);
+
+    img {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+    }
   }
-  .button {
-    flex-basis: 25%;
+
+  .card-body {
+    padding: rem(16);
+
+    .button:last-child {
+      margin: 0;
+    }
   }
 }

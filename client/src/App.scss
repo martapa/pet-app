@@ -1,39 +1,38 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,700,800&display=swap');
 
-@import "./styles/forms.scss";
-@import "./styles/buttons.scss";
+@import './styles/forms.scss';
+@import './styles/buttons.scss';
+@import './styles/functions.scss';
 
-$bright-yellow: #FCFC53;
-$pale-yellow: #FCFFC4;
-$light-grey: #A3A3A3;
-$dark-grey: #424242;
-$error-red: #dc3545;
+html {
+  font-size: 17px;
+}
 
-body{
+body {
   font-family: 'Montserrat', sans-serif;
 }
 
-h1{
-  font-size: 50px;
+h1 {
+  font-size: rem(50);
   font-weight: bold;
 }
 
-h2{
+h2 {
   font-size: 40px;
   font-weight: 400;
 }
 
-h3{
+h3 {
   font-size: 30px;
   font-weight: 400;
 }
 
-h4{
+h4 {
   font-size: 26px;
   font-weight: 300;
 }
 
-p{
-  font-size: 20px;
+p {
   font-weight: 300;
+  margin-bottom: rem(16);
 }

@@ -10,8 +10,8 @@ class DogCardProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
-    }
+      show: false
+    };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
 
@@ -30,51 +30,55 @@ class DogCardProfile extends Component {
     await this.props.deleteDog(id);
   }
   async handleClickEdit() {
-    const id = this.props.dog._id
-    this.props.history.push(`/edit/${this.props.dog._id}`)
-
+    const id = this.props.dog._id;
+    this.props.history.push(`/edit/${this.props.dog._id}`);
   }
-
-
 
   render() {
     return (
       <>
-      <Modal show={this.state.show} onHide={this.handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Delete account</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>Are you sure you want to delete {this.props.dog.name}? You won't be able to get them back.</Modal.Body>
-      <Modal.Footer>
-        <Button className="button" onClick={this.handleClose}>
-          Keep
-        </Button>
-        <Button className="button" onClick={this.handleClickDelete}>
-          Delete
-        </Button>
-      </Modal.Footer>
-    </Modal>
-      <Col sm={6}>
-       <Card className="dog-card dog-card-profile">
-         <div className="img">
-           <img src={this.props.dog.photo} />
-         </div>
-         <Card.Body>
-           <Card.Title className="title-name">
-             {this.props.dog.name}
-           </Card.Title>
-           <div className="buttons">
-           <Button className="button" variant="dark" onClick={this.handleShow}>
-             Delete
-           </Button>
-           <Button className="button" variant="dark" onClick={this.handleClickEdit}>
-             Edit
-           </Button>
-           </div>
-         </Card.Body>
-       </Card>
-     </Col>
-     </>
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Delete account</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Are you sure you want to delete {this.props.dog.name}? You won't be
+            able to get them back.
+          </Modal.Body>
+          <Modal.Footer>
+            <Button className="button" onClick={this.handleClose}>
+              Keep
+            </Button>
+            <Button className="button" onClick={this.handleClickDelete}>
+              Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        <Col sm={4}>
+          <Card className="dog-card-profile">
+            <div className="img-container">
+              <img src={this.props.dog.photo} />
+            </div>
+            <Card.Body>
+              <Card.Title className="title-name">
+                {this.props.dog.name}
+              </Card.Title>
+              <Button
+                className="button outline small"
+                onClick={this.handleShow}
+              >
+                Delete
+              </Button>
+              <Button
+                className="button outline small"
+                onClick={this.handleClickEdit}
+              >
+                Edit
+              </Button>
+            </Card.Body>
+          </Card>
+        </Col>
+      </>
     );
   }
 }
@@ -86,4 +90,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default withRouter(connect(mapStateToProps, { deleteDog, getDogDetail })(DogCardProfile));
+export default withRouter(
+  connect(mapStateToProps, { deleteDog, getDogDetail })(DogCardProfile)
+);

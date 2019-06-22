@@ -1,11 +1,14 @@
 @import '../../../styles/colours.scss';
 
-
 .dog-card {
-
   margin-top: 30px;
-  .description{
-    color: #A3A3A3;
+
+  .description {
+    color: #a3a3a3;
+  }
+
+  .card-title {
+    text-align: center;
   }
 
   .img {
@@ -20,25 +23,9 @@
       width: 100%;
     }
   }
-  &:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.7);
-  }
-  .dog-card-button {
-    background: $dark-grey;
-    color: #ffffff;
-    border-color: $dark-grey;
-    border-radius: .25rem;
 
-    &:hover {
-      background: $bright-yellow;
-      border-color: $bright-yellow;
-      color: $dark-grey;
-    }
-    &:active:focus {
-      background: $bright-yellow;
-      border-color: $bright-yellow;
-      color: $dark-grey;
-      outline: 0;
-    }
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.7);
   }
+
 }

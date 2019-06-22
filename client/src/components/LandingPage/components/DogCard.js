@@ -31,7 +31,7 @@ class DogCard extends Component {
           </div>
           <Card.Body>
             <Card.Title>{this.props.dog.name}</Card.Title>
-            <Button className="dog-card-button" onClick={this.handleClick}>
+            <Button className="button" onClick={this.handleClick}>
               Check details
             </Button>
           </Card.Body>

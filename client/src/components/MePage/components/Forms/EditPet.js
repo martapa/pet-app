@@ -36,12 +36,17 @@ class EditPet extends Component {
     super(props);
 
     this.state = {};
+    this.handleClickCancel = this.handleClickCancel.bind(this);
   }
 
   async componentDidMount() {
     const pet_id = this.props.match.params.id;
     const response = await axios.get(`/pets/${pet_id}`);
     this.setState(response.data.data[0][0]);
+  }
+
+  handleClickCancel(){
+    this.props.history.push('/me');
   }
 
   render() {
@@ -230,8 +235,11 @@ class EditPet extends Component {
                         </Row>
                       </Container>
 
-                      <Button className="form-button" type="submit">
+                      <Button className="button" type="submit">
                         Edit!
+                      </Button>
+                      <Button className="button" onClick={this.handleClickCancel}>
+                        Cancel
                       </Button>
                     </Form>
                   )}
