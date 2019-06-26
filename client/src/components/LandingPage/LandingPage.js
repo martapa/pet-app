@@ -26,7 +26,16 @@ class LandingPage extends Component {
             </Col>
             <Col sm={2}/>
           </Row>
-          <Dogs />
+          <Dogs status="For adoption"/>
+            <Row>
+              <Col sm={2}/>
+              <Col sm={8} className='meet-dogs'>
+                <h2>Dogs that found their homes</h2>
+              </Col>
+              <Col sm={2}/>
+            </Row>
+          <Dogs status="Already adopted"/>
+
         </Container>
       </>
     );

@@ -76,7 +76,8 @@ class MePage extends Component {
     this.props.history.push(`/profile-edit/${id}`);
   }
   handleClickAddPet() {
-    this.props.history.push('/addform/');
+    console.log('add pet')
+    //this.props.history.push('/addform/');
   }
 
   render() {
