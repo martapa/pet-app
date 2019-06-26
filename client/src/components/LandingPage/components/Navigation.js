@@ -10,40 +10,45 @@ import Search from '../../commons/Search';
 import * as actions from '../../../actions';
 import { getDogsNearYou } from '../../../actions/index';
 
-
 import { connect } from 'react-redux';
 
 import '../landing_page.scss';
 import './navigation.scss';
-
 
 class Navigation extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-     path: ''
-   };
+      navStyle: 'container-fluid light',
+      urlPath: ''
+    };
   }
 
   componentDidMount() {
-    const path = this.props.match.path;
-    console.log('tutaj',path)
-    this.setState({ path });
-    console.log('path', this.state.path)
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.path !== prevProps.path) {
-      const path = this.props.path;
-      this.setState({ path });
-      console.log("path updated", path)
+    if (this.props.match.path === '/') {
+      console.log('path is equal to', this.props.match.path);
+      this.setState({
+        urlPath: '/'
+      });
     }
   }
 
+  componentDidUpdate(prevProps) {
+    console.log('prev', prevProps);
+    console.log('this.props', this.props);
+      if (this.props.location.pathname !== prevProps.location.pathname) {
+        this.setState({
+          urlPath: this.props.location.pathname
+        });
+      }
+
+  }
+
   render() {
+    console.log(this.state)
     return (
-      <header className={this.state.path === '/' ? "container-fluid light" : "container-fluid dark"}>
+      <header className={this.state.urlPath === '/' ? "container-fluid light" : "container-fluid dark"}>
         <div className="row">
           <div className="col">
             <Navbar expand="lg" className="navbar">
@@ -55,25 +60,26 @@ class Navigation extends Component {
                 <Nav className="mr-auto">
                   {!this.props.shelter_user && (
                     <>
-                  <Nav.Link as={NavLink} to="/register" exact>
-                    Register
-                  </Nav.Link>
-                  <Nav.Link as={NavLink} to="/login" exact>
-                    Log in
-                  </Nav.Link>
-                </>)}
+                      <Nav.Link as={NavLink} to="/register" exact>
+                        Register
+                      </Nav.Link>
+                      <Nav.Link as={NavLink} to="/login" exact>
+                        Log in
+                      </Nav.Link>
+                    </>
+                  )}
                   {this.props.shelter_user && (
                     <>
-                    <Nav.Link as={NavLink} to="/me" exact>
-                      My Account
-                    </Nav.Link>
-                    <Nav.Link as={NavLink} to="/logout" exact>
-                      Log Out
-                    </Nav.Link>
+                      <Nav.Link as={NavLink} to="/me" exact>
+                        My Account
+                      </Nav.Link>
+                      <Nav.Link as={NavLink} to="/logout" exact>
+                        Log Out
+                      </Nav.Link>
                     </>
                   )}
                 </Nav>
-        <Search/>
+                <Search />
               </Navbar.Collapse>
             </Navbar>
           </div>

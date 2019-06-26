@@ -14,7 +14,7 @@ import * as yup from 'yup';
 //
 // // Import local dependencies
 import './login.scss';
-import '../commons/styling.scss';
+import '../../styles/errors.scss';
 const schema = yup.object({
   password: yup.string().required(),
   email: yup.string().email('Please enter a valid email').required(),
@@ -41,7 +41,6 @@ class LoginPage extends Component {
     return (
       <>
 
-        <div className='login-background' />
 
         <Container fluid className="login">
           <Row className="login-row">

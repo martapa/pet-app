@@ -69,20 +69,21 @@ class EditProfile extends Component {
     return (
       <>
 
-          {this.state.serverErrors && (
-            <Container fluid className="errors">
-              <Row>
-                <Col />
-                <Col xs={6} className="errors-col6">
-                  <p>{this.state.serverErrors}</p>
-                </Col>
-                <Col />
-              </Row>
-            </Container>
-          )}
+
         {this.state.shelter.shelter_name && (
           <Container fluid className="my-form">
             <Row>
+              {this.state.serverErrors && (
+                <Container fluid className="errors">
+                  <Row>
+                    <Col />
+                    <Col xs={6} className="errors-col6">
+                      <p>{this.state.serverErrors}</p>
+                    </Col>
+                    <Col />
+                  </Row>
+                </Container>
+              )}
               <Col xs={1} />
               <Col xs={10}>
                 <Formik

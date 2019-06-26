@@ -1,0 +1,28 @@
+@import './colours.scss';
+@import './functions.scss';
+
+
+.my-form{
+  .errors{
+    position: relative;
+    margin-bottom: rem(-120);
+    .errors-col6{
+      p{
+        text-align: center;
+        color: $error-red;
+      }
+    }
+  }
+}
+
+.login{
+  .errors{
+    position: relative;
+    .errors-col6{
+      p{
+        text-align: center;
+        color: $error-red;
+      }
+    }
+  }
+}

@@ -9,6 +9,7 @@ import { withRouter } from 'react-router-dom';
 
 
 import '../../styles/forms.scss';
+import '../../styles/errors.scss';
 
 //const phoneRegEx =
 const schema = yup.object({
@@ -62,19 +63,19 @@ class RegisterPage extends Component {
   render() {
     return (
       <>
-      {this.state.serverErrors && (
-        <Container fluid className="errors">
-          <Row>
-            <Col />
-            <Col xs={6} className="errors-col6">
-              <p>{this.state.serverErrors}</p>
-            </Col>
-            <Col />
-          </Row>
-        </Container>
-      )}
       <Container fluid className="my-form">
         <Row>
+          {this.state.serverErrors && (
+            <Container fluid className="errors">
+              <Row>
+                <Col />
+                <Col xs={6} className="errors-col6">
+                  <p>{this.state.serverErrors}</p>
+                </Col>
+                <Col />
+              </Row>
+            </Container>
+          )}
           <Col sm={1}/>
           <Col xs={10}>
             <Formik
