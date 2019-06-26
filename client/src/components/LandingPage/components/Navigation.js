@@ -20,14 +20,12 @@ class Navigation extends Component {
     super(props);
 
     this.state = {
-      navStyle: 'container-fluid light',
       urlPath: ''
     };
   }
 
   componentDidMount() {
     if (this.props.location.pathname === '/') {
-      //console.log('path is equal to', this.props.match.path);
       this.setState({
         urlPath: '/'
       });
@@ -35,21 +33,23 @@ class Navigation extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    //console.log('prev', prevProps);
-    //console.log('this.props', this.props);
-
-      if (this.props.location.pathname !== prevProps.location.pathname) {
-        this.setState({
-          urlPath: this.props.location.pathname
-        });
-      }
-
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.setState({
+        urlPath: this.props.location.pathname
+      });
+    }
   }
 
   render() {
-    console.log(this.state)
+    console.log(this.state);
     return (
-      <header className={this.state.urlPath === '/' ? "container-fluid light" : "container-fluid dark"}>
+      <header
+        className={
+          this.state.urlPath === '/'
+            ? 'container-fluid light'
+            : 'container-fluid dark'
+        }
+      >
         <div className="row">
           <div className="col">
             <Navbar expand="lg" className="navbar">

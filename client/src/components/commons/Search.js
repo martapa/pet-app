@@ -18,8 +18,25 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      serverErrors: ''
+      serverErrors: '',
+      urlPath: ''
     };
+  }
+
+  componentDidMount() {
+    if (this.props.location.pathname === '/') {
+      this.setState({
+        urlPath: '/'
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.setState({
+        urlPath: this.props.location.pathname
+      });
+    }
   }
 
   render() {
@@ -64,14 +81,14 @@ class Search extends Component {
                         id="search"
                         type="text"
                         placeholder="Your city"
-                        className="mr-sm-2 search-form"
+                        className={this.state.urlPath === '/' ? "mr-sm-2 search-form-light" : "mr-sm-2 search-form-dark"}
                         value={values.search}
                         onChange={handleChange}
                       />
                       <Button
                         variant="outline-success"
                         type="submit"
-                        className="search-button"
+                        className={this.state.urlPath === '/' ? "search-button-light" : "search-button-dark"}
                       >
                         Search
                       </Button>

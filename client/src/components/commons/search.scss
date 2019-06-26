@@ -1,15 +1,29 @@
 @import '../../styles/colours.scss';
 
-.search-form{
+.search-form-light {
   background-color: $dark-grey;
   border-color: $dark-grey;
 }
-.search-button {
+.search-button-light {
   color: $bright-yellow;
   border-color: $bright-yellow;
 
   &:hover {
     background: $pale-yellow;
     border-color: $pale-yellow;
+  }
+}
+
+.search-form-dark {
+  background-color: #ffffff;
+  border-color: $dark-grey;
+}
+.search-button-dark {
+  color: $dark-grey;
+  border-color: $dark-grey;
+
+  &:hover {
+    background: $light-grey;
+    border-color: $light-grey;
   }
 }
