@@ -103,58 +103,26 @@ class MePage extends Component {
                       )}
                       {this.props.shelter_user.phone && (
                         <li key={this.props.shelter_user.phone}>
-                          <Row>
-                            <Col sm={4}>
-                              <p>
-                                <strong>Phone</strong>
-                              </p>
-                            </Col>
-                            <Col>
-                              <p>{this.props.shelter_user.phone}</p>
-                            </Col>
-                          </Row>
+                          <h2>Phone</h2>
+                          <p>{this.props.shelter_user.phone}</p>
                         </li>
                       )}
                       {this.props.shelter_user.email && (
                         <li key={this.props.shelter_user.email}>
-                          <Row>
-                            <Col sm={4}>
-                              <p>
-                                <strong>Email</strong>
-                              </p>
-                            </Col>
-                            <Col>
-                              <p>{this.props.shelter_user.email}</p>
-                            </Col>
-                          </Row>
+                          <h2>Email</h2>
+                          <p>{this.props.shelter_user.email}</p>
                         </li>
                       )}
                       {this.props.shelter_user.volonteer_name && (
                         <li key={this.props.shelter_user.volonteer_name}>
-                          <Row>
-                            <Col sm={4}>
-                              <p>
-                                <strong>Volonteer</strong>
-                              </p>
-                            </Col>
-                            <Col>
-                              <p>{this.props.shelter_user.volonteer_name}</p>
-                            </Col>
-                          </Row>
+                          <h2>Volonteer</h2>
+                          <p>{this.props.shelter_user.volonteer_name}</p>
                         </li>
                       )}
                       {this.props.my_dogs && (
                         <li key={this.props.my_dogs.length}>
-                          <Row>
-                            <Col sm={4}>
-                              <p>
-                                <strong>My pets</strong>
-                              </p>
-                            </Col>
-                            <Col>
-                              <p>{this.props.my_dogs.length}</p>
-                            </Col>
-                          </Row>
+                          <h2>My Pets</h2>
+                          <p>{this.props.shelter_user.pets.length}</p>
                         </li>
                       )}
                     </ul>

@@ -36,7 +36,7 @@ export function getDogsNearYou(lng, lat) {
 }
 
 export function userLogOut() {
-  console.log('userLogOut');
+  //console.log('userLogOut');
   return {
     type: USER_LOGOUT,
     payload: 'User logged out'
@@ -66,7 +66,7 @@ export function getMyDogs() {
   });
   return function(dispatch) {
     req.then(function(response) {
-      console.log('response', response);
+      //console.log('response', response);
       dispatch({
         type: GET_MY_DOGS,
         payload: response.data.data[0].pets_profiles

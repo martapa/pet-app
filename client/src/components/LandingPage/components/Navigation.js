@@ -26,8 +26,8 @@ class Navigation extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.path === '/') {
-      console.log('path is equal to', this.props.match.path);
+    if (this.props.location.pathname === '/') {
+      //console.log('path is equal to', this.props.match.path);
       this.setState({
         urlPath: '/'
       });
@@ -35,8 +35,9 @@ class Navigation extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log('prev', prevProps);
-    console.log('this.props', this.props);
+    //console.log('prev', prevProps);
+    //console.log('this.props', this.props);
+
       if (this.props.location.pathname !== prevProps.location.pathname) {
         this.setState({
           urlPath: this.props.location.pathname
