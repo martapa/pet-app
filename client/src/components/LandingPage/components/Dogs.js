@@ -28,7 +28,6 @@ class Dogs extends Component {
         };
       }
       const filteredDogs = this.props.dogs.filter(checkStatus(this.props.status));
-      //console.log('this.props.dogs',filteredDogs)
       return _.map(filteredDogs, this.renderListItem.bind(this));
     }
   }

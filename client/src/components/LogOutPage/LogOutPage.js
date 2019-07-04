@@ -37,11 +37,11 @@ return(
           <Card.Text>
             Are you sure you want to log out?
           </Card.Text>
-          <div className="log-out-buttons">
-          <Button className="log-out-button" onClick={this.handleClickYes}>
+          <div className="buttons">
+          <Button className="button" onClick={this.handleClickYes}>
             Yes
           </Button>
-          <Button className="log-out-button" onClick={this.handleClickNo}>
+          <Button className="button" onClick={this.handleClickNo}>
             No
           </Button>
           </div>
