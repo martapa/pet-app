@@ -19,11 +19,13 @@ const { router: shelterRouter } = require('./routes/shelter/shelterRouter');
 const { router: petRouter } = require('./routes/pet/petRouter');
 const { router: geocodeRouter } = require('./routes/geocode/geocodeRouter');
 
+
 applyMiddleware(middleWare, router);
 
 router.use('/shelters', shelterRouter);
 router.use('/pets', petRouter);
 router.use('/geocode', geocodeRouter);
+
 
 // 1. Change route handler to return static folder
 const publicFolder = path.resolve(__dirname, '..', 'build');
@@ -43,8 +45,8 @@ const server = http.createServer(router);
 mongoose.connect(URL, { useNewUrlParser: true }).then(async () => {
   console.log(`Connected to database at: ${URL}`);
   try {
-    await require('./utils/seed').truncate();
-    await require('./utils/seed').seed();
+    //await require('./utils/seed').truncate();
+    //await require('./utils/seed').seed();
 
     server.listen(PORT, () => {
       console.log(`Server is running on PORT:${PORT}`);

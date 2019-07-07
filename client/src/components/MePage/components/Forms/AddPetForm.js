@@ -43,13 +43,14 @@ class AddPetForm extends Component {
       photo: '',
       description: '',
       is_adopted: '',
-      good_with: ''
+      good_with: '',
+      file: {}
     };
 
     this.handleClickCancel = this.handleClickCancel.bind(this);
   }
 
-  handleClickCancel(){
+  handleClickCancel() {
     this.props.history.push('/me');
   }
 
@@ -62,26 +63,37 @@ class AddPetForm extends Component {
             <Formik
               validationSchema={schema}
               onSubmit={async values => {
-                //console.log(values);
+                console.log(this.state.file);
 
                 try {
+                  const data = new FormData();
+                  data.append('name', values.name);
+                  data.append('size', values.size);
+                  data.append('age', values.age);
+                  data.append('gender', values.gender);
+                  data.append('description', values.description);
+                  data.append('is_adopted', values.is_adopted);
+                  data.append('good_with', values.good_with);
+                  data.append('file', this.state.file);
                   const pet = {
                     name: values.name,
                     size: values.size,
                     age: values.age,
                     gender: values.gender,
-                    photo: values.photo,
+                    photo: this.state.file,
                     description: values.description,
                     is_adopted: values.is_adopted,
                     good_with: values.good_with
                   };
                   const token = getToken();
-                  const post_pet = await axios.post('/pets', pet, {
+                  console.log('PHOTO', pet.photo);
+                  const post_pet = await axios.post('/pets', data, {
                     headers: {
-                      Authorization: `Bearer ${token}`
+                      Authorization: `Bearer ${token}`,
+                      'content-type': 'multipart/form-data'
                     }
                   });
-                  console.log('pet',pet);
+
                   this.props.history.push('/me');
                 } catch (err) {
                   console.log(err);
@@ -105,9 +117,10 @@ class AddPetForm extends Component {
                 values,
                 touched,
                 isValid,
-                errors
+                errors,
+                setFieldValue
               }) => (
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit} enctype="multipart/form-data">
                   <Container>
                     <Row>
                       <Col xs={6}>
@@ -186,9 +199,18 @@ class AddPetForm extends Component {
                       <Col xs={6}>
                         <Form.Label>Photo:</Form.Label>
                         <Form.Control
-                          type="text"
+                          type="file"
                           name="photo"
-                          onChange={handleChange}
+                          onChange={event => {
+                            // console.log(event.currentTarget.files[0]);
+                            // setFieldValue(
+                            //   'photo',
+                            //   ''
+                            // );
+                            this.setState({
+                              file: event.target.files[0]
+                            });
+                          }}
                           value={values.photo}
                         />
                         <Form.Group controlId="exampleForm.ControlSelect2">
