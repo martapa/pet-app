@@ -1,8 +1,12 @@
 const Pet = require('./petModel');
 const Shelter = require('../shelter/shelterModel');
 const mongoose = require('mongoose');
-const { HTTP404Error, HTTP403Error, HTTP400Error } = require('../../utils/httpErrors');
-const _ = require('lodash');
+const {
+  HTTP404Error,
+  HTTP403Error,
+  HTTP400Error
+} = require('../../utils/httpErrors');
+const { _, isEmpty } = require('lodash');
 const awsService = require('../../utils/awsService');
 
 exports.getAllPets = async () => {
@@ -14,35 +18,49 @@ exports.getAllPets = async () => {
 };
 exports.createPet = async (petData, shelterId, buffer) => {
   const pet = new Pet(petData);
-  const is_adopted_arr = ["For adoption", "Already adopted"]
-  const size_arr = ['extra-small','small', 'medium', 'large', 'extra-large']
-  const good_with_arr = ['dogs', 'cats', 'children', ''];
+  const is_adopted_arr = ['For adoption', 'Already adopted'];
+  const size_arr = [
+    '',
+    'extra-small',
+    'small',
+    'medium',
+    'large',
+    'extra-large'
+  ];
   //console.log(pet.good_with)
   //console.log(good_with_arr);
-  const filtered = pet.good_with.every( e => good_with_arr.includes(e) )
+
+  const good_with_arr = ['', 'dogs', 'cats', 'children'];
+
+  const filtered = pet.good_with.every(e => good_with_arr.includes(e));
 
   if (!filtered) throw new HTTP400Error('Invalid dog informationnnn');
 
-  if (!is_adopted_arr.includes(pet.is_adopted[0])) throw new HTTP400Error('Invalid dog information');
+  if (!size_arr.includes(pet.size[0]))
+    throw new HTTP400Error('Invalid dog information size');
 
-  if (!size_arr.includes(pet.size[0])) throw new HTTP400Error('Invalid dog information');
+  if (!is_adopted_arr.includes(pet.is_adopted[0]))
+    throw new HTTP400Error('Invalid dog information status');
 
   if (!Number.isInteger(pet.age)) throw new HTTP400Error('Invalid dog age');
 
-
-
   try {
-    const awsImage = await awsService.resizeAndUpload(buffer.buffer);
-    pet.photo = awsImage;
+    if (buffer) {
+      console.log(pet);
+      const awsImage = await awsService.resizeAndUpload(buffer.buffer, pet._id, 'pets');
+      //console.log(awsImage)
 
-    const doc = await pet.save();
+      pet.photo = awsImage;
 
-    const shelter = await Shelter.findByIdAndUpdate(
-      shelterId,
-      { $push: { pets: doc._id } },
-      { new: true }
-    );
-    return doc;
+      const doc = await pet.save();
+
+      const shelter = await Shelter.findByIdAndUpdate(
+        shelterId,
+        { $push: { pets: doc._id } },
+        { new: true }
+      );
+      return doc;
+    }
   } catch (err) {
     throw err;
   }
@@ -56,7 +74,7 @@ exports.getPetById = async id => {
     //return await Pet.findById(id);
     //console.log(id);
     const p = await Pet.aggregate([
-      { $match: {_id: ObjectId(id)} },
+      { $match: { _id: ObjectId(id) } },
       {
         $lookup: {
           from: 'shelters',
@@ -64,7 +82,7 @@ exports.getPetById = async id => {
           pipeline: [
             { $match: { $expr: { $in: ['$$id', '$pets'] } } },
             { $unwind: '$pets' },
-            { $match: { $expr: { $eq: ['$pets', '$$id'] } } },
+            { $match: { $expr: { $eq: ['$pets', '$$id'] } } }
           ],
           as: 'shelter_info'
         }

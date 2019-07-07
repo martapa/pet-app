@@ -34,16 +34,7 @@ router
     }
   })
   .post(requiresAuth, upload.single('file'), async (req, res, next) => {
-    // upload(req, res, function(err) {
-    //   console.log('req', req.file);
-    //   if (err instanceof multer.MulterError) {
-    //     console.log('A Multer error occurred when uploading.');
-    //   } else if (err) {
-    //     console.log(err);
-    //   }
-    //
-    //   console.log('ok');
-    // });
+
     const shelterId = req.token.shelter.id;
     try {
       const pet = await petService.createPet(req.body, shelterId, req.file);

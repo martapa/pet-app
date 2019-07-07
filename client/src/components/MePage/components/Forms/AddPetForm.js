@@ -63,9 +63,10 @@ class AddPetForm extends Component {
             <Formik
               validationSchema={schema}
               onSubmit={async values => {
-                console.log(this.state.file);
+                const good_with_arr = values.good_with[0] ? values.good_with[0].split(",") : [];
 
                 try {
+
                   const data = new FormData();
                   data.append('name', values.name);
                   data.append('size', values.size);
@@ -73,7 +74,7 @@ class AddPetForm extends Component {
                   data.append('gender', values.gender);
                   data.append('description', values.description);
                   data.append('is_adopted', values.is_adopted);
-                  data.append('good_with', values.good_with);
+                  data.append('good_with', good_with_arr);
                   data.append('file', this.state.file);
                   const pet = {
                     name: values.name,
@@ -85,8 +86,8 @@ class AddPetForm extends Component {
                     is_adopted: values.is_adopted,
                     good_with: values.good_with
                   };
+                  console.log("post_pet",pet)
                   const token = getToken();
-                  console.log('PHOTO', pet.photo);
                   const post_pet = await axios.post('/pets', data, {
                     headers: {
                       Authorization: `Bearer ${token}`,
@@ -202,11 +203,7 @@ class AddPetForm extends Component {
                           type="file"
                           name="photo"
                           onChange={event => {
-                            // console.log(event.currentTarget.files[0]);
-                            // setFieldValue(
-                            //   'photo',
-                            //   ''
-                            // );
+
                             this.setState({
                               file: event.target.files[0]
                             });

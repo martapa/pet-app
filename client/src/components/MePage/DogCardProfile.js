@@ -28,6 +28,9 @@ class DogCardProfile extends Component {
   async handleClickDelete() {
     const id = this.props.dog._id;
     await this.props.deleteDog(id);
+    this.setState({ show: false });
+
+
   }
   async handleClickEdit() {
     const id = this.props.dog._id;

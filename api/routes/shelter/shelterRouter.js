@@ -1,4 +1,6 @@
 const express = require('express');
+const multer = require('multer');
+
 
 //initiate a router
 const router = express.Router();
@@ -11,6 +13,10 @@ const Shelter = require('./shelterModel');
 
 const axios = require('axios');
 const _ = require('lodash');
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 
 
 router
@@ -25,7 +31,7 @@ router
       next(err);
     }
   })
-  .post(requiresAuth, async (req, res, next) => {
+  .post(requiresAuth,  async (req, res, next) => {
     try {
       const id = req.token.shelter.id;
 
@@ -87,9 +93,9 @@ router
 
 //register shelter
 //doesn't require authentication
-router.route('/register').post(async (req, res, next) => {
+router.route('/register').post(upload.single('file'), async (req, res, next) => {
   try {
-    const shelter = await shelterService.createShelter(req.body);
+    const shelter = await shelterService.createShelter(req.body, req.file);
     res.status(201).json({
       data: [shelter]
     });

@@ -2,7 +2,9 @@ const Shelter = require('./shelterModel');
 const mongoose = require('mongoose');
 const tokenService = require('../../utils/tokenService');
 const { HTTP404Error, HTTP403Error, HTTP400Error } = require('../../utils/httpErrors');
-var validator = require('validator');
+const validator = require('validator');
+const awsService = require('../../utils/awsService');
+
 
 
 
@@ -29,6 +31,10 @@ exports.getShelterById = async id => {
 // check if this works
 exports.updateShelter = async (id, updated) => {
   const { email, password, shelter_name, description, address, phone, location } = updated;
+  const newLocation = {
+      type:'Point',
+      coordinates: location
+    };
 
   try {
 
@@ -116,8 +122,18 @@ exports.getShelterPets = async id => {
     throw err;
   }
 };
-exports.createShelter = async shelterData => {
-  const { email, password, shelter_name, description, address, phone, location } = shelterData;
+exports.createShelter = async (shelterData, buffer) => {
+  const { email, password, shelter_name, description, address, phone } = shelterData;
+  console.log(shelterData.location)
+
+  const coordinates = shelterData.location.split(",");
+
+
+  //shelterData.loaction = newLocation;
+  shelterData["location"] = {
+      type:'Point',
+      coordinates: coordinates.map(Number)
+    }
 
   try {
     const users_email = await Shelter.findOne({ email });
@@ -130,11 +146,11 @@ exports.createShelter = async shelterData => {
 
     if (phone && !validator.isMobilePhone(phone)) throw new HTTP400Error('Invalid phone number');
 
-    if (location.type !== "Point" ) throw new HTTP400Error('Invalid location type');
+    if (shelterData.location.type !== "Point" ) throw new HTTP400Error('Invalid location type');
 
-    if (location.coordinates[0] < -180 ||  location.coordinates[0] > 180 ) throw new HTTP400Error('Invalid coordinates');
+    if (shelterData.location.coordinates[0] < -180 ||  shelterData.location.coordinates[0] > 180 ) throw new HTTP400Error('Invalid coordinates');
 
-    if (location.coordinates[1] > 90 ||  location.coordinates[1] < 0 ) throw new HTTP400Error('Invalid coordinates');
+    if (shelterData.location.coordinates[1] > 90 ||  shelterData.location.coordinates[1] < 0 ) throw new HTTP400Error('Invalid coordinates');
 
 
 
@@ -145,7 +161,17 @@ exports.createShelter = async shelterData => {
     if (user) throw new HTTP404Error('User Already Exists');
 
     const shelter = new Shelter(shelterData);
-    return await shelter.save();
+    console.log('shelter')
+    console.log(shelter)
+    if (buffer) {
+      const awsImage = await awsService.resizeAndUpload(buffer.buffer, shelter._id, 'shelters');
+
+      shelter.avatar = awsImage;
+
+      const doc = await shelter.save();
+
+      return doc;
+    }
   } catch (err) {
     if (err.name === 'MongoError' && process.env.NODE_ENV === 'production')
       throw new HTTP400Error();

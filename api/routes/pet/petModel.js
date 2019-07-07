@@ -9,7 +9,7 @@ const petSchema = new Schema({
   size:
     [{
       type: String,
-      enum: ['extra-small','small', 'medium', 'large', 'extra-large']
+      enum: ['', 'extra-small','small', 'medium', 'large', 'extra-large']
     }]
   ,
   age: {
@@ -34,7 +34,7 @@ const petSchema = new Schema({
   ,
   good_with: [{
     type: String,
-    enum: ['dogs', 'cats', 'children']
+    enum: ['', 'dogs', 'cats', 'children']
   }],
 });
 
