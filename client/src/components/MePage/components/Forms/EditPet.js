@@ -170,13 +170,7 @@ class EditPet extends Component {
                             </Form.Control.Feedback>
                           </Col>
                           <Col xs={6}>
-                            <Form.Label>Photo:</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="photo"
-                              onChange={handleChange}
-                              value={values.photo}
-                            />
+                        
                             <Form.Group controlId="exampleForm.ControlSelect2">
                               <Form.Label>Availability:</Form.Label>
                               <Form.Control

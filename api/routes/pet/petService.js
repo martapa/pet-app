@@ -47,7 +47,7 @@ exports.createPet = async (petData, shelterId, buffer) => {
   try {
     if (buffer) {
       console.log(pet);
-      const awsImage = await awsService.resizeAndUpload(buffer.buffer, pet._id, 'pets');
+      const awsImage = await awsService.resizeAndUpload(buffer.buffer, 'pets');
       //console.log(awsImage)
 
       pet.photo = awsImage;

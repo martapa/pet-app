@@ -272,13 +272,7 @@ class EditProfile extends Component {
                                 </Form.Control.Feedback>
                               </Form.Group>
                             </Form.Row>
-                            <Form.Label>Avatar:</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="avatar"
-                              onChange={handleChange}
-                              value={values.avatar}
-                            />
+                            
                           </Col>
                         </Row>
                       </Container>

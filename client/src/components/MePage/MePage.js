@@ -40,6 +40,8 @@ class MePage extends Component {
     this.handleClickDelete = this.handleClickDelete.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
     this.handleClickAddPet = this.handleClickAddPet.bind(this);
+    this.handleClickEditProfilePhoto = this.handleClickEditProfilePhoto.bind(this);
+
   }
 
   handleClose() {
@@ -74,6 +76,11 @@ class MePage extends Component {
   async handleClickEdit() {
     const id = this.props.shelter_user._id;
     this.props.history.push(`/profile-edit/${id}`);
+  }
+
+  async handleClickEditProfilePhoto() {
+    const id = this.props.shelter_user._id;
+    this.props.history.push(`/profile-photo-edit/${id}`);
   }
   handleClickAddPet() {
     //console.log('add pet')
@@ -129,7 +136,9 @@ class MePage extends Component {
                     </ul>
                   </Col>
                 </Row>
-
+                <Button className="button outline" onClick={this.handleClickEditProfilePhoto}>
+                  Change Photo
+                </Button>
                 <Button className="button" onClick={this.handleClickAddPet}>
                   Add Pet
                 </Button>
@@ -140,6 +149,7 @@ class MePage extends Component {
                 <Button className="button outline" onClick={this.handleShow}>
                   Delete Account
                 </Button>
+
               </Col>
               <Col sm={8}>
                 <Row>{this.renderList()}</Row>

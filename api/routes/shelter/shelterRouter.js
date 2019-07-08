@@ -10,14 +10,14 @@ const tokenService = require('../../utils/tokenService');
 const { ClientError } = require('../../utils/errors');
 const requiresAuth = require('../../middleware/auth');
 const Shelter = require('./shelterModel');
+const awsService = require('../../utils/awsService');
+
 
 const axios = require('axios');
 const _ = require('lodash');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
-
 
 router
   .route('/')
@@ -75,6 +75,12 @@ router
       next(err);
     }
   });
+
+
+
+
+
+
 
   // router.route('/key').post(async (req, res, next) => {
   //   try {
@@ -148,6 +154,24 @@ router.route('/mypets').get(requiresAuth, async (req, res, next) => {
     next(err);
   }
 });
+
+router
+  .route('/editProfilePhoto')
+  .patch(requiresAuth, upload.single('file'), async (req, res, next) => {
+    const id = req.token.shelter.id;
+    console.log(req)
+
+    try {
+      const awsImage = await awsService.resizeAndUpload(req.file.buffer, 'shelters');
+      await Shelter.findOneAndUpdate({_id: id}, { 'avatar': awsImage  }, { new: true });
+
+      res.status(200).send({
+        data: [awsImage]
+      });
+    } catch (err) {
+      next(err);
+    }
+  })
 //get shelter info by specyfic shelter id
 router
   .route('/:id')
@@ -162,5 +186,8 @@ router
       next(err);
     }
   })
+
+
+
 
 exports.router = router;

@@ -11,6 +11,8 @@ import AddPetForm from './components/MePage/components/Forms/AddPetForm';
 import EditPet from './components/MePage/components/Forms/EditPet';
 import EditProfile from './components/MePage/components/Forms/EditProfile';
 import LogOutPage from './components/LogOutPage/LogOutPage';
+import EditProfilePhoto from './components/MePage/components/Forms/EditProfilePhoto';
+
 
 
 
@@ -28,6 +30,8 @@ export const routes = [
   { path: '/edit/:id', component: EditPet },
   { path: '/profile-edit/:id', component: EditProfile},
   { path: '/logout', component: LogOutPage},
+  { path: '/profile-photo-edit/:id', component: EditProfilePhoto},
+
 
 
 ];

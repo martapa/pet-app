@@ -31,10 +31,7 @@ exports.getShelterById = async id => {
 // check if this works
 exports.updateShelter = async (id, updated) => {
   const { email, password, shelter_name, description, address, phone, location } = updated;
-  const newLocation = {
-      type:'Point',
-      coordinates: location
-    };
+
 
   try {
 
