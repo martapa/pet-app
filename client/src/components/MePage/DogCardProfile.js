@@ -17,6 +17,8 @@ class DogCardProfile extends Component {
 
     this.handleClickDelete = this.handleClickDelete.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
+    this.handleClickEditPhoto = this.handleClickEditPhoto.bind(this);
+
   }
   handleClose() {
     this.setState({ show: false });
@@ -32,6 +34,11 @@ class DogCardProfile extends Component {
 
 
   }
+  async handleClickEditPhoto() {
+    const id = this.props.dog._id;
+    this.props.history.push(`/pet-photo-edit/${this.props.dog._id}`);
+  }
+
   async handleClickEdit() {
     const id = this.props.dog._id;
     this.props.history.push(`/edit/${this.props.dog._id}`);
@@ -77,6 +84,12 @@ class DogCardProfile extends Component {
                 onClick={this.handleClickEdit}
               >
                 Edit
+              </Button>
+              <Button
+                className="button outline small"
+                onClick={this.handleClickEditPhoto}
+              >
+                Edit Photo
               </Button>
             </Card.Body>
           </Card>

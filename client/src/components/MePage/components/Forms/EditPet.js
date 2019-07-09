@@ -170,7 +170,7 @@ class EditPet extends Component {
                             </Form.Control.Feedback>
                           </Col>
                           <Col xs={6}>
-                        
+
                             <Form.Group controlId="exampleForm.ControlSelect2">
                               <Form.Label>Availability:</Form.Label>
                               <Form.Control

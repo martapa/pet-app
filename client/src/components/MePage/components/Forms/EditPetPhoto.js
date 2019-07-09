@@ -11,23 +11,27 @@ import '../../../../styles/errors.scss';
 
 //const phoneRegEx =
 
-class EditProfilePhoto extends Component {
+class EditPetPhoto extends Component {
   constructor(props) {
     super(props);
     this.state = {
       serverErrors: '',
       file: {},
+      pet: {}
     };
     this.handleClickCancel = this.handleClickCancel.bind(this);
   }
   handleClickCancel() {
-    this.props.history.push('/');
+    this.props.history.push('/me');
   }
-  // async componentDidMount(){
-  //   const shelter_id = this.props.match.params.id;
-  //   const response = await axios.get(`/shelters/${shelter_id}`);
-  //   this.setState({shelter: response.data.data[0]});
-  // }
+  async componentDidMount() {
+    const pet_id = this.props.match.params.id;
+    const response = await axios.get(`/pets/${pet_id}`);
+    this.setState({ pet: response.data.data[0][0]} );
+    //console.log(this.state)
+
+  }
+
 
   render() {
     return (
@@ -57,9 +61,11 @@ class EditProfilePhoto extends Component {
 
                     data.append('file', this.state.file);
                     const token = getToken();
+                    const id = this.state.pet._id;
 
-                    const post_shelter = await axios.patch(
-                      '/shelters/editProfilePhoto/',
+
+                    const post_pet = await axios.patch(
+                      `/pets/editPetPhoto/${id}`,
                       data,
                       {
                         headers: {
@@ -70,13 +76,11 @@ class EditProfilePhoto extends Component {
                     );
                     this.props.history.push('/me');
                   } catch (error) {
-                    this.setState({
-                      serverErrors: error.response.data.error
-                    });
+                    console.log(error)
                   }
                 }}
                 initialValues={{
-                  avatar: ''
+                  photo: ''
                 }}
               >
                 {({
@@ -95,7 +99,7 @@ class EditProfilePhoto extends Component {
                           <Form.Label>Upload Photo</Form.Label>
                           <Form.Control
                             type="file"
-                            name="avatar"
+                            name="photo"
                             onChange={event => {
                               this.setState({
                                 file: event.target.files[0]
@@ -124,4 +128,4 @@ class EditProfilePhoto extends Component {
     );
   }
 }
-export default withRouter(EditProfilePhoto);
+export default withRouter(EditPetPhoto);

@@ -1,5 +1,10 @@
 const express = require('express');
 const multer = require('multer');
+const awsService = require('../../utils/awsService');
+const Shelter = require('../shelter/shelterModel');
+const Pet = require('./petModel');
+
+
 // const storage = multer.diskStorage({
 //       destination: function (req, file, cb) {
 //       cb(null, 'public')
@@ -34,7 +39,6 @@ router
     }
   })
   .post(requiresAuth, upload.single('file'), async (req, res, next) => {
-
     const shelterId = req.token.shelter.id;
     try {
       const pet = await petService.createPet(req.body, shelterId, req.file);
@@ -94,13 +98,42 @@ router
     const { id } = req.params;
     const shelterId = req.token.shelter.id;
 
-    console.log(req.body);
+    //console.log(req.body);
     try {
       const pet = await petService.updatePet(id, req.body, shelterId);
       //console.log(pet);
       res.status(200).send({
         data: [pet]
       });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+router
+  .route('/editPetPhoto/:id')
+  .patch(requiresAuth, upload.single('file'), async (req, res, next) => {
+    const shelterId = req.token.shelter.id;
+    const { id } = req.params;
+    //console.log(req)
+    try {
+      const awsImage = await awsService.resizeAndUpload(
+        req.file.buffer,
+        'pets'
+      );
+      const shelter = await Shelter.findById(shelterId);
+
+      if (shelter.pets.filter(pet => pet.toString() === id).length > 0) {
+        const pet = await Pet.findOneAndUpdate(
+          { _id: id },
+          { photo: awsImage },
+          { new: true }
+        );
+
+        res.status(200).send({
+          data: [awsImage]
+        });
+      }
     } catch (err) {
       next(err);
     }
