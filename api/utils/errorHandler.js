@@ -1,7 +1,5 @@
-// Import internal dependencies
-const { HTTPClientError, HTTP404Error } = require('./httpErrors');
+const { HTTP404Error, HTTPClientError } = require('./httpErrors');
 
-// Handle client error
 exports.clientError = (err, req, res, next) => {
   if (err instanceof HTTPClientError) {
     res.status(err.statusCode).json({ error: err.message });
@@ -10,16 +8,16 @@ exports.clientError = (err, req, res, next) => {
   }
 };
 
-// Handle not found error
 exports.notFoundError = () => {
   throw new HTTP404Error('Method Not Found');
 };
 
-// Handle server error
 exports.serverError = (err, res, next) => {
   console.error(err);
 
-  if (process.env.NODE_ENV === 'production')
-    res.status(500).send('Internal Server Error');
-  else res.status(500).send(err.stack);
+  if (process.env.NODE_ENV === 'production') {
+    res.status(500).send({ error: 'Internal Server Error' });
+  } else {
+    res.status(500).send(err.stack);
+  }
 };

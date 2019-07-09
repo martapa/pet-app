@@ -1,4 +1,4 @@
-const { handleBodyRequestParsing } = require('./common');
+const { handleRequestBodyParsing } = require('./common');
+const { handleHelmet } = require('./helmet');
 
-module.exports = [
-  handleBodyRequestParsing ];
+module.exports = [handleHelmet, handleRequestBodyParsing];

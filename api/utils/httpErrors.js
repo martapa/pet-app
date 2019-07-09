@@ -1,8 +1,10 @@
-// HTTP client error
 class HTTPClientError extends Error {
   constructor(message) {
-    if (message instanceof Object) super(JSON.stringify(message));
-    else super(message);
+    if (message instanceof Object) {
+      super(JSON.stringify(message));
+    } else {
+      super(message);
+    }
 
     Error.captureStackTrace(this, this.constructor);
 
@@ -13,7 +15,6 @@ class HTTPClientError extends Error {
 
 exports.HTTPClientError = HTTPClientError;
 
-// HTTP 400 error
 class HTTP400Error extends HTTPClientError {
   constructor(message = 'Bad Request') {
     super(message);
@@ -24,7 +25,6 @@ class HTTP400Error extends HTTPClientError {
 
 exports.HTTP400Error = HTTP400Error;
 
-// HTTP 401 error
 class HTTP401Error extends HTTPClientError {
   constructor(message = 'Unauthorized') {
     super(message);
@@ -35,7 +35,6 @@ class HTTP401Error extends HTTPClientError {
 
 exports.HTTP401Error = HTTP401Error;
 
-// HTTP 403 error
 class HTTP403Error extends HTTPClientError {
   constructor(message = 'Forbidden') {
     super(message);
@@ -46,7 +45,6 @@ class HTTP403Error extends HTTPClientError {
 
 exports.HTTP403Error = HTTP403Error;
 
-// HTTP 404 error
 class HTTP404Error extends HTTPClientError {
   constructor(message = 'Not Found') {
     super(message);

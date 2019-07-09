@@ -189,7 +189,7 @@ exports.login = async (email, password) => {
 
     if (!match) throw new HTTP403Error('User Or Password Incorrect');
 
-    const token = tokenService.create(user);
+    const token = tokenService.generateToken(user);
 
     return token;
   } catch (e) {

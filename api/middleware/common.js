@@ -1,7 +1,6 @@
 const bodyParser = require('body-parser');
 
-exports.handleBodyRequestParsing = (router) => {
-  console.log("body parser");
-  router.use(bodyParser.urlencoded({ extended: true }));
+exports.handleRequestBodyParsing = router => {
   router.use(bodyParser.json());
+  router.use(bodyParser.urlencoded({ extended: true }));
 };

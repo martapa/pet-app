@@ -5,7 +5,6 @@ const { HTTP400Error } = require('../../utils/httpErrors');
 
 //initiate a router
 const router = express.Router();
-const { ClientError } = require('../../utils/errors');
 
 const axios = require('axios');
 

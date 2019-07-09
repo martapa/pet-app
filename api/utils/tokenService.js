@@ -1,9 +1,7 @@
-// Import internal dependencies
 const jwt = require('jsonwebtoken');
-const  SECRET = process.env.SECRET || 'super-secret-passphrase'
+const { SECRET } = require('./constants');
 
-// Create JWT token with user id in payload
-exports.create = shelter => {
+exports.generateToken = shelter => {
   const { _id: id } = shelter;
   const payload = {
     shelter: {
@@ -11,10 +9,9 @@ exports.create = shelter => {
     }
   };
 
-  return jwt.sign(payload, SECRET, { expiresIn: '1 day' });
+  return jwt.sign(payload, SECRET, { expiresIn: '1h' });
 };
 
-// Verify JWT token
-exports.verify = token => {
+exports.verifyToken = token => {
   return jwt.verify(token, SECRET);
 };

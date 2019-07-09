@@ -19,7 +19,6 @@ const { router: shelterRouter } = require('./routes/shelter/shelterRouter');
 const { router: petRouter } = require('./routes/pet/petRouter');
 const { router: geocodeRouter } = require('./routes/geocode/geocodeRouter');
 
-
 applyMiddleware(middleWare, router);
 
 router.use('/shelters', shelterRouter);

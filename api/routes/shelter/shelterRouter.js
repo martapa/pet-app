@@ -7,7 +7,6 @@ const router = express.Router();
 const shelterService = require('./shelterService');
 const petService = require('../pet/petService');
 const tokenService = require('../../utils/tokenService');
-const { ClientError } = require('../../utils/errors');
 const requiresAuth = require('../../middleware/auth');
 const Shelter = require('./shelterModel');
 const awsService = require('../../utils/awsService');

@@ -1,6 +1,5 @@
-
 exports.applyMiddleware = (middlewareWrapper, router) => {
-  for (const wrapper of middlewareWrapper) {
-    wrapper(router);
-  }
+  middlewareWrapper.map(wrapper => {
+    return wrapper(router);
+  });
 };
