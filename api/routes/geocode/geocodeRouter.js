@@ -1,40 +1,29 @@
 const express = require('express');
-require('dotenv').config()
-const { HTTP400Error } = require('../../utils/httpErrors');
-
-
-//initiate a router
-const router = express.Router();
-
 const axios = require('axios');
 
-const { ENV_GOOGLE_KEY } = require('../../utils/constants')
-//const API_KEY = process.env.GOOGLE_API || process.env.ENV_GOOGLE_KEY
-//console.log("here",process.env.ENV_GOOGLE_KEY)
+const { HTTP400Error } = require('../../utils/httpErrors');
+const { ENV_GOOGLE_KEY } = require('../../utils/constants');
 
-router
-  .route('/')
-  .get(async (req, res, next) => {
-    try {
-      const response = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=,+${
-          req.query.address
-        }&key=${ENV_GOOGLE_KEY}`
-      );
+const router = express.Router();
 
-      if (response.data.status ==="ZERO_RESULTS"){
-        throw new HTTP400Error('No address found')
-      }
-      else {
-        res.status(200).send({
-          data: [response.data]
-        });
-      }
+router.route('/').get(async (req, res, next) => {
+  try {
+    const response = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=,+${
+        req.query.address
+      }&key=${ENV_GOOGLE_KEY}`
+    );
 
-
-    } catch (err) {
-      next(err);
+    if (response.data.status === 'ZERO_RESULTS') {
+      throw new HTTP400Error('No address found');
+    } else {
+      res.status(200).send({
+        data: [response.data]
+      });
     }
-  });
+  } catch (err) {
+    next(err);
+  }
+});
 
 exports.router = router;

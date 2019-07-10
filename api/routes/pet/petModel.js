@@ -6,12 +6,12 @@ const petSchema = new Schema({
     type: String,
     required: true
   },
-  size:
-    [{
+  size: [
+    {
       type: String,
-      enum: ['', 'extra-small','small', 'medium', 'large', 'extra-large']
-    }]
-  ,
+      enum: ['', 'extra-small', 'small', 'medium', 'large', 'extra-large']
+    }
+  ],
   age: {
     type: Number,
     required: true
@@ -26,16 +26,18 @@ const petSchema = new Schema({
     type: String,
     max: 1000
   },
-  is_adopted:
-    [{
+  is_adopted: [
+    {
       type: String,
-      enum: ['For adoption','Already adopted']
-    }]
-  ,
-  good_with: [{
-    type: String,
-    enum: ['', 'dogs', 'cats', 'children']
-  }],
+      enum: ['For adoption', 'Already adopted']
+    }
+  ],
+  good_with: [
+    {
+      type: String,
+      enum: ['', 'dogs', 'cats', 'children']
+    }
+  ]
 });
 
 module.exports = mongoose.model('pets', petSchema);

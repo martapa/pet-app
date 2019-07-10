@@ -1,12 +1,14 @@
 const Shelter = require('./shelterModel');
 const mongoose = require('mongoose');
-const tokenService = require('../../utils/tokenService');
-const { HTTP404Error, HTTP403Error, HTTP400Error } = require('../../utils/httpErrors');
 const validator = require('validator');
+
+const tokenService = require('../../utils/tokenService');
+const {
+  HTTP404Error,
+  HTTP403Error,
+  HTTP400Error
+} = require('../../utils/httpErrors');
 const awsService = require('../../utils/awsService');
-
-
-
 
 exports.getAllShelters = async () => {
   try {
@@ -16,8 +18,6 @@ exports.getAllShelters = async () => {
   }
 };
 
-
-
 exports.getShelterById = async id => {
   try {
     return await Shelter.findById(id);
@@ -26,28 +26,39 @@ exports.getShelterById = async id => {
   }
 };
 
-
-
-// check if this works
 exports.updateShelter = async (id, updated) => {
-  const { email, password, shelter_name, description, address, phone, location } = updated;
-
+  const {
+    email,
+    password,
+    shelter_name,
+    description,
+    address,
+    phone,
+    location
+  } = updated;
 
   try {
-
-    if (!email || !password || !shelter_name || !description || !address) throw new HTTP400Error('Something is missing');
+    if (!email || !password || !shelter_name || !description || !address)
+      throw new HTTP400Error('Something is missing');
 
     if (!validator.isEmail(email)) throw new HTTP400Error('Invalid email');
 
-    if (phone && !validator.isMobilePhone(phone)) throw new HTTP400Error('Invalid phone number');
+    if (phone && !validator.isMobilePhone(phone))
+      throw new HTTP400Error('Invalid phone number');
 
-    if (location.type !== "Point" ) throw new HTTP400Error('Invalid location type');
+    if (location.type !== 'Point')
+      throw new HTTP400Error('Invalid location type');
 
-    if (location.coordinates[0] < -180 ||  location.coordinates[0] > 180 ) throw new HTTP400Error('Invalid coordinates');
+    if (location.coordinates[0] < -180 || location.coordinates[0] > 180)
+      throw new HTTP400Error('Invalid coordinates');
 
-    if (location.coordinates[1] > 90 ||  location.coordinates[1] < 0 ) throw new HTTP400Error('Invalid coordinates');
+    if (location.coordinates[1] > 90 || location.coordinates[1] < 0)
+      throw new HTTP400Error('Invalid coordinates');
 
-    const shelter = await Shelter.findOneAndUpdate({_id: id}, updated, { new: true });
+    const shelter = await Shelter.findOneAndUpdate({ _id: id }, updated, {
+      new: true
+    });
+
     return shelter;
   } catch (err) {
     throw err;
@@ -64,7 +75,6 @@ exports.deleteShelter = async id => {
 
 exports.aggregateShelterWithPets = async (longitude, latitude) => {
   try {
-    //console.log(longitude);
     const ag = await Shelter.aggregate([
       {
         $geoNear: {
@@ -95,9 +105,9 @@ exports.aggregateShelterWithPets = async (longitude, latitude) => {
   }
 };
 
-
 exports.getShelterPets = async id => {
   const ObjectId = mongoose.Types.ObjectId;
+
   try {
     const sp = await Shelter.aggregate([
       {
@@ -114,54 +124,68 @@ exports.getShelterPets = async id => {
         }
       }
     ]);
+
     return sp;
   } catch (err) {
     throw err;
   }
 };
 exports.createShelter = async (shelterData, buffer) => {
-  const { email, password, shelter_name, description, address, phone } = shelterData;
-  console.log(shelterData.location)
+  const {
+    email,
+    password,
+    shelter_name,
+    description,
+    address,
+    phone
+  } = shelterData;
 
-  const coordinates = shelterData.location.split(",");
-
-
-  //shelterData.loaction = newLocation;
-  shelterData["location"] = {
-      type:'Point',
-      coordinates: coordinates.map(Number)
-    }
+  const coordinates = shelterData.location.split(',');
+  shelterData['location'] = {
+    type: 'Point',
+    coordinates: coordinates.map(Number)
+  };
 
   try {
     const users_email = await Shelter.findOne({ email });
 
-    if (!email || !password || !shelter_name || !description || !address) throw new HTTP400Error('Something is missing');
+    if (!email || !password || !shelter_name || !description || !address)
+      throw new HTTP400Error('Something is missing');
 
     if (!validator.isEmail(email)) throw new HTTP400Error('Invalid email');
 
     if (email === users_email) throw new HTTP400Error('User already exists');
 
-    if (phone && !validator.isMobilePhone(phone)) throw new HTTP400Error('Invalid phone number');
+    if (phone && !validator.isMobilePhone(phone))
+      throw new HTTP400Error('Invalid phone number');
 
-    if (shelterData.location.type !== "Point" ) throw new HTTP400Error('Invalid location type');
+    if (shelterData.location.type !== 'Point')
+      throw new HTTP400Error('Invalid location type');
 
-    if (shelterData.location.coordinates[0] < -180 ||  shelterData.location.coordinates[0] > 180 ) throw new HTTP400Error('Invalid coordinates');
+    if (
+      shelterData.location.coordinates[0] < -180 ||
+      shelterData.location.coordinates[0] > 180
+    )
+      throw new HTTP400Error('Invalid coordinates');
 
-    if (shelterData.location.coordinates[1] > 90 ||  shelterData.location.coordinates[1] < 0 ) throw new HTTP400Error('Invalid coordinates');
-
-
-
-    // To do: check with Google if address is valid
-    // check if coordinates correct with adress
+    if (
+      shelterData.location.coordinates[1] > 90 ||
+      shelterData.location.coordinates[1] < 0
+    )
+      throw new HTTP400Error('Invalid coordinates');
 
     const user = await Shelter.findOne({ email });
+
     if (user) throw new HTTP404Error('User Already Exists');
 
     const shelter = new Shelter(shelterData);
-    console.log('shelter')
-    console.log(shelter)
+
     if (buffer) {
-      const awsImage = await awsService.resizeAndUpload(buffer.buffer, shelter._id, 'shelters');
+      const awsImage = await awsService.resizeAndUpload(
+        buffer.buffer,
+        shelter._id,
+        'shelters'
+      );
 
       shelter.avatar = awsImage;
 
@@ -193,6 +217,6 @@ exports.login = async (email, password) => {
 
     return token;
   } catch (e) {
-      throw e;
+    throw e;
   }
 };

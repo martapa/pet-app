@@ -38,15 +38,15 @@ const shelterSchema = new Schema({
     }
   ],
   location: {
-   type: { type: String },
-   coordinates: []
+    type: { type: String },
+    coordinates: []
   },
   address: {
-    type: String,
+    type: String
   }
 });
 
-shelterSchema.index({ location: "2dsphere" });
+shelterSchema.index({ location: '2dsphere' });
 
 shelterSchema.pre('save', async function(next) {
   const shelter = this;
@@ -69,6 +69,5 @@ shelterSchema.pre('save', async function(next) {
 shelterSchema.methods.comparePassword = function(password) {
   return bcrypt.compare(password, this.password);
 };
-
 
 module.exports = mongoose.model('shelters', shelterSchema);

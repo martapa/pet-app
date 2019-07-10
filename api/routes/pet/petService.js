@@ -1,13 +1,13 @@
+const mongoose = require('mongoose');
+const { _, isEmpty } = require('lodash');
+
 const Pet = require('./petModel');
 const Shelter = require('../shelter/shelterModel');
-const mongoose = require('mongoose');
-
 const {
   HTTP404Error,
   HTTP403Error,
   HTTP400Error
 } = require('../../utils/httpErrors');
-const { _, isEmpty } = require('lodash');
 const awsService = require('../../utils/awsService');
 
 exports.getAllPets = async () => {
@@ -17,6 +17,7 @@ exports.getAllPets = async () => {
     throw err;
   }
 };
+
 exports.createPet = async (petData, shelterId, buffer) => {
   const pet = new Pet(petData);
   const is_adopted_arr = ['For adoption', 'Already adopted'];
@@ -28,9 +29,6 @@ exports.createPet = async (petData, shelterId, buffer) => {
     'large',
     'extra-large'
   ];
-  //console.log(pet.good_with)
-  //console.log(good_with_arr);
-
   const good_with_arr = ['', 'dogs', 'cats', 'children'];
 
   const filtered = pet.good_with.every(e => good_with_arr.includes(e));
@@ -47,9 +45,7 @@ exports.createPet = async (petData, shelterId, buffer) => {
 
   try {
     if (buffer) {
-      console.log(pet);
       const awsImage = await awsService.resizeAndUpload(buffer.buffer, 'pets');
-      //console.log(awsImage)
 
       pet.photo = awsImage;
 
@@ -68,12 +64,9 @@ exports.createPet = async (petData, shelterId, buffer) => {
 };
 
 exports.getPetById = async id => {
-  console.log(id);
   const ObjectId = mongoose.Types.ObjectId;
 
   try {
-    //return await Pet.findById(id);
-    //console.log(id);
     const p = await Pet.aggregate([
       { $match: { _id: ObjectId(id) } },
       {
@@ -89,24 +82,7 @@ exports.getPetById = async id => {
         }
       }
     ]);
-    return p;
-    // const sp = await Pet.aggregate([
-    //   { $match: { _id: ObjectId(id) } },
-    //   {
-    //     $lookup: {
-    //       from: 'shelters',
-    //       let: { id: '$_id' },
-    //       pipeline: [
-    //         { $match: { $expr: { $in: [ObjectId(id), '$pets'] } } },
-    //         { $unwind: '$pets' },
-    //         { $match: { $expr: { $eq: ['$pets', '$$id'] } } },
-    //
-    //       ],
-    //       as: 'shelter_info'
-    //     }
-    //   }
-    // ]);
-    //console.log(sp);
+
     return p;
   } catch (err) {
     throw err;
@@ -124,10 +100,12 @@ exports.deletePet = async id => {
 exports.updatePet = async (petId, updated, shelterId) => {
   try {
     const shelter = await Shelter.findById(shelterId);
+
     if (shelter.pets.filter(pet => pet.toString() === petId).length > 0) {
       const pet = await Pet.findOneAndUpdate({ _id: petId }, updated, {
         new: true
       });
+
       return pet;
     }
   } catch (err) {
