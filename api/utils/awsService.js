@@ -6,16 +6,17 @@ const uuidv1 = require('uuid/v1');
 
 const { HTTP400Error } = require('./httpErrors');
 
-require('dotenv').config();
+//require('dotenv').config();
+const { AWS_S3_BUCKET, AWS_S3_REGION  } = require('./constants');
 
-AWS.config.update({ region: process.env.AWS_S3_REGION });
+AWS.config.update({ region: AWS_S3_REGION });
 
 const s3 = new AWS.S3();
 
 exports.resizeAndUpload = async (file, folder) => {
 
   const uploadParams = {
-    Bucket: process.env.AWS_S3_BUCKET,
+    Bucket: AWS_S3_BUCKET,
     Key: '',
     Body: '',
     ContentType: 'image/jpeg'

@@ -8,8 +8,8 @@ const router = express.Router();
 
 const axios = require('axios');
 
-
-const API_KEY = process.env.GOOGLE_API || process.env.ENV_GOOGLE_KEY
+const { ENV_GOOGLE_KEY } = require('../../utils/constants')
+//const API_KEY = process.env.GOOGLE_API || process.env.ENV_GOOGLE_KEY
 //console.log("here",process.env.ENV_GOOGLE_KEY)
 
 router
@@ -19,7 +19,7 @@ router
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?address=,+${
           req.query.address
-        }&key=${API_KEY}`
+        }&key=${ENV_GOOGLE_KEY}`
       );
 
       if (response.data.status ==="ZERO_RESULTS"){

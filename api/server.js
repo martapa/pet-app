@@ -5,12 +5,7 @@ const router = express();
 const errorHandlers = require('./middleware/errorHandlers');
 const path = require('path');
 
-const PORT = process.env.PORT || 3001;
-const URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/pets_project';
-//const KEY = process.env.GOOGLE_KEY || 'key'
-
-//const PORT = 3001;
-//const URL = 'mongodb://localhost:27017/pets_project';
+const { PORT, MONGODB_URI } = require('./utils/constants');
 
 const { applyMiddleware } = require('./utils');
 const middleWare = require('./middleware');
@@ -41,8 +36,8 @@ applyMiddleware(errorHandlers, router);
 
 const server = http.createServer(router);
 
-mongoose.connect(URL, { useNewUrlParser: true }).then(async () => {
-  console.log(`Connected to database at: ${URL}`);
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true }).then(async () => {
+  console.log(`Connected to database at: ${MONGODB_URI}`);
   try {
     //await require('./utils/seed').truncate();
     //await require('./utils/seed').seed();
