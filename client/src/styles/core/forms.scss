@@ -1,0 +1,30 @@
+@import '../variables/colors.scss';
+@import '../variables/functions.scss';
+
+.my-form {
+  padding: rem(64) 0;
+
+  > .row {
+    align-items: center;
+    height: 100vh;
+
+    .col-10 {
+      border: 5px solid $white;
+      border-radius: 10px;
+      padding: rem(24);
+
+      input {
+        margin-bottom: rem(24);
+      }
+
+      .button {
+        margin: rem(16) 0 0 rem(8);
+        width: calc(50% - #{rem(8)});
+
+        + button {
+          margin: rem(16) 0 0 rem(8);
+        }
+      }
+    }
+  }
+}

@@ -9,17 +9,18 @@ import './dog-card-profile.scss';
 class DogCardProfile extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       show: false
     };
+
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-
     this.handleClickDelete = this.handleClickDelete.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
     this.handleClickEditPhoto = this.handleClickEditPhoto.bind(this);
-
   }
+
   handleClose() {
     this.setState({ show: false });
   }
@@ -27,20 +28,18 @@ class DogCardProfile extends Component {
   handleShow() {
     this.setState({ show: true });
   }
+
   async handleClickDelete() {
     const id = this.props.dog._id;
     await this.props.deleteDog(id);
     this.setState({ show: false });
-
-
   }
+
   async handleClickEditPhoto() {
-    const id = this.props.dog._id;
     this.props.history.push(`/pet-photo-edit/${this.props.dog._id}`);
   }
 
   async handleClickEdit() {
-    const id = this.props.dog._id;
     this.props.history.push(`/edit/${this.props.dog._id}`);
   }
 
@@ -67,7 +66,7 @@ class DogCardProfile extends Component {
         <Col sm={4}>
           <Card className="dog-card-profile">
             <div className="img-container">
-              <img src={this.props.dog.photo} />
+              <img src={this.props.dog.photo} alt={this.props.dog.name} />
             </div>
             <Card.Body>
               <Card.Title className="title-name">

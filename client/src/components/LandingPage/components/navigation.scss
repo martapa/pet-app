@@ -1,7 +1,9 @@
-@import '../../../styles/colours.scss';
+@import '../../../styles/variables/colors.scss';
 
-.dark{
-  .navbar-light .navbar-nav .nav-link {
+.dark {
+  .navbar-light .navbar-nav .nav-link,
+  .navbar-brand,
+  .navbar-brand:focus {
     color: $dark-grey;
 
     &:hover {
@@ -11,6 +13,8 @@
 }
 
 .light {
+  .navbar-brand,
+  .navbar-brand:focus,
   .navbar-light .navbar-nav .nav-link {
     color: $bright-yellow;
 

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import { Container } from 'react-bootstrap';
-import Navigation from './components/LandingPage/components/Navigation';
-
 import { connect } from 'react-redux';
+
+import Navigation from './components/LandingPage/components/Navigation';
+import Footer from './components/Footer/Footer';
 import { getShelterUser } from './actions';
 import { getToken } from './services/tokenService';
 
 import Routes from './Routes.js';
-import './App.scss'
+import './App.scss';
 
 class App extends Component {
   componentDidMount() {
@@ -22,6 +22,7 @@ class App extends Component {
       <>
         <Navigation />
         <Routes />
+        <Footer />
       </>
     );
   }

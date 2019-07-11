@@ -1,4 +1,4 @@
-@import '../../styles/colours.scss';
+@import '../../styles/variables/colors.scss';
 
 header .col {
   padding-left: 0;
@@ -9,7 +9,6 @@ header {
   position: absolute;
   width: 100%;
   z-index: 1;
-  //background: #FCFC53;
 }
 
 .main-col {

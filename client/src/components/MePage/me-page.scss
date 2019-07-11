@@ -1,10 +1,9 @@
-@import '../../styles/colours.scss';
-@import '../../styles/functions.scss';
+@import '../../styles/variables/colors.scss';
+@import '../../styles/variables/functions.scss';
 
 .me-page {
   padding-top: 50px;
   padding-bottom: 50px;
-
 
   h2 {
     font-size: rem(19);
@@ -12,8 +11,9 @@
     font-weight: 700;
     margin-bottom: rem(8);
   }
+
   h4 {
-    margin:auto;
+    margin: auto;
     padding-top: rem(48);
     padding-bottom: rem(48);
   }

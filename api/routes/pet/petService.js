@@ -33,7 +33,7 @@ exports.createPet = async (petData, shelterId, buffer) => {
 
   const filtered = pet.good_with.every(e => good_with_arr.includes(e));
 
-  if (!filtered) throw new HTTP400Error('Invalid dog informationnnn');
+  if (!filtered) throw new HTTP400Error('Invalid dog information');
 
   if (!size_arr.includes(pet.size[0]))
     throw new HTTP400Error('Invalid dog information size');

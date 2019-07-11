@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-//import { Navbar, Nav, Form, Button, FormControl } from 'react-bootstrap';
-//import { LinkContainer, Routes } from "react-router-bootstrap";
 import { Link, NavLink, withRouter } from 'react-router-dom';
-import { Nav, Navbar, Form, Button, FormControl, Image } from 'react-bootstrap';
-import { Formik } from 'formik';
-import axios from 'axios';
+import { Nav, Navbar } from 'react-bootstrap';
 import Search from '../../commons/Search';
 
-import * as actions from '../../../actions';
 import { getDogsNearYou } from '../../../actions/index';
 
 import { connect } from 'react-redux';
@@ -41,7 +36,6 @@ class Navigation extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <header
         className={
@@ -54,7 +48,7 @@ class Navigation extends Component {
           <div className="col">
             <Navbar expand="lg" className="navbar">
               <Link to="/" className="navbar-brand">
-                Pet Search
+                Adopster
               </Link>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
@@ -91,7 +85,6 @@ class Navigation extends Component {
 }
 
 function mapStateToProps(state) {
-  //console.log('navigation', state);
   return {
     shelter_user: state.shelter_user,
     dogs_near_you: state.dogs_near_you

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { debounce } from 'lodash';
 import { Form, Button, Col, Container, Row } from 'react-bootstrap';
 import * as yup from 'yup';
 import { Formik, FieldArray } from 'formik';
@@ -8,13 +7,11 @@ import { withRouter } from 'react-router-dom';
 
 import { getToken } from '../../../../services/tokenService';
 
-import '../../../../styles/forms.scss';
+import '../../../../styles/core/forms.scss';
 
-//const phoneRegEx
 const schema = yup.object({
   name: yup.string().required('Name is required'),
   size: yup.string(),
-
   age: yup.string().required('Age is required'),
   gender: yup.string(),
   photo: yup.string(),
@@ -24,7 +21,6 @@ const schema = yup.object({
     .max(1000, 'Maximum of 1000 characters'),
   is_adopted: yup.string().required('Required'),
   good_with: yup.string()
-  //good_with: yup.string().required('Please enter street number and name')
 });
 const categories = [
   { id: 'dogs', name: 'dogs' },
@@ -63,11 +59,13 @@ class AddPetForm extends Component {
             <Formik
               validationSchema={schema}
               onSubmit={async values => {
-                const good_with_arr = values.good_with[0] ? values.good_with[0].split(",") : [];
+                const good_with_arr = values.good_with[0]
+                  ? values.good_with[0].split(',')
+                  : [];
 
                 try {
-
                   const data = new FormData();
+
                   data.append('name', values.name);
                   data.append('size', values.size);
                   data.append('age', values.age);
@@ -76,19 +74,9 @@ class AddPetForm extends Component {
                   data.append('is_adopted', values.is_adopted);
                   data.append('good_with', good_with_arr);
                   data.append('file', this.state.file);
-                  const pet = {
-                    name: values.name,
-                    size: values.size,
-                    age: values.age,
-                    gender: values.gender,
-                    photo: this.state.file,
-                    description: values.description,
-                    is_adopted: values.is_adopted,
-                    good_with: values.good_with
-                  };
-                  console.log("post_pet",pet)
+
                   const token = getToken();
-                  const post_pet = await axios.post('/pets', data, {
+                  await axios.post('/pets', data, {
                     headers: {
                       Authorization: `Bearer ${token}`,
                       'content-type': 'multipart/form-data'
@@ -121,7 +109,7 @@ class AddPetForm extends Component {
                 errors,
                 setFieldValue
               }) => (
-                <Form onSubmit={handleSubmit} enctype="multipart/form-data">
+                <Form onSubmit={handleSubmit} encType="multipart/form-data">
                   <Container>
                     <Row>
                       <Col xs={6}>
@@ -136,7 +124,7 @@ class AddPetForm extends Component {
                         <Form.Control.Feedback type="invalid">
                           {errors.name}
                         </Form.Control.Feedback>
-                        <Form.Group controlId="exampleForm.ControlSelect1">
+                        <Form.Group>
                           <Form.Label>Size:</Form.Label>
                           <Form.Control
                             as="select"
@@ -166,7 +154,7 @@ class AddPetForm extends Component {
                         <Form.Control.Feedback type="invalid">
                           {errors.age}
                         </Form.Control.Feedback>
-                        <Form.Group controlId="exampleForm.ControlSelect2">
+                        <Form.Group>
                           <Form.Label>Gender:</Form.Label>
                           <Form.Control
                             as="select"
@@ -203,14 +191,12 @@ class AddPetForm extends Component {
                           type="file"
                           name="photo"
                           onChange={event => {
-
                             this.setState({
                               file: event.target.files[0]
                             });
                           }}
-                          value={values.photo}
                         />
-                        <Form.Group controlId="exampleForm.ControlSelect2">
+                        <Form.Group>
                           <Form.Label>Availability:</Form.Label>
                           <Form.Control
                             as="select"
@@ -267,7 +253,6 @@ class AddPetForm extends Component {
                       </Col>
                     </Row>
                   </Container>
-
                   <Button className="button" type="submit">
                     Add Pet!
                   </Button>

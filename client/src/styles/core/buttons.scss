@@ -1,30 +1,26 @@
-@import './styles/functions.scss';
+@import '../variables/colors.scss';
+@import '../variables/functions.scss';
 
 .button {
   background: $bright-yellow;
   border: 0;
-  color: $dark-grey;
   border-radius: 2rem;
-  padding: 1rem 2rem;
+  color: $dark-grey;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin-bottom: rem(16);
+  padding: rem(16) rem(24);
 
-  &:hover {
-    background: $pale-yellow;
-    color: $dark-grey;
-  }
-
+  &:hover,
   &:active:focus {
-    background: $bright-yellow;
+    background: $pale-yellow;
     color: $dark-grey;
   }
 
   &.small {
     font-size: rem(14);
-    padding: 0.5rem 1rem;
     margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
   }
-
 
   &.outline {
     background: none;
@@ -32,12 +28,12 @@
 
     &:hover {
       background: $light-grey;
-      color: #fff;
+      color: $white;
     }
 
     &:active:focus {
       background: $light-grey;
-      color: #fff;
+      color: $white;
     }
   }
 }

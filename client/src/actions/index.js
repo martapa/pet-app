@@ -12,6 +12,7 @@ import { getToken } from '../services/tokenService';
 
 export function getDogs() {
   const request = axios.get('/pets');
+
   return function(dispatch) {
     request.then(function(response) {
       dispatch({
@@ -24,9 +25,9 @@ export function getDogs() {
 
 export function getDogsNearYou(lng, lat) {
   const request = axios.get(`/shelters/near?lat=${lat}&lon=${lng}`);
+
   return function(dispatch) {
     request.then(function(response) {
-      //console.log(response);
       dispatch({
         type: GET_DOGS_NEAR,
         payload: response.data.data[0]
@@ -36,7 +37,6 @@ export function getDogsNearYou(lng, lat) {
 }
 
 export function userLogOut() {
-  //console.log('userLogOut');
   return {
     type: USER_LOGOUT,
     payload: 'User logged out'
@@ -45,9 +45,9 @@ export function userLogOut() {
 
 export function getDogDetail(id) {
   const request = axios.get(`/pets/${id}`);
+
   return function(dispatch) {
     request.then(function(response) {
-      //console.log("response", response)
       dispatch({
         type: GET_DOG_DETAIL,
         payload: response.data.data[0][0]
@@ -64,9 +64,9 @@ export function getMyDogs() {
       Authorization: `Bearer ${token}`
     }
   });
+
   return function(dispatch) {
     req.then(function(response) {
-      //console.log('response', response);
       dispatch({
         type: GET_MY_DOGS,
         payload: response.data.data[0].pets_profiles
@@ -109,7 +109,6 @@ export function deleteDog(id) {
 
   return function(dispatch) {
     req.then(function(response) {
-      console.log('response delete', response);
       dispatch({
         type: GET_MY_DOGS,
         payload: response.data.data[0][0].pets_profiles
@@ -117,26 +116,3 @@ export function deleteDog(id) {
     });
   };
 }
-
-// export function addDog(dog) {
-//   const token = getToken();
-//   const req = axios.post(
-//     '/pets',
-//     dog,
-//     {
-//       headers: {
-//         Authorization: `Bearer ${token}`
-//       }
-//     }
-//   );
-//
-//   return function(dispatch) {
-//     req.then(function(response) {
-//       console.log('response delete',response);
-//       dispatch({
-//         type: GET_MY_DOGS,
-//         payload: response.data.data[0][0].pets_profiles
-//       });
-//     });
-//   };
-// }

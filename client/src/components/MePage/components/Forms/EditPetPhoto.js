@@ -5,11 +5,8 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { getToken } from '../../../../services/tokenService';
 
-
-import '../../../../styles/forms.scss';
-import '../../../../styles/errors.scss';
-
-//const phoneRegEx =
+import '../../../../styles/core/forms.scss';
+import '../../../../styles/core/errors.scss';
 
 class EditPetPhoto extends Component {
   constructor(props) {
@@ -27,11 +24,8 @@ class EditPetPhoto extends Component {
   async componentDidMount() {
     const pet_id = this.props.match.params.id;
     const response = await axios.get(`/pets/${pet_id}`);
-    this.setState({ pet: response.data.data[0][0]} );
-    //console.log(this.state)
-
+    this.setState({ pet: response.data.data[0][0] });
   }
-
 
   render() {
     return (
@@ -42,7 +36,7 @@ class EditPetPhoto extends Component {
               <Container fluid className="errors">
                 <Row>
                   <Col />
-                  <Col xs={6} className="errors-col6">
+                  <Col xs={6} className="errors-col-6">
                     <p>{this.state.serverErrors}</p>
                   </Col>
                   <Col />
@@ -53,30 +47,21 @@ class EditPetPhoto extends Component {
             <Col xs={10}>
               <Formik
                 onSubmit={async values => {
-                  //console.log(values);
-
                   try {
                     const data = new FormData();
-                    //console.log('DATA',data)
-
                     data.append('file', this.state.file);
                     const token = getToken();
                     const id = this.state.pet._id;
 
-
-                    const post_pet = await axios.patch(
-                      `/pets/editPetPhoto/${id}`,
-                      data,
-                      {
-                        headers: {
-                          Authorization: `Bearer ${token}`,
-                          'content-type': 'multipart/form-data'
-                        }
+                    await axios.patch(`/pets/editPetPhoto/${id}`, data, {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                        'content-type': 'multipart/form-data'
                       }
-                    );
+                    });
                     this.props.history.push('/me');
                   } catch (error) {
-                    console.log(error)
+                    console.log(error);
                   }
                 }}
                 initialValues={{
@@ -92,7 +77,7 @@ class EditPetPhoto extends Component {
                   isValid,
                   errors
                 }) => (
-                  <Form onSubmit={handleSubmit} enctype="multipart/form-data">
+                  <Form onSubmit={handleSubmit} encType="multipart/form-data">
                     <Container>
                       <Row>
                         <Col xs={6}>
@@ -104,9 +89,7 @@ class EditPetPhoto extends Component {
                               this.setState({
                                 file: event.target.files[0]
                               });
-
                             }}
-
                           />
                         </Col>
                       </Row>

@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
-import {
-  Col,
-  Row,
-  Container,
-  Image,
-  Card,
-  Button,
-  Modal
-} from 'react-bootstrap';
-//import { getDogDetail } from '../../../actions/index';
+import { Col, Row, Container, Button, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { getMyDogs, userLogOut, getShelterUser } from '../../actions';
 import DogCardProfile from './DogCardProfile';
-import AddNewPetCard from './AddNewPetCard';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { removeToken, getToken } from '../../services/tokenService';
 import axios from 'axios';
 
@@ -40,8 +30,9 @@ class MePage extends Component {
     this.handleClickDelete = this.handleClickDelete.bind(this);
     this.handleClickEdit = this.handleClickEdit.bind(this);
     this.handleClickAddPet = this.handleClickAddPet.bind(this);
-    this.handleClickEditProfilePhoto = this.handleClickEditProfilePhoto.bind(this);
-
+    this.handleClickEditProfilePhoto = this.handleClickEditProfilePhoto.bind(
+      this
+    );
   }
 
   handleClose() {
@@ -53,7 +44,7 @@ class MePage extends Component {
   }
 
   renderListItem(dog) {
-    return <DogCardProfile dog={dog} key={dog.id} />;
+    return <DogCardProfile dog={dog} key={dog._id} />;
   }
 
   renderList() {
@@ -64,11 +55,13 @@ class MePage extends Component {
 
   async handleClickDelete() {
     let token = getToken();
-    const delete_shelter = await axios.delete('/shelters/', {
+
+    await axios.delete('/shelters/', {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
+
     token = removeToken();
     this.props.userLogOut();
     this.props.history.push('/');
@@ -83,7 +76,6 @@ class MePage extends Component {
     this.props.history.push(`/profile-photo-edit/${id}`);
   }
   handleClickAddPet() {
-    //console.log('add pet')
     this.props.history.push('/addform/');
   }
 
@@ -100,7 +92,7 @@ class MePage extends Component {
                 <Row>
                   <Col>
                     <div className="img-container">
-                      <img src={this.props.shelter_user.avatar} />
+                      <img src={this.props.shelter_user.avatar} alt={this.props.shelter_user.name} />
                     </div>
                     <ul>
                       {this.props.shelter_user.address && (
@@ -121,10 +113,10 @@ class MePage extends Component {
                           <p>{this.props.shelter_user.email}</p>
                         </li>
                       )}
-                      {this.props.shelter_user.volonteer_name && (
-                        <li key={this.props.shelter_user.volonteer_name}>
-                          <h2>Volonteer</h2>
-                          <p>{this.props.shelter_user.volonteer_name}</p>
+                      {this.props.shelter_user.volunteer_name && (
+                        <li key={this.props.shelter_user.volunteer_name}>
+                          <h2>volunteer</h2>
+                          <p>{this.props.shelter_user.volunteer_name}</p>
                         </li>
                       )}
                       {this.props.my_dogs && (
@@ -136,7 +128,10 @@ class MePage extends Component {
                     </ul>
                   </Col>
                 </Row>
-                <Button className="button outline" onClick={this.handleClickEditProfilePhoto}>
+                <Button
+                  className="button outline"
+                  onClick={this.handleClickEditProfilePhoto}
+                >
                   Change Photo
                 </Button>
                 <Button className="button" onClick={this.handleClickAddPet}>
@@ -149,7 +144,6 @@ class MePage extends Component {
                 <Button className="button outline" onClick={this.handleShow}>
                   Delete Account
                 </Button>
-
               </Col>
               <Col sm={8}>
                 <Row>{this.renderList()}</Row>

@@ -8,12 +8,11 @@ import { connect } from 'react-redux';
 
 import { getToken } from '../../../../services/tokenService';
 
-import '../../../../styles/forms.scss';
+import '../../../../styles/core/forms.scss';
 
 const schema = yup.object({
   name: yup.string().required('Name is required'),
   size: yup.string(),
-
   age: yup.string().required('Age is required'),
   gender: yup.string(),
   photo: yup.string(),
@@ -23,7 +22,6 @@ const schema = yup.object({
     .max(1000, 'Maximum of 1000 characters'),
   is_adopted: yup.string().required('Required'),
   good_with: yup.string()
-  //good_with: yup.string().required('Please enter street number and name')
 });
 const categories = [
   { id: 'dogs', name: 'dogs' },
@@ -36,16 +34,18 @@ class EditPet extends Component {
     super(props);
 
     this.state = {};
+
     this.handleClickCancel = this.handleClickCancel.bind(this);
   }
 
   async componentDidMount() {
     const pet_id = this.props.match.params.id;
     const response = await axios.get(`/pets/${pet_id}`);
+
     this.setState(response.data.data[0][0]);
   }
 
-  handleClickCancel(){
+  handleClickCancel() {
     this.props.history.push('/me');
   }
 
@@ -63,20 +63,13 @@ class EditPet extends Component {
                     try {
                       const token = getToken();
                       const id = this.state._id;
-                      const req = await axios.patch(`/pets/${id}`, values, {
+                      await axios.patch(`/pets/${id}`, values, {
                         headers: {
                           Authorization: `Bearer ${token}`
                         }
                       });
-                      this.props.history.push('/me');
 
-                      //   const response = await axios.post('/shelters/login', values);
-                      //   const { data } = response.data;
-                      //
-                      //   setToken(data[0]);
-                      //   // call redux action that fetches user and puts user in state
-                      //   this.props.getShelterUser();
-                      //   this.props.history.push('/');
+                      this.props.history.push('/me');
                     } catch (error) {
                       console.log(error);
                     }
@@ -108,7 +101,7 @@ class EditPet extends Component {
                             <Form.Control.Feedback type="invalid">
                               {errors.name}
                             </Form.Control.Feedback>
-                            <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Group>
                               <Form.Label>Size:</Form.Label>
                               <Form.Control
                                 as="select"
@@ -118,7 +111,6 @@ class EditPet extends Component {
                                 value={values.size}
                               >
                                 <option>Choose...</option>
-
                                 <option>extra-small</option>
                                 <option>small</option>
                                 <option>medium</option>
@@ -126,7 +118,6 @@ class EditPet extends Component {
                                 <option>extra-large</option>
                               </Form.Control>
                             </Form.Group>
-
                             <Form.Label>Age:</Form.Label>
                             <Form.Control
                               type="age"
@@ -138,7 +129,7 @@ class EditPet extends Component {
                             <Form.Control.Feedback type="invalid">
                               {errors.age}
                             </Form.Control.Feedback>
-                            <Form.Group controlId="exampleForm.ControlSelect2">
+                            <Form.Group>
                               <Form.Label>Gender:</Form.Label>
                               <Form.Control
                                 as="select"
@@ -148,12 +139,10 @@ class EditPet extends Component {
                                 value={values.gender}
                               >
                                 <option>Choose...</option>
-
                                 <option>female</option>
                                 <option>male</option>
                               </Form.Control>
                             </Form.Group>
-
                             <Form.Label>Description:</Form.Label>
                             <Form.Control
                               as="textarea"
@@ -170,8 +159,7 @@ class EditPet extends Component {
                             </Form.Control.Feedback>
                           </Col>
                           <Col xs={6}>
-
-                            <Form.Group controlId="exampleForm.ControlSelect2">
+                            <Form.Group>
                               <Form.Label>Availability:</Form.Label>
                               <Form.Control
                                 as="select"
@@ -184,7 +172,6 @@ class EditPet extends Component {
                                 }
                               >
                                 <option>Choose...</option>
-
                                 <option>For adoption</option>
                                 <option>Already adopted</option>
                               </Form.Control>
@@ -228,11 +215,13 @@ class EditPet extends Component {
                           </Col>
                         </Row>
                       </Container>
-
                       <Button className="button" type="submit">
                         Edit!
                       </Button>
-                      <Button className="button" onClick={this.handleClickCancel}>
+                      <Button
+                        className="button"
+                        onClick={this.handleClickCancel}
+                      >
                         Cancel
                       </Button>
                     </Form>
@@ -246,9 +235,8 @@ class EditPet extends Component {
     );
   }
 }
-// export default connect(mapStateToProps, { getMyDogs })(EditPet);
+
 function mapStateToProps(state) {
-  console.log('here', state);
   return {
     dog_detail: state.dog_detail
   };

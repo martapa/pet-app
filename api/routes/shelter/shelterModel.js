@@ -28,7 +28,7 @@ const shelterSchema = new Schema({
   phone: {
     type: String
   },
-  volonteer_name: {
+  volunteer_name: {
     type: String
   },
   pets: [

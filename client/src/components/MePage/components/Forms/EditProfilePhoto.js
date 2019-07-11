@@ -5,29 +5,22 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { getToken } from '../../../../services/tokenService';
 
-
-import '../../../../styles/forms.scss';
-import '../../../../styles/errors.scss';
-
-//const phoneRegEx =
+import '../../../../styles/core/forms.scss';
+import '../../../../styles/core/errors.scss';
 
 class EditProfilePhoto extends Component {
   constructor(props) {
     super(props);
     this.state = {
       serverErrors: '',
-      file: {},
+      file: {}
     };
     this.handleClickCancel = this.handleClickCancel.bind(this);
   }
+
   handleClickCancel() {
     this.props.history.push('/');
   }
-  // async componentDidMount(){
-  //   const shelter_id = this.props.match.params.id;
-  //   const response = await axios.get(`/shelters/${shelter_id}`);
-  //   this.setState({shelter: response.data.data[0]});
-  // }
 
   render() {
     return (
@@ -38,7 +31,7 @@ class EditProfilePhoto extends Component {
               <Container fluid className="errors">
                 <Row>
                   <Col />
-                  <Col xs={6} className="errors-col6">
+                  <Col xs={6} className="errors-col-6">
                     <p>{this.state.serverErrors}</p>
                   </Col>
                   <Col />
@@ -49,25 +42,18 @@ class EditProfilePhoto extends Component {
             <Col xs={10}>
               <Formik
                 onSubmit={async values => {
-                  //console.log(values);
-
                   try {
                     const data = new FormData();
-                    //console.log('DATA',data)
 
                     data.append('file', this.state.file);
                     const token = getToken();
 
-                    const post_shelter = await axios.patch(
-                      '/shelters/editProfilePhoto/',
-                      data,
-                      {
-                        headers: {
-                          Authorization: `Bearer ${token}`,
-                          'content-type': 'multipart/form-data'
-                        }
+                    await axios.patch('/shelters/editProfilePhoto/', data, {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                        'content-type': 'multipart/form-data'
                       }
-                    );
+                    });
                     this.props.history.push('/me');
                   } catch (error) {
                     this.setState({
@@ -88,7 +74,7 @@ class EditProfilePhoto extends Component {
                   isValid,
                   errors
                 }) => (
-                  <Form onSubmit={handleSubmit} enctype="multipart/form-data">
+                  <Form onSubmit={handleSubmit} encType="multipart/form-data">
                     <Container>
                       <Row>
                         <Col xs={6}>
@@ -100,9 +86,7 @@ class EditProfilePhoto extends Component {
                               this.setState({
                                 file: event.target.files[0]
                               });
-
                             }}
-
                           />
                         </Col>
                       </Row>

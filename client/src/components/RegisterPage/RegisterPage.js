@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { debounce } from 'lodash';
 import { Form, Button, Col, Container, Row } from 'react-bootstrap';
-import { google_api_key } from '../../keys.js';
 import * as yup from 'yup';
 import { Formik } from 'formik';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
-import '../../styles/forms.scss';
-import '../../styles/errors.scss';
+import '../../styles/core/forms.scss';
+import '../../styles/core/errors.scss';
 
-//const phoneRegEx =
 const schema = yup.object({
   shelter_name: yup.string().required('Name is required'),
   email: yup
@@ -26,7 +23,7 @@ const schema = yup.object({
       /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/,
       'Phone number is not valid'
     ),
-  volonteer_name: yup.string(),
+  volunteer_name: yup.string(),
   street: yup.string().required('Please enter street number and name'),
   city: yup.string().required('Please enter the city'),
   province: yup.string().required('Province is required'),
@@ -35,9 +32,11 @@ const schema = yup.object({
     .max(7, 'Too long')
     .required('Zip code is required')
 });
+
 class RegisterPage extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       shelter: {
         shelter_name: '',
@@ -46,8 +45,7 @@ class RegisterPage extends Component {
         avatar: '',
         description: '',
         phone: '',
-        volonteer_name: '',
-        //location: '',
+        volunteer_name: '',
         street: '',
         city: '',
         province: '',
@@ -71,7 +69,7 @@ class RegisterPage extends Component {
               <Container fluid className="errors">
                 <Row>
                   <Col />
-                  <Col xs={6} className="errors-col6">
+                  <Col xs={6} className="errors-col-6">
                     <p>{this.state.serverErrors}</p>
                   </Col>
                   <Col />
@@ -83,7 +81,6 @@ class RegisterPage extends Component {
               <Formik
                 validationSchema={schema}
                 onSubmit={async values => {
-                  //console.log(values);
                   const street2 = values.street.split(' ').join('+');
                   const city2 = '+' + values.city.split(' ').join('+');
                   const address = [street2, city2, values.province].join(',');
@@ -99,40 +96,22 @@ class RegisterPage extends Component {
                     const formatted_address =
                       response.data.data[0].results[0].formatted_address;
                     const data = new FormData();
-                    //console.log('DATA',data)
+
                     data.append('shelter_name', values.shelter_name);
                     data.append('email', values.email);
                     data.append('password', values.password);
                     data.append('file', this.state.file);
                     data.append('description', values.description);
                     data.append('phone', values.phone);
-                    data.append('volonteer_name', values.volonteer_name);
+                    data.append('volunteer_name', values.volunteer_name);
                     data.append('location', location);
                     data.append('address', formatted_address);
-                    // const shelter = {
-                    //   shelter_name: values.shelter_name,
-                    //   email: values.email,
-                    //   password: values.password,
-                    //   avatar: values.avatar,
-                    //   description: values.description,
-                    //   phone: values.phone,
-                    //   volonteer_name: values.volonteer_name,
-                    //   location: {
-                    //     type:'Point',
-                    //     coordinates: location
-                    //   },
-                    //   address: formatted_address
-                    // }
-                    console.log('data',data)
-                    const post_shelter = await axios.post(
-                      '/shelters/register',
-                      data,
-                      {
-                        headers: {
-                          'content-type': 'multipart/form-data'
-                        }
+
+                    await axios.post('/shelters/register', data, {
+                      headers: {
+                        'content-type': 'multipart/form-data'
                       }
-                    );
+                    });
                     this.props.history.push('/login');
                   } catch (error) {
                     this.setState({
@@ -147,8 +126,7 @@ class RegisterPage extends Component {
                   avatar: '',
                   description: '',
                   phone: '',
-                  volonteer_name: '',
-                  //location: '',
+                  volunteer_name: '',
                   street: '',
                   city: '',
                   province: '',
@@ -164,7 +142,7 @@ class RegisterPage extends Component {
                   isValid,
                   errors
                 }) => (
-                  <Form onSubmit={handleSubmit} enctype="multipart/form-data">
+                  <Form onSubmit={handleSubmit} encType="multipart/form-data">
                     <Container>
                       <Row>
                         <Col xs={6}>
@@ -203,12 +181,12 @@ class RegisterPage extends Component {
                           <Form.Control.Feedback type="invalid">
                             {errors.password}
                           </Form.Control.Feedback>
-                          <Form.Label>Volonteer Name:</Form.Label>
+                          <Form.Label>Volunteer Name:</Form.Label>
                           <Form.Control
                             type="text"
-                            name="volonteer_name"
+                            name="volunteer_name"
                             onChange={handleChange}
-                            value={values.volonteer_name}
+                            value={values.volunteer_name}
                           />
                           <Form.Label>Description:</Form.Label>
                           <Form.Control
@@ -237,7 +215,7 @@ class RegisterPage extends Component {
                           <Form.Control.Feedback type="invalid">
                             {errors.phone}
                           </Form.Control.Feedback>
-                          <Form.Group controlId="formGridAddress1">
+                          <Form.Group>
                             <Form.Label>Address</Form.Label>
                             <Form.Control
                               name="street"
@@ -253,7 +231,7 @@ class RegisterPage extends Component {
                           </Form.Group>
 
                           <Form.Row>
-                            <Form.Group as={Col} controlId="formGridCity">
+                            <Form.Group as={Col}>
                               <Form.Label>City</Form.Label>
                               <Form.Control
                                 name="city"
@@ -266,7 +244,7 @@ class RegisterPage extends Component {
                               </Form.Control.Feedback>
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="formGridState">
+                            <Form.Group as={Col}>
                               <Form.Label>Province</Form.Label>
                               <Form.Control
                                 name="province"
@@ -297,7 +275,7 @@ class RegisterPage extends Component {
                               </Form.Control.Feedback>
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="formGridZip">
+                            <Form.Group as={Col}>
                               <Form.Label>Zip</Form.Label>
                               <Form.Control
                                 name="zip"

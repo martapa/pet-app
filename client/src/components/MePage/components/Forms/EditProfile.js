@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 
 import { Form, Button, Col, Container, Row } from 'react-bootstrap';
 import * as yup from 'yup';
-import { Formik, FieldArray } from 'formik';
+import { Formik } from 'formik';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { getToken } from '../../../../services/tokenService';
-import '../../../../styles/forms.scss';
-
-//import './register.scss';
+import '../../../../styles/core/forms.scss';
 
 const schema = yup.object({
   shelter_name: yup.string().required('Name is required'),
@@ -27,7 +25,7 @@ const schema = yup.object({
       /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/,
       'Phone number is not valid'
     ),
-  volonteer_name: yup.string(),
+  volunteer_name: yup.string(),
   street: yup.string(),
   city: yup.string(),
   province: yup.string(),
@@ -61,15 +59,13 @@ class EditProfile extends Component {
       .trim();
     this.setState({ shelter: shelter });
   }
-  handleClickCancel(){
+  handleClickCancel() {
     this.props.history.push('/me');
   }
 
   render() {
     return (
       <>
-
-
         {this.state.shelter.shelter_name && (
           <Container fluid className="my-form">
             <Row>
@@ -77,7 +73,7 @@ class EditProfile extends Component {
                 <Container fluid className="errors">
                   <Row>
                     <Col />
-                    <Col xs={6} className="errors-col6">
+                    <Col xs={6} className="errors-col-6">
                       <p>{this.state.serverErrors}</p>
                     </Col>
                     <Col />
@@ -89,7 +85,6 @@ class EditProfile extends Component {
                 <Formik
                   validationSchema={schema}
                   onSubmit={async values => {
-                    console.log('values', values);
                     const street2 = '+' + values.street.split(' ').join('+');
                     const city2 = values.city.replace(' ', '+');
                     const address = [street2, city2, values.province].join(',');
@@ -111,20 +106,19 @@ class EditProfile extends Component {
                         avatar: values.avatar,
                         description: values.description,
                         phone: values.phone,
-                        volonteer_name: values.volonteer_name,
+                        volunteer_name: values.volunteer_name,
                         location: {
                           type: 'Point',
                           coordinates: location
                         },
                         address: formatted_address
                       };
-                      Object.keys(shelter).forEach(key => shelter[key] === undefined && delete shelter[key])
-                      console.log('shelter', shelter);
-
-
+                      Object.keys(shelter).forEach(
+                        key => shelter[key] === undefined && delete shelter[key]
+                      );
 
                       const token = getToken();
-                      const edit_shelter = await axios.patch(
+                      await axios.patch(
                         '/shelters/',
                         shelter,
                         {
@@ -168,12 +162,12 @@ class EditProfile extends Component {
                             <Form.Control.Feedback type="invalid">
                               {errors.shelter_name}
                             </Form.Control.Feedback>
-                            <Form.Label>Volonteer Name:</Form.Label>
+                            <Form.Label>Volunteer Name:</Form.Label>
                             <Form.Control
                               type="text"
-                              name="volonteer_name"
+                              name="volunteer_name"
                               onChange={handleChange}
-                              value={values.volonteer_name}
+                              value={values.volunteer_name}
                             />
                             <Form.Label>Description:</Form.Label>
                             <Form.Control
@@ -215,7 +209,7 @@ class EditProfile extends Component {
                             </Form.Control.Feedback>
 
                             <Form.Row>
-                              <Form.Group as={Col} controlId="formGridCity">
+                              <Form.Group as={Col}>
                                 <Form.Label>City</Form.Label>
                                 <Form.Control
                                   name="city"
@@ -228,7 +222,7 @@ class EditProfile extends Component {
                                 </Form.Control.Feedback>
                               </Form.Group>
 
-                              <Form.Group as={Col} controlId="formGridState">
+                              <Form.Group as={Col}>
                                 <Form.Label>Province</Form.Label>
                                 <Form.Control
                                   name="province"
@@ -259,7 +253,7 @@ class EditProfile extends Component {
                                 </Form.Control.Feedback>
                               </Form.Group>
 
-                              <Form.Group as={Col} controlId="formGridZip">
+                              <Form.Group as={Col}>
                                 <Form.Label>Zip</Form.Label>
                                 <Form.Control
                                   name="zip"
@@ -272,7 +266,6 @@ class EditProfile extends Component {
                                 </Form.Control.Feedback>
                               </Form.Group>
                             </Form.Row>
-                            
                           </Col>
                         </Row>
                       </Container>
@@ -280,7 +273,10 @@ class EditProfile extends Component {
                       <Button className="button" type="submit">
                         Submit
                       </Button>
-                      <Button className="button" onClick={this.handleClickCancel}>
+                      <Button
+                        className="button"
+                        onClick={this.handleClickCancel}
+                      >
                         Cancel
                       </Button>
                     </Form>
@@ -298,7 +294,6 @@ class EditProfile extends Component {
 function mapStateToProps(state) {
   return {
     shelter_user: state.shelter_user
-    // my_dogs: state.my_dogs
   };
 }
 

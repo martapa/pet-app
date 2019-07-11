@@ -13,7 +13,7 @@
     "build:client": "react-scripts build",
     "test:client": "react-scripts test",
     "eject:client": "react-scripts eject",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +29,7 @@
     "formik": "^1.5.4",
     "helmet": "^3.18.0",
     "import": "0.0.6",
+    "jest": "^24.8.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
     "mongoose": "^5.4.22",
@@ -52,8 +53,16 @@
     "yup": "^0.27.0"
   },
   "devDependencies": {
-    "pm2": "^3.5.0",
-    "hackeryou-fullstack-react-scripts": "2.3.0"
+    "babel-jest": "^24.8.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "hackeryou-fullstack-react-scripts": "2.3.0",
+    "pm2": "^3.5.0"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/client/setupTests.js"
+    ]
   },
   "browserslist": {
     "production": [

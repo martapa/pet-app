@@ -14,13 +14,6 @@ import LogOutPage from './components/LogOutPage/LogOutPage';
 import EditProfilePhoto from './components/MePage/components/Forms/EditProfilePhoto';
 import EditPetPhoto from './components/MePage/components/Forms/EditPetPhoto';
 
-
-
-
-
-
-
-
 export const routes = [
   { path: '/', component: LandingPage },
   { path: '/register', component: RegisterPage },
@@ -30,22 +23,16 @@ export const routes = [
   { path: '/me', component: MePage },
   { path: '/addform', component: AddPetForm },
   { path: '/edit/:id', component: EditPet },
-  { path: '/profile-edit/:id', component: EditProfile},
-  { path: '/logout', component: LogOutPage},
-  { path: '/profile-photo-edit/:id', component: EditProfilePhoto},
-  { path: '/pet-photo-edit/:id', component: EditPetPhoto},
-
-
-
-
+  { path: '/profile-edit/:id', component: EditProfile },
+  { path: '/logout', component: LogOutPage },
+  { path: '/profile-photo-edit/:id', component: EditProfilePhoto },
+  { path: '/pet-photo-edit/:id', component: EditPetPhoto }
 ];
 
 const genKey = path => `route:${path}`;
 
 class Router extends Component {
-  // Render method should always be last
   render() {
-    // Render a Switch component with a route for each item in the routes array
     return (
       <Switch>
         {routes.map(config => (
